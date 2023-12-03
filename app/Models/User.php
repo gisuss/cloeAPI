@@ -30,6 +30,7 @@ class User extends Authenticatable
         'dni',
         'email',
         'username',
+        'active',
         'password',
         'active',
     ];
