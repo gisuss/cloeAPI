@@ -28,10 +28,13 @@ Route::group(['prefix' => 'auth'], function () {
 
 // CONSULTAS INDIVIDUALES
 Route::middleware('auth:sanctum')->group(function() {
-
+    Route::post('users/register', [App\Http\Controllers\Users\UserController::class, 'store']);
+    Route::post('users/activar/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
+    Route::post('users/desactivar/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
+    Route::post('users/getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
 });
 
 // API RESOURCES
 Route::middleware('auth:sanctum')->group(function() {
-
+    Route::apiResource('users', App\Http\Controllers\Users\UserController::class);
 });

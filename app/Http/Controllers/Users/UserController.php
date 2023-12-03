@@ -1,0 +1,419 @@
+<?php
+
+namespace App\Http\Controllers\Users;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Requests\{UserUpdateRequest,UserActivateRequest};
+use App\Responsable\Users\{ UserShowResponsable,UserDestroyResponsable, UserIndexResponsable,UserGetByRoleResponsable,
+                            UserStoreResponsable, UserUpdateResponsable, UserDesactivateResponsable,UserActivateResponsable,
+                          };
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     * 
+     * @param mixed $userIndexResponsable
+     * @return void
+     * @OA\Get(
+     *      path="/api/users",
+     *      tags={"Users"},
+     *      summary="INDEX Users",
+     *      description="Retorna la lista de usuarios registrados en el sistema",
+     *      security={{"sanctum":{}}},
+     *      @OA\Response(
+     *         response=200,
+     *         description="Recurso obtenido con éxito.",
+     *         @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *      )
+     * )
+     */
+    public function index(UserIndexResponsable $userIndexResponsable)
+    {
+        return $userIndexResponsable;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * 
+     * @param mixed $userStoreResponsable
+     * @return void
+     * @OA\Schema(
+     *    schema="CreateUserRequest",
+     *    @OA\Property(
+     *        property="name",
+     *        type="string",
+     *        description="Nombre",
+     *        nullable=false,
+     *        example="Juan"
+     *    ),
+     *    @OA\Property(
+     *        property="lastname",
+     *        type="string",
+     *        description="Apellido",
+     *        nullable=false,
+     *        example="Pérez"
+     *    ),
+     *    @OA\Property(
+     *        property="dni",
+     *        type="string",
+     *        description="Documento de identificación personal",
+     *        nullable=false,
+     *        example="E12345678"
+     *    ),
+     *    @OA\Property(
+     *        property="email",
+     *        type="string",
+     *        description="Correo eletrónico",
+     *        nullable=false,
+     *        format="email"
+     *    ),
+     *    @OA\Property(
+     *        property="role",
+     *        type="string",
+     *        description="Rol",
+     *        nullable=false,
+     *        example="Recolector"
+     *    ),
+     *    @OA\Property(
+     *        property="password",
+     *        type="string",
+     *        description="Contraseña",
+     *        nullable=false,
+     *        example="password"
+     *    ),
+     *    @OA\Property(
+     *        property="confirm_password",
+     *        type="string",
+     *        description="Confirmacion de contraseña",
+     *        nullable=false,
+     *        example="password"
+     *    ),
+     * )
+     *
+     * @OA\Post(
+     *     path="/api/users",
+     *     tags={"Users"},
+     *     summary="STORE a new user",
+     *     description="Registra un nuevo usuario.",
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/CreateUserRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso creado con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function store(UserStoreResponsable $userStoreResponsable)
+    {
+        return $userStoreResponsable;
+    }
+
+    /**
+     * Display the specified resource.
+     * 
+     * @param int $user
+     * @return void
+     * @OA\Get(
+     *     path="/api/users/{user}",
+     *     tags={"Users"},
+     *     summary="SHOW {User}",
+     *     description="Retorna la información del usuario solicitado.",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="integer",
+     *              example=1     
+     *         ),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\Response(
+     *         @OA\MediaType(mediaType="application/json"),
+     *         response=200,
+     *         description="Recurso obtenido con éxito."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response=404,
+     *         description="No se ha encontrado el usuario."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * ) 
+     */
+    public function show(int $user)
+    {
+        return new UserShowResponsable($user);
+    }
+
+    /**
+     * Display users by role name.
+     * 
+     * @param int $user
+     * @return void
+     * @OA\Schema(
+     *    schema="RoleRequest",
+     *    @OA\Property(
+     *        property="roleName",
+     *        type="string",
+     *        description="Nombre de rol",
+     *        nullable=false,
+     *        example="Recolector"
+     *    ),
+     * )
+     * @OA\Post(
+     *      path="/api/users/getByRoleName",
+     *      tags={"Users"},
+     *      summary="INDEX Users by role name",
+     *      description="Retorna la lista de usuarios dado un rol",
+     *      security={{"sanctum":{}}},
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(ref="#/components/schemas/RoleRequest")
+     *      ),
+     *      @OA\Response(
+     *         response=200,
+     *         description="Recurso obtenido con éxito.",
+     *         @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error.",
+     *         @OA\JsonContent()
+     *      )
+     * )
+     */
+    public function getUsersByRole(UserGetByRoleResponsable $userGetByRoleResponsable)
+    {
+        return $userGetByRoleResponsable;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * 
+     * @param int $user
+     * @param UserUpdateRequest $request
+     * @return void
+     * @OA\Schema(
+     *    schema="UpdateUserRequest",
+     *    @OA\Property(
+     *        property="name",
+     *        type="string",
+     *        description="Nombre",
+     *        nullable=false,
+     *        example="Juan"
+     *    ),
+     *    @OA\Property(
+     *        property="lastname",
+     *        type="string",
+     *        description="Apellido",
+     *        nullable=false,
+     *        example="Pérez"
+     *    ),
+     *    @OA\Property(
+     *        property="dni",
+     *        type="string",
+     *        description="Documento de identificación personal",
+     *        nullable=false,
+     *        example="V12345678"
+     *    ),
+     *    @OA\Property(
+     *        property="email",
+     *        type="string",
+     *        description="Correo eletrónico",
+     *        nullable=false,
+     *        format="email"
+     *    ),
+     *    @OA\Property(
+     *        property="role",
+     *        type="string",
+     *        description="Rol",
+     *        nullable=false,
+     *        example="Recolector"
+     *    ),
+     * )
+     *
+     * @OA\Put(
+     *     path="/api/users/{user}",
+     *     tags={"Users"},
+     *     summary="UPDATE {user}",
+     *     description="Actualiza un usuario.",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la búsqueda en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/UpdateUserRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso actualizado con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function update(int $user, UserUpdateRequest $request)
+    {
+        return new UserUpdateResponsable($user, $request->validated());
+    }
+
+    /**
+     * Desactive an specified user.
+     * 
+     * @param int $user
+     * @return void
+     * @OA\Post(
+     *      path="/api/users/desactivar/{user}",
+     *      tags={"Users"},
+     *      summary="DESACTIVATE an User by ID",
+     *      description="Desactiva un usuario del sistema",
+     *      security={{"sanctum":{}}},
+     *      @OA\Parameter(
+     *         description="Parámetro necesario para la búsqueda en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso obtenido con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function desactivarUser(int $user) {
+        return new UserDesactivateResponsable($user);
+    }
+    
+    /**
+     * Desactive an specified user.
+     * 
+     * @param int $user
+     * @return void
+     * @OA\Schema(
+     *    schema="activarUserRequest",
+     *    @OA\Property(
+     *        property="role",
+     *        type="string",
+     *        description="Rol",
+     *        nullable=false,
+     *        example="Recolector"
+     *    ),
+     * )
+     * @OA\Post(
+     *      path="/api/users/activar/{user}",
+     *      tags={"Users"},
+     *      summary="ACTIVATE an User by ID",
+     *      description="Activa un usuario del sistema",
+     *      security={{"sanctum":{}}},
+     *      @OA\Parameter(
+     *         description="Parámetro necesario para la búsqueda en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/activarUserRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso obtenido con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function activarUser(int $user, UserActivateRequest $request) {
+        return new UserActivateResponsable($user, $request->validated());
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * 
+     * @param mixed $user
+     * @return void
+     * @OA\Delete(
+     *     path="/api/users/{user}",
+     *     tags={"Users"},
+     *     summary="DELETE {user}",
+     *     description="Elimina un usuario.",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la búsqueda en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="int", value="1", summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso eliminado con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function destroy(int $user)
+    {
+        return new UserDestroyResponsable($user);
+    }
+}
