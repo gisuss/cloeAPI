@@ -57,6 +57,7 @@ class AuthService
                     $array['message'] = "Usuario logeado exitosamente.";
                     $array['code'] = Response::HTTP_OK;
                     $array['token'] = $token->plainTextToken;
+                    $array['role'] = $user->getRoleNames();
         
                     $now = Carbon::now();
                     $expires_at = Carbon::parse($token->accessToken->expires_at);

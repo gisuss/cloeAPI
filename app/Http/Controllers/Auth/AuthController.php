@@ -60,6 +60,7 @@ class AuthController extends Controller
         return response()->json([
             "message" => $result["message"],
             "token" => isset($result["token"]) ? $result["token"] : "",
+            "role" => isset($result["role"]) ? $result["role"] : "",
             "expiredIn" => isset($result["expiresIn"]) ? $result["expiresIn"] : "",
             "code" => $result["code"],
         ], $result["code"]);

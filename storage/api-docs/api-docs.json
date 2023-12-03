@@ -306,9 +306,467 @@
                     }
                 ]
             }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "INDEX Users",
+                "description": "Retorna la lista de usuarios registrados en el sistema",
+                "operationId": "95ce247c5738fbbb7c7af9fe88e34485",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "STORE a new user",
+                "description": "Registra un nuevo usuario.",
+                "operationId": "b878d72cb681cdebfd5ea4a59b936aca",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/{user}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "SHOW {User}",
+                "description": "Retorna la información del usuario solicitado.",
+                "operationId": "29b48abebfb0f3166cb9a1bbd9dc86f1",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la consulta en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el usuario.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "UPDATE {user}",
+                "description": "Actualiza un usuario.",
+                "operationId": "71b99b7b4943e78b2cb6e00c0519e2ce",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "DELETE {user}",
+                "description": "Elimina un usuario.",
+                "operationId": "4cbe82807344c19f54545df95861a5eb",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso eliminado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/getByRoleName": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "INDEX Users by role name",
+                "description": "Retorna la lista de usuarios dado un rol",
+                "operationId": "55dc2f10d5032976ef524bbdf1f26d8e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/desactivar/{user}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "DESACTIVATE an User by ID",
+                "description": "Desactiva un usuario del sistema",
+                "operationId": "bcc369beec267fba8532430c5fb5e092",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/activar/{user}": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "ACTIVATE an User by ID",
+                "description": "Activa un usuario del sistema",
+                "operationId": "fb2cc608b27987921015722e04b6a7c4",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/activarUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
         }
     },
     "components": {
+        "schemas": {
+            "CreateUserRequest": {
+                "properties": {
+                    "name": {
+                        "description": "Nombre",
+                        "type": "string",
+                        "example": "Juan",
+                        "nullable": false
+                    },
+                    "lastname": {
+                        "description": "Apellido",
+                        "type": "string",
+                        "example": "Pérez",
+                        "nullable": false
+                    },
+                    "dni": {
+                        "description": "Documento de identificación personal",
+                        "type": "string",
+                        "example": "E12345678",
+                        "nullable": false
+                    },
+                    "email": {
+                        "description": "Correo eletrónico",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": false
+                    },
+                    "role": {
+                        "description": "Rol",
+                        "type": "string",
+                        "example": "Recolector",
+                        "nullable": false
+                    },
+                    "password": {
+                        "description": "Contraseña",
+                        "type": "string",
+                        "example": "password",
+                        "nullable": false
+                    },
+                    "confirm_password": {
+                        "description": "Confirmacion de contraseña",
+                        "type": "string",
+                        "example": "password",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "RoleRequest": {
+                "properties": {
+                    "roleName": {
+                        "description": "Nombre de rol",
+                        "type": "string",
+                        "example": "Recolector",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateUserRequest": {
+                "properties": {
+                    "name": {
+                        "description": "Nombre",
+                        "type": "string",
+                        "example": "Juan",
+                        "nullable": false
+                    },
+                    "lastname": {
+                        "description": "Apellido",
+                        "type": "string",
+                        "example": "Pérez",
+                        "nullable": false
+                    },
+                    "dni": {
+                        "description": "Documento de identificación personal",
+                        "type": "string",
+                        "example": "V12345678",
+                        "nullable": false
+                    },
+                    "email": {
+                        "description": "Correo eletrónico",
+                        "type": "string",
+                        "format": "email",
+                        "nullable": false
+                    },
+                    "role": {
+                        "description": "Rol",
+                        "type": "string",
+                        "example": "Recolector",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "activarUserRequest": {
+                "properties": {
+                    "role": {
+                        "description": "Rol",
+                        "type": "string",
+                        "example": "Recolector",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
             "sanctum": {
                 "type": "http",
