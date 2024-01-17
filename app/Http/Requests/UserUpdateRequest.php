@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\{Identification, User};
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -22,7 +23,9 @@ class UserUpdateRequest extends FormRequest
             'role' => 'cargo',
             'name' => 'nombre',
             'lastname' => 'apellido',
-            'dni' => 'documento de identificación',
+            'address' => 'dirección',
+            'ci_type' => 'tipo de documento de identificación',
+            'ci_number' => 'número del documento de identificación',
         ];
     }
 
@@ -44,12 +47,17 @@ class UserUpdateRequest extends FormRequest
             'lastname.required' => 'El :attribute es requerido.',
             'lastname.max' => 'El :attribute debe ser menor a 255 caracteres.',
             'lastname.regex' => 'El :attribute solo debe contener letras y espacios.',
-            'role.required' => 'El :attribute es requerido.',
+            'address.required' => 'La :attribute es requerido.',
+            'address.max' => 'El :attribute debe ser menor a 255 caracteres.',
+            'address.regex' => 'La :attribute solo debe contener letras y espacios.',
+            'role.required' => 'La :attribute es requerido.',
             'role.string' => 'El :attribute debe ser de tipo string.',
             'role.exists' => 'El :attribute no es válido.',
-            'dni.required' => 'El :attribute es requerido.',
-            'dni.regex' => 'El :attribute no tiene formato válido.',
-            'dni.unique' => 'El :attribute ya está registrado.',
+            'ci_type.required' => 'El :attribute es requerido.',
+            'ci_type.in' => 'El :attribute debe ser V, E, P, J o G.',
+            'ci_number.required' => 'El :attribute es requerido.',
+            'ci_number.min' => 'El :attribute debe tener al menos 7 dígitos.',
+            'ci_number.max' => 'El :attribute no debe exceder los 9 dígitos.',
         ];
     }
 
@@ -60,12 +68,21 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $identification = Identification::find(User::find($this->user)->ci_id);
         return [
             'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'lastname' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'dni' => ['required', 'string', 'regex:/^[V|E|J|G][0-9]{6,9}$/', Rule::unique('users','dni')->ignore($this->user)],
+            'address' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'email' => ['required', 'max:256', Rule::unique('users','email')->ignore($this->user)],
             'role' => 'required|string|exists:roles,name',
+            'ci_type' => 'required|in:V,E,P,J,G',
+            'ci_number' => [
+                'required',
+                'string',
+                'min:7',
+                'max:9',
+                Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
+            ],
         ];
     }
 }

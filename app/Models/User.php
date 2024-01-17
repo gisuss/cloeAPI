@@ -27,12 +27,14 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'lastname',
-        'dni',
+        'ci_id',
         'email',
         'username',
         'active',
         'password',
         'active',
+        'address',
+        'email_verified_at'
     ];
 
     /**
@@ -74,4 +76,8 @@ class User extends Authenticatable
         return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
     }
 
+    //relacion con identification cedula
+    public function cedula() : BelongsTo {
+        return $this->belongsTo(Identification::class, 'ci_id');
+    }
 }

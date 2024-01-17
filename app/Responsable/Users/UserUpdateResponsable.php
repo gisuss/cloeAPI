@@ -3,13 +3,12 @@
 namespace App\Responsable\Users;
 
 use Illuminate\Contracts\Support\Responsable;
-use App\Models\{User, Cargo};
+use App\Models\{Identification, User};
 use Illuminate\Http\Response;
 use App\Repositories\Users\UserRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\{DB, Auth, Mail};
-use App\Mail\{UserUpdateMail, UserBossUpdateMail};
+use Illuminate\Support\Facades\{DB};
 
 class UserUpdateResponsable implements Responsable
 {
@@ -33,7 +32,16 @@ class UserUpdateResponsable implements Responsable
 					$usuario->syncRoles([$this->request['role']]);
                 }
 
-                $update = $usuario->update($this->request);
+                $cedula = Identification::find($usuario->ci_id);
+                
+                if ($cedula->type <> $this->request['ci_type'] || $cedula->number <> $this->request['ci_number']) {
+                    $cedula->update([
+                        'type' => $this->request['ci_type'],
+                        'number' => $this->request['ci_number'],
+                    ]);
+                }
+
+                $update = $usuario->update(array_merge($this->request, ['ci_id' => $cedula->id]));
             DB::commit();
             return $this->updateResponse(UserResource::make($usuario), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

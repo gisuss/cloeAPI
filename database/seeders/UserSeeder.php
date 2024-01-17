@@ -17,8 +17,9 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'Admin',
             'lastname' => 'Cloe',
-            'dni' => 'V12345678',
+            'ci_id' => 1,
             'email' => 'admin@cloe.com',
+            'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
             'username' => 'admin',
             'email_verified_at' => Carbon::now(),
@@ -28,8 +29,9 @@ class UserSeeder extends Seeder
         $user2 = User::create([
             'name' => 'Recolector',
             'lastname' => 'Cloe',
-            'dni' => 'V11122278',
+            'ci_id' => 2,
             'email' => 'recolector@cloe.com',
+            'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
             'username' => 'recolector',
             'email_verified_at' => Carbon::now(),
@@ -39,8 +41,9 @@ class UserSeeder extends Seeder
         $user3 = User::create([
             'name' => 'Separador',
             'lastname' => 'Cloe',
-            'dni' => 'V22233389',
+            'ci_id' => 3,
             'email' => 'separador@cloe.com',
+            'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
             'username' => 'separador',
             'email_verified_at' => Carbon::now(),

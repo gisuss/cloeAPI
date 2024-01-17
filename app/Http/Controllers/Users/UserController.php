@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Http\Requests\{UserUpdateRequest,UserActivateRequest};
 use App\Responsable\Users\{ UserShowResponsable,UserDestroyResponsable, UserIndexResponsable,UserGetByRoleResponsable,
                             UserStoreResponsable, UserUpdateResponsable, UserDesactivateResponsable,UserActivateResponsable,
@@ -66,14 +65,21 @@ class UserController extends Controller
      *        type="string",
      *        description="Apellido",
      *        nullable=false,
-     *        example="Pérez"
+     *        example="Arango"
      *    ),
      *    @OA\Property(
-     *        property="dni",
+     *        property="ci_type",
      *        type="string",
-     *        description="Documento de identificación personal",
+     *        description="Tipo de identificación personal",
      *        nullable=false,
-     *        example="E12345678"
+     *        example="V"
+     *    ),
+     *    @OA\Property(
+     *        property="ci_number",
+     *        type="string",
+     *        description="Número de identificación personal",
+     *        nullable=false,
+     *        example="20753800"
      *    ),
      *    @OA\Property(
      *        property="email",
@@ -83,25 +89,18 @@ class UserController extends Controller
      *        format="email"
      *    ),
      *    @OA\Property(
+     *        property="address",
+     *        type="string",
+     *        description="Dirección del usuario",
+     *        nullable=false,
+     *        example="Valencia, calle 101, Venezuela"
+     *    ),
+     *    @OA\Property(
      *        property="role",
      *        type="string",
      *        description="Rol",
      *        nullable=false,
      *        example="Recolector"
-     *    ),
-     *    @OA\Property(
-     *        property="password",
-     *        type="string",
-     *        description="Contraseña",
-     *        nullable=false,
-     *        example="password"
-     *    ),
-     *    @OA\Property(
-     *        property="confirm_password",
-     *        type="string",
-     *        description="Confirmacion de contraseña",
-     *        nullable=false,
-     *        example="password"
      *    ),
      * )
      *
@@ -148,7 +147,7 @@ class UserController extends Controller
      *         required=true,
      *         @OA\Schema(
      *              type="integer",
-     *              example=1     
+     *              example=1
      *         ),
      *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
      *     ),
@@ -246,11 +245,18 @@ class UserController extends Controller
      *        example="Pérez"
      *    ),
      *    @OA\Property(
-     *        property="dni",
+     *        property="ci_type",
      *        type="string",
-     *        description="Documento de identificación personal",
+     *        description="Tipo de identificación personal",
      *        nullable=false,
-     *        example="V12345678"
+     *        example="V"
+     *    ),
+     *    @OA\Property(
+     *        property="ci_number",
+     *        type="string",
+     *        description="Número de identificación personal",
+     *        nullable=false,
+     *        example="20753800"
      *    ),
      *    @OA\Property(
      *        property="email",
@@ -258,6 +264,13 @@ class UserController extends Controller
      *        description="Correo eletrónico",
      *        nullable=false,
      *        format="email"
+     *    ),
+     *    @OA\Property(
+     *        property="address",
+     *        type="string",
+     *        description="Dirección del usuario",
+     *        nullable=false,
+     *        example="Valencia, calle 120, Venezuela"
      *    ),
      *    @OA\Property(
      *        property="role",

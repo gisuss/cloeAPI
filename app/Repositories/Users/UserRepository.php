@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Users;
 
-use App\Models\{User};
+use App\Models\{User, Identification};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\{Collection,Str};
@@ -24,15 +24,22 @@ class UserRepository extends Repository
      * @param array $data
      */
     public function register(array $data) {
+        $pass = $this->generateRandomPIN(6);
+        $cedula = Identification::create([
+            'type' => $data['ci_type'],
+            'number' => $data['ci_number'],
+        ]);
+
         $user = $this->model->create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
-            'dni' => $data['dni'],
+            'ci_id' => $cedula->id,
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'address' => $data['address'],
+            'password' => Hash::make($pass),
             'username' => $this->setUsername($data['name'], $data['lastname']),
+            'email_verified_at' => Carbon::now(),
             // 'photo' => 'https://eu.ui-avatars.com/api/?name=' . $avatarNames[0] . '+' . $avatarNames[1] . '&background=ebebeb&color=000&bold=true',
-            'email_verified_at' => Carbon::now()
         ]);
 
         $user->assignRole($data['role']);
@@ -189,6 +196,10 @@ class UserRepository extends Repository
         );
 
         return $cadena;
+    }
+
+    public function generateRandomPIN($length) {
+        return substr(str_shuffle("0123456789"), 0, $length);
     }
 
     public function paginate($relations = null, $paginate = 20, $filtersColumns = []) {

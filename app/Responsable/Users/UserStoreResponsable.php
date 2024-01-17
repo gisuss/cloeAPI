@@ -25,9 +25,9 @@ class UserStoreResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $register = $this->repository->register($this->data);
+                $user = $this->repository->register($this->data);
             DB::commit();
-            return $this->storeResponse(UserResource::make($register), isset($register) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            return $this->storeResponse(UserResource::make($user), isset($user) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
