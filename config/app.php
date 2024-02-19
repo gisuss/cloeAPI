@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'America/Caracas'),
+    'timezone' => 'America/Caracas',
 
     /*
     |--------------------------------------------------------------------------

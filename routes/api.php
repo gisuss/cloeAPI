@@ -17,10 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
     Route::post('forgot-password', [App\Http\Controllers\Auth\AuthController::class, 'forgotPassword']);
-    Route::get('verifyPin', [App\Http\Controllers\Auth\AuthController::class, 'verifyPin']);
+    Route::post('reset-password', [App\Http\Controllers\Auth\AuthController::class, 'resetPassword']);
     
     Route::group( ['middleware' => ['auth:sanctum']], function() {
-        Route::post('reset-password', [App\Http\Controllers\Auth\AuthController::class, 'resetPassword']);
         Route::get('is-logged-in', [App\Http\Controllers\Auth\AuthController::class, 'isLoggeIn']);
         Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
     });

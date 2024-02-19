@@ -14,10 +14,6 @@ No extravíes tu contraseña ya que será única para tu ingreso al sistema.
 
 También puedes hacer uso de tu correo electrónico para el inicio de sesión.
 
-<x-mail::button :url="$url" color="primary">
-Abrir la aplicación web
-</x-mail::button>
-
 Saludos.<br>
 
 <hr>

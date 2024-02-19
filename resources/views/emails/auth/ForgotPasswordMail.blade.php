@@ -1,16 +1,12 @@
 <x-mail::message>
-# ¡Hola👋!<br>
-Estás recibiendo este correo electrónico porque se ha solicitado un cambio de contraseña para tu cuenta.
+# ¡Hola, {{ $user->name }}👋!<br>
+Estás recibiendo este correo electrónico porque se ha solicitado un restablecimiento de contraseña para tu cuenta Cloe.
 
-El PIN para restablecimiento de contraseña es el siguiente:
+El enlace para restablecimiento de contraseña es el siguiente:
 
-<x-mail::table>
-| PIN | 
-|:----:| 
-{{ $pin }}
-</x-mail::table>
-
-Este PIN para restablecer tu contraseña caduca en 60 minutos.
+<x-mail::button :url="$url" color="primary">
+Restablecer contraseña
+</x-mail::button>
 
 Si no has solicitado un cambio de contraseña, puedes ignorar o eliminar este correo electrónico.
 

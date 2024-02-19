@@ -8,19 +8,22 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
 
 class ForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $pin;
+    protected User $user;
+    protected string $url;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($pin)
+    public function __construct(User $user, string $pin)
     {
-        $this->pin = $pin;
+        $this->user = $user;
+        $this->url = 'www.google.com/' . $pin;
     }
 
     /**
@@ -29,7 +32,7 @@ class ForgotPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Email de Recuperación de contraseña',
+            subject: 'Restablecimiento de contraseña',
         );
     }
 
@@ -39,9 +42,10 @@ class ForgotPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.auth.forgotPassword',
+            markdown: 'emails.auth.ForgotPasswordMail',
             with: [
-                'pin' => $this->pin,
+                'user' => $this->user,
+                'url' => $this->url
             ],
         );
     }

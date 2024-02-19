@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\{LoginRequests,ResetPasswordRequests,ForgotPasswordRequests,VerifyPinRequests};
+use App\Http\Requests\{ResetPasswordRequests,ForgotPasswordRequests};
 use Illuminate\Http\Request;
 use App\Services\Auth\AuthService;
 
@@ -23,15 +23,14 @@ class AuthController extends Controller
      *     path="/api/auth/login",
      *     tags={"Auth"},
      *     summary="LOGIN user",
-     *     description="Login.",
+     *     description="Iniciar sesión.",
      *     @OA\RequestBody(
      *        required=true,
      *        description="Pass user credentials",
      *        @OA\JsonContent(
      *           required={"email_username","password"},
      *           @OA\Property(property="email_username", type="string", format="string", example="admin"),
-     *           @OA\Property(property="password", type="string", format="password", example="password"),
-     *           @OA\Property(property="remember_me", type="boolean", example="true"),
+     *           @OA\Property(property="password", type="string", format="password", example="password")
      *        ),
      *     ),
      *     @OA\Response(
@@ -55,15 +54,9 @@ class AuthController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function login(LoginRequests $request) {
-        $result = $this->service->login($request->validated());
-        return response()->json([
-            "message" => $result["message"],
-            "token" => isset($result["token"]) ? $result["token"] : "",
-            "role" => isset($result["role"]) ? $result["role"] : "",
-            "expiredIn" => isset($result["expiresIn"]) ? $result["expiresIn"] : "",
-            "code" => $result["code"],
-        ], $result["code"]);
+    public function login(Request $request) {
+        $result = $this->service->login($request);
+        return response()->json($result);
     }
 
     /**
@@ -91,10 +84,7 @@ class AuthController extends Controller
      */
     public function logout() {
         $result = $this->service->logout();
-        return response()->json([
-            "message" => $result["message"],
-            "code" => $result["code"],
-        ], $result["code"]);
+        return response()->json($result);
     }
 
     /**
@@ -103,14 +93,14 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/auth/forgot-password",
      *     summary="Forgot password",
-     *     description="Inicia proceso de reseteo de contraseña.",
+     *     description="Inicia proceso de restablecimiento de contraseña.",
      *     tags={"Auth"},
      *     security={{"sanctum":{}}},
      *     @OA\RequestBody(
      *        required=true,
      *        @OA\JsonContent(
      *           required={"email"},
-     *           @OA\Property(property="email", type="string", format="email", example="admin@censo.com"),
+     *           @OA\Property(property="email", type="string", format="email", example="admin@cloe.com"),
      *        ),
      *     ),
      *     @OA\Response(
@@ -129,20 +119,7 @@ class AuthController extends Controller
      */
     public function forgotPassword(ForgotPasswordRequests $request) {
         $result = $this->service->forgotPassword($request->validated());
-        return response()->json([
-            "message" => $result["message"],
-            "code" => $result["code"],
-        ], $result["code"]);
-    }
-
-    public function verifyPin(VerifyPinRequests $request) {
-        $result = $this->service->verifyPin($request->validated());
-        return response()->json([
-            "message" => $result["message"],
-            "OK" => $result["OK"],
-            "user" => isset($result["user"]) ? $result["user"] : "",
-            "code" => $result["code"],
-        ], $result["code"]);
+        return response()->json($result);
     }
 
     /**
@@ -168,27 +145,23 @@ class AuthController extends Controller
      */
     public function isLoggeIn() {
         $result = $this->service->isLoggeIn();
-        return response()->json([
-            "message" => $result["message"],
-            "OK" => $result["OK"],
-            "code" => $result["code"],
-        ], $result["code"]);
+        return response()->json($result);
     }
 
     /**
-     * Forgot Password
+     * Reset Password
      * 
-     * @OA\Put(
+     * @OA\Post(
      *     path="/api/auth/reset-password",
      *     summary="Reset password",
-     *     description="Reseteo de contraseña.",
+     *     description="Restablecimiento de contraseña.",
      *     tags={"Auth"},
-     *     security={{"sanctum":{}}},
      *     @OA\RequestBody(
      *        required=true,
      *        @OA\JsonContent(
-     *           @OA\Property(property="password", type="string", format="password", example="Sint3x#123"),
-     *           @OA\Property(property="confirm_password", type="string", format="password", example="Sint3x#123"),
+     *           @OA\Property(property="password", type="string", format="password", example="password"),
+     *           @OA\Property(property="confirm_password", type="string", format="password", example="password"),
+     *           @OA\Property(property="pin", type="string", format="string", example="123456"),
      *        ),
      *     ),
      *     @OA\Response(
@@ -207,10 +180,6 @@ class AuthController extends Controller
      */
     public function resetPassword(ResetPasswordRequests $request) {
         $result = $this->service->resetPassword($request->validated());
-        return response()->json([
-            "message" => $result["message"],
-            "code" => $result["code"],
-        ], $result["code"]);
+        return response()->json($result);
     }
-
 }

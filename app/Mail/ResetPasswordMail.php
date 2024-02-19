@@ -16,7 +16,6 @@ class ResetPasswordMail extends Mailable
 
     protected User $user;
     protected string $pass;
-    protected string $url;
 
     /**
      * Create a new message instance.
@@ -25,7 +24,6 @@ class ResetPasswordMail extends Mailable
     {
         $this->user = $user;
         $this->pass = $pass;
-        $this->url = '#';
     }
 
     /**
@@ -34,7 +32,7 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmación de Cambio de Contraseña',
+            subject: 'Confirmación de restablecimiento de Contraseña',
         );
     }
 
@@ -44,11 +42,10 @@ class ResetPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.auth.resetPassword',
+            markdown: 'emails.auth.resetPasswordMail',
             with: [
                 'user' => $this->user,
-                'pass' => $this->pass,
-                'url' => $this->url
+                'pass' => $this->pass
             ],
         );
     }

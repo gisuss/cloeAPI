@@ -35,8 +35,9 @@ class ForgotPasswordRequests extends FormRequest
     {
         return [
             'email.required' => 'Necesitamos saber tu :attribute.',
-            'email.max' => 'El campo de :attribute no debe exceder los 256 caracteres.',
-            'email.email' => 'El campo de :attribute no es válido.',
+            'email.max' => 'El :attribute no debe exceder los 255 caracteres.',
+            'email.email' => 'El :attribute no tiene formato válido.',
+            'email.exists' => 'El :attribute no está registrado.',
         ];
     }
 
@@ -48,7 +49,7 @@ class ForgotPasswordRequests extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:256',
+            'email' => 'required|string|email|max:255|exists:users,email',
         ];
     }
 
