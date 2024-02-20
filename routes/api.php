@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['prefix' => 'utils'], function () {
+    Route::post('contact', [App\Http\Controllers\LandingController::class, 'contact']);
+    Route::get('estados', [App\Http\Controllers\LandingController::class, 'states']);
+    Route::get('ciudades', [App\Http\Controllers\LandingController::class, 'cities']);
+    Route::get('centros', [App\Http\Controllers\Centros\CentroAcopioController::class, 'findByLocation']);
+});
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
     Route::post('forgot-password', [App\Http\Controllers\Auth\AuthController::class, 'forgotPassword']);
@@ -27,13 +34,22 @@ Route::group(['prefix' => 'auth'], function () {
 
 // CONSULTAS INDIVIDUALES
 Route::middleware('auth:sanctum')->group(function() {
-    Route::post('users/register', [App\Http\Controllers\Users\UserController::class, 'store']);
-    Route::post('users/activar/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
-    Route::post('users/desactivar/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
-    Route::post('users/getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
+    // USERS
+    Route::group(['prefix' => 'users'], function () {
+        Route::post('register', [App\Http\Controllers\Users\UserController::class, 'store']);
+        Route::post('activar/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
+        Route::post('desactivar/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
+        Route::post('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
+    });
+    // CENTROS DE ACOPIO
+    Route::group(['prefix' => 'centro-acopio'], function () {
+        Route::get('index', [App\Http\Controllers\Centros\CentroAcopioController::class, 'index']);
+        Route::get('show/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'show']);
+        Route::post('store', [App\Http\Controllers\Centros\CentroAcopioController::class, 'store']);
+    });
 });
 
 // API RESOURCES
 Route::middleware('auth:sanctum')->group(function() {
-    Route::apiResource('users', App\Http\Controllers\Users\UserController::class);
+
 });

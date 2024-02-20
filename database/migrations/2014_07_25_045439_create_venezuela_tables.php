@@ -14,29 +14,26 @@ return new class extends Migration
 	public function up(): void 
     {
 		Schema::create('estados', function(Blueprint $table) {
-			$table->increments('id');
+			$table->id();
 			$table->string('estado');
 		});
 
 	    Schema::create('municipios', function(Blueprint $table) {
-	        $table->increments('id');
-          	$table->integer('estado_id')->unsigned();
-			$table->foreign('estado_id')->references('id')->on('estados');
+	        $table->id();
+			$table->foreignId('estado_id')->constrained('estados', 'id');
 	        $table->string('municipio');
 	    });
 
 	    Schema::create('ciudades', function(Blueprint $table) {
-	        $table->increments('id');
-          	$table->integer('estado_id')->unsigned();
-			$table->foreign('estado_id')->references('id')->on('estados');
+	        $table->id();
+			$table->foreignId('estado_id')->constrained('estados', 'id');
 	        $table->string('ciudad');
 	        $table->tinyInteger('capital');
 	    });
 
 	    Schema::create('parroquias', function(Blueprint $table) {
-	        $table->increments('id');
-          	$table->integer('municipio_id')->unsigned();
-			$table->foreign('municipio_id')->references('id')->on('municipios');
+	        $table->id();
+			$table->foreignId('municipio_id')->constrained('municipios', 'id');
 	        $table->string('parroquia');
 	    });
 	}

@@ -79,18 +79,6 @@ class UserStoreRequest extends FormRequest
                 'max:9',
                 Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))
             ],
-            // 'cedula' => ['required', 'string', 'regex:/^[V|E|J|G][0-9]{6,10}$/', 'unique:users,cedula'],
-            // 'password' => [
-			// 	'required',
-			// 	'max:16',
-			// 	Password::min(8)
-			// 			// ->mixedCase()
-			// 			->letters()
-			// 			// ->numbers()
-			// 			// ->symbols()
-			// 			// ->uncompromised(),
-            // ],
-            // 'confirm_password' => 'required|same:password',
           ];
     }
 }

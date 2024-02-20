@@ -14,4 +14,9 @@ class Ciudad extends Model {
         return $this->belongsTo('Estado', 'estado_id', 'id');
     }
 
+    public function scopeFilterByState($query, $filters) {
+        $query->when($filters['estado_id'] ?? null, function($query, $estadoID) {
+            $query->where('estado_id', $estadoID);
+        });
+    }
 }

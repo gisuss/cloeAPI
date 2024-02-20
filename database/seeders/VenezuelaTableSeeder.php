@@ -493,7 +493,7 @@ class VenezuelaTableSeeder extends Seeder {
 		Ciudad::create(array( 'id' => 125, 'estado_id' => 7, 'ciudad'=> 'Tocuyito', 'capital' => 0, ));
 		Ciudad::create(array( 'id' => 126, 'estado_id' => 7, 'ciudad'=> 'Urama', 'capital' => 0, ));
 		Ciudad::create(array( 'id' => 127, 'estado_id' => 7, 'ciudad'=> 'Valencia', 'capital' => 1, ));
-		Ciudad::create(array( 'id' => 128, 'estado_id' => 7, 'ciudad'=> 'Vigirimita', 'capital' => 0, ));
+		Ciudad::create(array( 'id' => 128, 'estado_id' => 7, 'ciudad'=> 'Vigirima', 'capital' => 0, ));
 		Ciudad::create(array( 'id' => 129, 'estado_id' => 8, 'ciudad'=> 'Aguirre', 'capital' => 0, ));
 		Ciudad::create(array( 'id' => 130, 'estado_id' => 8, 'ciudad'=> 'Apartaderos Cojedes', 'capital' => 0, ));
 		Ciudad::create(array( 'id' => 131, 'estado_id' => 8, 'ciudad'=> 'Arismendi', 'capital' => 0, ));
