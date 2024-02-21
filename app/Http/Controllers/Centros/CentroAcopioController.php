@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Centros;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Responsable\CentrosAcopio\{CentrosAcopioStoreResponsable, CentrosAcopioShowResponsable, CentrosAcopioIndexResponsable, CentrosAcopioFindResponsable};
+use App\Http\Requests\CentroAcopioUpdateRequest;
+use App\Responsable\CentrosAcopio\{CentrosAcopioStoreResponsable, CentrosAcopioDesactivateResponsable, CentrosAcopioUpdateResponsable, CentrosAcopioShowResponsable, CentrosAcopioIndexResponsable, CentrosAcopioActivateResponsable, CentrosAcopioFindResponsable};
 
 class CentroAcopioController extends Controller
 {
@@ -104,6 +105,74 @@ class CentroAcopioController extends Controller
     }
 
     /**
+     * Update a specified resource in storage.
+     * 
+     * @param int $centro_id
+     * @return void
+     * @OA\Schema(
+     *    schema="UpdateCentroRequest",
+     *    @OA\Property(
+     *        property="encargado_id",
+     *        type="integer",
+     *        description="Encargado",
+     *        nullable=false,
+     *        example="1"
+     *    ),
+     *    @OA\Property(
+     *        property="estado_id",
+     *        type="integer",
+     *        description="Estado",
+     *        nullable=false,
+     *        example="7"
+     *    ),
+     *    @OA\Property(
+     *        property="ciudad_id",
+     *        type="integer",
+     *        description="Ciudad",
+     *        nullable=false,
+     *        example="127"
+     *    ),
+     *    @OA\Property(
+     *        property="description",
+     *        type="string",
+     *        description="Descripción del centro de acopio",
+     *        nullable=true,
+     *        example="Centro de Acopio de Valencia"
+     *    ),
+     *    @OA\Property(
+     *        property="address",
+     *        type="string",
+     *        description="Dirección del centro de acopio",
+     *        nullable=false,
+     *        format="Valencia centro"
+     *    ),
+     * )
+     *
+     * @OA\Put(
+     *     path="/api/centro-acopio/update/{centro_id}",
+     *     tags={"Centro Acopio"},
+     *     summary="Actualiza datos de un Centro de Acopio",
+     *     description="Actualiza datos de un Centro de Acopio.",
+     *     security={{"sanctum":{}}},
+     *     @OA\RequestBody(
+     *        @OA\JsonContent(ref="#/components/schemas/UpdateCentroRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Recurso actualizado con éxito.",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * )
+     */
+    public function update(int $centro_id, CentroAcopioUpdateRequest $request) {
+        return new CentrosAcopioUpdateResponsable($centro_id, $request->validated());
+    }
+
+    /**
      * Display the specified resource.
      * 
      * @param int $centro_id
@@ -149,5 +218,91 @@ class CentroAcopioController extends Controller
 
     public function findByLocation(CentrosAcopioFindResponsable $centrosAcopioFindResponsable) {
         return $centrosAcopioFindResponsable;
+    }
+
+    /**
+     * Activate the specified resource.
+     * 
+     * @param int $centro_id
+     * @return void
+     * @OA\Post(
+     *     path="/api/centro-acopio/activate/{centro_id}",
+     *     tags={"Centro Acopio"},
+     *     summary="ACTIVAR Centro de Acopio",
+     *     description="Reactiva el Centro de Acopio solicitado.",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta en la tabla Centros de Acopio",
+     *         in="path",
+     *         name="centro_id",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *         ),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un centro de acopio.")
+     *     ),
+     *     @OA\Response(
+     *         @OA\MediaType(mediaType="application/json"),
+     *         response=200,
+     *         description="Recurso actualizado con éxito."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response=404,
+     *         description="No se ha encontrado el centro de acopio."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * ) 
+     */
+    public function activate(int $centro_id) {
+        return new CentrosAcopioActivateResponsable($centro_id);
+    }
+
+    /**
+     * Desactivate the specified resource.
+     * 
+     * @param int $centro_id
+     * @return void
+     * @OA\Post(
+     *     path="/api/centro-acopio/desactivate/{centro_id}",
+     *     tags={"Centro Acopio"},
+     *     summary="DESACTIVAR Centro de Acopio",
+     *     description="Desactiva el Centro de Acopio solicitado.",
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la consulta en la tabla Centros de Acopio",
+     *         in="path",
+     *         name="centro_id",
+     *         required=true,
+     *         @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *         ),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un centro de acopio.")
+     *     ),
+     *     @OA\Response(
+     *         @OA\MediaType(mediaType="application/json"),
+     *         response=200,
+     *         description="Recurso actualizado con éxito."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response=404,
+     *         description="No se ha encontrado el centro de acopio."
+     *     ),
+     *     @OA\Response(
+     *     @OA\MediaType(mediaType="application/json"),
+     *         response="default",
+     *         description="Ha ocurrido un error."
+     *     )
+     * ) 
+     */
+    public function desactivate(int $centro_id) {
+        return new CentrosAcopioDesactivateResponsable($centro_id);
     }
 }

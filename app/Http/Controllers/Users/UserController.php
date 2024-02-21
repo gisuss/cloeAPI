@@ -17,7 +17,7 @@ class UserController extends Controller
      * @param mixed $userIndexResponsable
      * @return void
      * @OA\Get(
-     *      path="/api/users",
+     *      path="/api/users/index",
      *      tags={"Users"},
      *      summary="INDEX Users",
      *      description="Retorna la lista de usuarios registrados en el sistema",
@@ -135,9 +135,9 @@ class UserController extends Controller
      * @param int $user
      * @return void
      * @OA\Get(
-     *     path="/api/users/{user}",
+     *     path="/api/users/show/{user}",
      *     tags={"Users"},
-     *     summary="SHOW {User}",
+     *     summary="SHOW User",
      *     description="Retorna la información del usuario solicitado.",
      *     security={{"sanctum":{}}},
      *     @OA\Parameter(
@@ -282,9 +282,9 @@ class UserController extends Controller
      * )
      *
      * @OA\Put(
-     *     path="/api/users/{user}",
+     *     path="/api/users/update/{user}",
      *     tags={"Users"},
-     *     summary="UPDATE {user}",
+     *     summary="UPDATE user",
      *     description="Actualiza un usuario.",
      *     security={{"sanctum":{}}},
      *     @OA\Parameter(
@@ -320,7 +320,7 @@ class UserController extends Controller
      * @param int $user
      * @return void
      * @OA\Post(
-     *      path="/api/users/desactivar/{user}",
+     *      path="/api/users/desactivate/{user}",
      *      tags={"Users"},
      *      summary="DESACTIVATE an User by ID",
      *      description="Desactiva un usuario del sistema",
@@ -364,7 +364,7 @@ class UserController extends Controller
      *    ),
      * )
      * @OA\Post(
-     *      path="/api/users/activar/{user}",
+     *      path="/api/users/activate/{user}",
      *      tags={"Users"},
      *      summary="ACTIVATE an User by ID",
      *      description="Activa un usuario del sistema",

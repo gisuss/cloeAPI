@@ -41,6 +41,6 @@ class CentroAcopio extends Model
             $query->where('estado_id', $estadoID);
         })->when($filters['ciudad_id'] ?? null, function($query, $ciudadID) {
             $query->where('ciudad_id', $ciudadID);
-        });
+        })->where('active', true);
     }
 }

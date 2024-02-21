@@ -36,9 +36,12 @@ Route::group(['prefix' => 'auth'], function () {
 Route::middleware('auth:sanctum')->group(function() {
     // USERS
     Route::group(['prefix' => 'users'], function () {
+        Route::get('index', [App\Http\Controllers\Users\UserController::class, 'index']);
+        Route::get('show/{user}', [App\Http\Controllers\Users\UserController::class, 'show']);
         Route::post('register', [App\Http\Controllers\Users\UserController::class, 'store']);
-        Route::post('activar/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
-        Route::post('desactivar/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
+        Route::put('update', [App\Http\Controllers\Users\UserController::class, 'update']);
+        Route::post('activate/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
+        Route::post('desactivate/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
         Route::post('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
     });
     // CENTROS DE ACOPIO
@@ -46,6 +49,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('index', [App\Http\Controllers\Centros\CentroAcopioController::class, 'index']);
         Route::get('show/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'show']);
         Route::post('store', [App\Http\Controllers\Centros\CentroAcopioController::class, 'store']);
+        Route::put('update/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'update']);
+        Route::post('desactivate/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'desactivate']);
+        Route::post('activate/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'activate']);
     });
 });
 

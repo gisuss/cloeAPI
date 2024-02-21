@@ -1,7 +1,7 @@
 
 # Cloe API
 
-Es un desarrollo para la facultad de ciencias y tecnología de la universidad de Carabobo. Dicho sistema pretende llevar el control de todos los RAEEs que ingresen a un centro de acopio dentro del nivel nacional.
+Es un desarrollo para la facultad de ciencias y tecnología de la universidad de Carabobo. Dicho sistema pretende llevar el control de todos los RAEEs que ingresen a un centro de acopio dentro del territorio a nivel nacional.
 
 En la presente documentación se especificarán los detalles de instalacion y uso de esta API.
 ## Tecnologías usadas
@@ -32,38 +32,268 @@ En la presente documentación se especificarán los detalles de instalacion y us
   php artisan key:generate
 ```
 
-5- Aplicar migraciones y seeders
+5- Crear y configurar la DB en el .env
+
+6- Aplicar migraciones y seeders
 ```bash
   php artisan migrate --seed
 ```
 
-6- Poner en marcha el servidor
+7- Poner en marcha el servidor
 ```bash
   php artisan serve
 ```
+
+8- En caso de usar Valet:
+
+8.1- Desde la terminal, ubicarse en la carpeta contenedora de tus proyectos
+
+8.2- ejecutar el comando
+```bash
+  valet park
+```
+
+8.3- Desde la terminal, ubicarse en la raiz del proyecto laravel
+```bash
+  valet link
+```
+
+8.4- para verificar tu enlace simbólico al proyecto
+```bash
+  valet links
+```
+
+
 ## API Reference
 
-#### Obtener todos los centros de acopio
+#### Inicio de Sessión
 
 ```http
-  GET /api/items
+  POST /api/auth/login
 ```
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| `email_username` | `string` | **Required**. Tu usuario o email |
+| `password` | `string` | **Required**. Tu contraseña |
 
-#### Get item
+#### Logout
 
 ```http
-  GET /api/items/${id}
+  POST /api/auth/logout
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+| `api_key`      | `string` | **Required**. Tu API token |
 
-#### add(num1, num2)
+#### Solicitud de cambio de contraseña
 
-Takes two numbers and returns the sum.
+```http
+  POST /api/auth/forgot-password
+```
 
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `string` | **Required**. |
+
+#### Cambio de contraseña
+
+```http
+  POST /api/auth/reset-password
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `password`      | `string` | **Required**. |
+| `confirm_password`      | `string` | **Required**. |
+| `pin`      | `string` | **Required**. Pin recibido por email |
+
+#### Formulario de contacto desde la landing page
+
+```http
+  POST /api/utils/contact
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. |
+| `phone`      | `string` | **Required**. |
+| `email`      | `string` | **Required**. |
+| `city`      | `string` | **Required**. |
+| `message`      | `string` | **Required**. |
+
+#### Consulta de centros de acopio desde la landing page
+
+```http
+  GET /api/utils/centros
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `filters`      | `array` | **Optional**. |
+| `estado_id`      | `numeric` | **Required if filters**. |
+| `ciudad_id`      | `numeric` | **Required if filters**. |
+
+#### Listar todos los centros de acopio
+
+```http
+  GET /api/centro-acopio/index
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `filters`      | `array` | **Optional**. |
+| `estado_id`      | `numeric` | **Required if filters**. |
+| `ciudad_id`      | `numeric` | **Required if filters**. |
+
+#### Muestra la información de un centro de acopio
+
+```http
+  GET /api/centro-acopio/show/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Registra un nuevo centro de acopio
+
+```http
+  POST /api/centro-acopio/store
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `encargado_id`      | `numeric` | **Required**. |
+| `estado_id`      | `numeric` | **Required**. |
+| `ciudad_id`      | `numeric` | **Required**. |
+| `description`      | `string` | **Optional**. |
+| `address`      | `string` | **Required**. |
+
+#### Actualiza la información de un centro de acopio
+
+```http
+  PUT /api/centro-acopio/update/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `encargado_id`      | `numeric` | **Required**. |
+| `estado_id`      | `numeric` | **Required**. |
+| `ciudad_id`      | `numeric` | **Required**. |
+| `description`      | `string` | **Optional**. |
+| `address`      | `string` | **Required**. |
+
+#### Activa un centro de acopio
+
+```http
+  POST /api/centro-acopio/activate/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Desactiva un centro de acopio
+
+```http
+  POST /api/centro-acopio/desactivate/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Listar todos los usuarios
+
+```http
+  GET /api/users/index
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Muestra la información de un usuario
+
+```http
+  GET /api/users/show/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Registra un nuevo usuario
+
+```http
+  POST /api/users/register
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `name`      | `string` | **Required**. |
+| `lastname`      | `string` | **Required**. |
+| `email`      | `string` | **Required**. |
+| `address`      | `string` | **Required**. |
+| `role`      | `string` | **Required**. |
+| `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
+| `ci_number`      | `string` | **Required**. |
+
+#### Actualiza la información de un usuario
+
+```http
+  PUT /api/users/update
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `name`      | `string` | **Required**. |
+| `lastname`      | `string` | **Required**. |
+| `email`      | `string` | **Required**. |
+| `address`      | `string` | **Required**. |
+| `role`      | `string` | **Required**. |
+| `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
+| `ci_number`      | `string` | **Required**. |
+
+#### Activa a un usuario
+
+```http
+  POST /api/users/activate/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `role`      | `string` | **Required**. |
+
+#### Desactiva a un usuario
+
+```http
+  POST /api/users/desactivate/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+#### Listar usuarios dado un rol
+
+```http
+  POST /api/users/getByRoleName
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `roleName`      | `string` | **Required**. |
+
+## Authors
+
+- [@gisuss](https://gitlab.com/gisuss)
