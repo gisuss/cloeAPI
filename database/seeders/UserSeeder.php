@@ -19,35 +19,55 @@ class UserSeeder extends Seeder
             'lastname' => 'Cloe',
             'ci_id' => 1,
             'email' => 'admin@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Guacara',
             'password'  =>  Hash::make('password'),
             'username' => 'admin',
             'email_verified_at' => Carbon::now(),
+            'estado_id' => 7,
+            'municipio_id' => 80,
         ]);
         $user->assignRole('Admin');
         
         $user2 = User::create([
-            'name' => 'Recolector',
+            'name' => 'Encargado',
             'lastname' => 'Cloe',
             'ci_id' => 2,
-            'email' => 'recolector@cloe.com',
+            'email' => 'encargado@cloe.com',
             'address' => 'Valencia',
+            'password'  =>  Hash::make('password'),
+            'username' => 'encargado',
+            'email_verified_at' => Carbon::now(),
+            'estado_id' => 7,
+            'municipio_id' => 90,
+        ]);
+        $user2->assignRole('Encargado');
+        
+        $user3 = User::create([
+            'name' => 'Recolector',
+            'lastname' => 'Cloe',
+            'ci_id' => 3,
+            'email' => 'recolector@cloe.com',
+            'address' => 'Bejuma',
             'password'  =>  Hash::make('password'),
             'username' => 'recolector',
             'email_verified_at' => Carbon::now(),
+            'estado_id' => 7,
+            'municipio_id' => 77,
         ]);
-        $user2->assignRole('Recolector');
+        $user3->assignRole('Recolector');
         
-        $user3 = User::create([
+        $user4 = User::create([
             'name' => 'Separador',
             'lastname' => 'Cloe',
-            'ci_id' => 3,
+            'ci_id' => 4,
             'email' => 'separador@cloe.com',
             'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
             'username' => 'separador',
             'email_verified_at' => Carbon::now(),
+            'estado_id' => 7,
+            'municipio_id' => 90,
         ]);
-        $user3->assignRole('Separador');
+        $user4->assignRole('Separador');
     }
 }

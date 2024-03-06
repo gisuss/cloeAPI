@@ -15,7 +15,7 @@ En la presente documentación se especificarán los detalles de instalacion y us
 
 ## Instalación
 
-1- Clonar este repositorio e ir a la carpeta
+1- Clonar este repositorio e ir a la carpeta raiz
 
 2- instalar/actualizar dependencias de composer
 ```bash
@@ -39,30 +39,59 @@ En la presente documentación se especificarán los detalles de instalacion y us
   php artisan migrate --seed
 ```
 
-7- Poner en marcha el servidor
+7- Generar json de Swagger
+```bash
+  php artisan l5-swagger:generate
+```
+
+8- Poner en marcha el servidor
 ```bash
   php artisan serve
 ```
 
-8- En caso de usar Valet:
+9- En caso de usar Valet:
 
-8.1- Desde la terminal, ubicarse en la carpeta contenedora de tus proyectos
+9.1- Desde la terminal, ubicarse en la carpeta contenedora de tus proyectos
 
-8.2- ejecutar el comando
+9.2- ejecutar el comando
 ```bash
   valet park
 ```
 
-8.3- Desde la terminal, ubicarse en la raiz del proyecto laravel
+9.3- Desde la terminal, ubicarse en la raiz del proyecto laravel
 ```bash
   valet link
 ```
 
-8.4- para verificar tu enlace simbólico al proyecto
+9.4- para verificar tu enlace simbólico al proyecto
 ```bash
   valet links
 ```
 
+## Usuarios de Prueba
+```bash
+Usuario Administrador:
+
+  'email': admin@cloe.com
+  'username': admin
+  'password':  password
+```
+
+```bash
+Usuario Recolector:
+
+  'email': recolector@cloe.com
+  'username': recolector
+  'password':  password
+```
+
+```bash
+Usuario Separador:
+
+  'email': separador@cloe.com
+  'username': separador
+  'password':  password
+```
 
 ## API Reference
 
@@ -109,7 +138,7 @@ En la presente documentación se especificarán los detalles de instalacion y us
 | `confirm_password`      | `string` | **Required**. |
 | `pin`      | `string` | **Required**. Pin recibido por email |
 
-#### Formulario de contacto desde la landing page
+#### Formulario de contacto desde landing page (NO AUTH)
 
 ```http
   POST /api/utils/contact
@@ -123,7 +152,28 @@ En la presente documentación se especificarán los detalles de instalacion y us
 | `city`      | `string` | **Required**. |
 | `message`      | `string` | **Required**. |
 
-#### Consulta de centros de acopio desde la landing page
+#### Consultar estados desde landing page (NO AUTH)
+
+```http
+  GET /api/utils/estados
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| ``      | `` | **nothings**. |
+
+#### Consultar ciudades desde landing page (NO AUTH)
+
+```http
+  GET /api/utils/ciudades
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `filters`      | `array` | **Optional**. |
+| `filters.estado_id`      | `numeric` | **Required if filters**. |
+
+#### Consultar centros de acopio desde landing page (NO AUTH)
 
 ```http
   GET /api/utils/centros
@@ -132,8 +182,8 @@ En la presente documentación se especificarán los detalles de instalacion y us
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `filters`      | `array` | **Optional**. |
-| `estado_id`      | `numeric` | **Required if filters**. |
-| `ciudad_id`      | `numeric` | **Required if filters**. |
+| `filters.estado_id`      | `numeric` | **Required if filters**. |
+| `filters.ciudad_id`      | `numeric` | **Required if filters**. |
 
 #### Listar todos los centros de acopio
 
@@ -145,8 +195,8 @@ En la presente documentación se especificarán los detalles de instalacion y us
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 | `filters`      | `array` | **Optional**. |
-| `estado_id`      | `numeric` | **Required if filters**. |
-| `ciudad_id`      | `numeric` | **Required if filters**. |
+| `filters.estado_id`      | `numeric` | **Required if filters**. |
+| `filters.ciudad_id`      | `numeric` | **Required if filters**. |
 
 #### Muestra la información de un centro de acopio
 
@@ -297,3 +347,4 @@ En la presente documentación se especificarán los detalles de instalacion y us
 ## Authors
 
 - [@gisuss](https://gitlab.com/gisuss)
+- [@jhonattanrgc21](#)

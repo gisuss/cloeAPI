@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'utils'], function () {
-    Route::post('contact', [App\Http\Controllers\LandingController::class, 'contact']);
-    Route::get('estados', [App\Http\Controllers\LandingController::class, 'states']);
-    Route::get('ciudades', [App\Http\Controllers\LandingController::class, 'cities']);
+    Route::post('contact', [App\Http\Controllers\UtilsController::class, 'contact']);
+    Route::get('estados', [App\Http\Controllers\UtilsController::class, 'states']);
+    Route::get('ciudades', [App\Http\Controllers\UtilsController::class, 'cities']);
+    Route::get('municipios', [App\Http\Controllers\UtilsController::class, 'municipios']);
     Route::get('centros', [App\Http\Controllers\Centros\CentroAcopioController::class, 'findByLocation']);
+    Route::get('brands', [App\Http\Controllers\UtilsController::class, 'getBrands']);
+    Route::get('lines', [App\Http\Controllers\UtilsController::class, 'getLineas']);
+    Route::get('categories', [App\Http\Controllers\UtilsController::class, 'getCategories']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -27,8 +31,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('reset-password', [App\Http\Controllers\Auth\AuthController::class, 'resetPassword']);
     
     Route::group( ['middleware' => ['auth:sanctum']], function() {
-        Route::get('is-logged-in', [App\Http\Controllers\Auth\AuthController::class, 'isLoggeIn']);
         Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+        Route::get('is-logged-in', [App\Http\Controllers\Auth\AuthController::class, 'isLoggeIn']);
     });
 });
 
@@ -39,11 +43,18 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('index', [App\Http\Controllers\Users\UserController::class, 'index']);
         Route::get('show/{user}', [App\Http\Controllers\Users\UserController::class, 'show']);
         Route::post('register', [App\Http\Controllers\Users\UserController::class, 'store']);
-        Route::put('update', [App\Http\Controllers\Users\UserController::class, 'update']);
+        Route::put('update/{user}', [App\Http\Controllers\Users\UserController::class, 'update']);
         Route::post('activate/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
         Route::post('desactivate/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
-        Route::post('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
+        Route::get('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
+        Route::post('first-reset-password/{user}', [App\Http\Controllers\Users\UserController::class, 'firstResetPassword']);
     });
+
+    // CARGOS
+    Route::group(['prefix' => 'cargos'], function () {
+        Route::get('/', [App\Http\Controllers\UtilsController::class, 'getRoles']);
+    });
+
     // CENTROS DE ACOPIO
     Route::group(['prefix' => 'centro-acopio'], function () {
         Route::get('index', [App\Http\Controllers\Centros\CentroAcopioController::class, 'index']);
@@ -53,6 +64,9 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('desactivate/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'desactivate']);
         Route::post('activate/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'activate']);
     });
+
+    // MODULO DE CLASIFICACION
+
 });
 
 // API RESOURCES

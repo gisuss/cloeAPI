@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('lastname');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->foreignId('ci_id')->constrained('identifications', 'id');
+            $table->foreignId('estado_id')->constrained('estados', 'id');
+            $table->foreignId('municipio_id')->constrained('municipios', 'id');
             $table->string('address');
             $table->boolean('active')->default(true);
-            $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

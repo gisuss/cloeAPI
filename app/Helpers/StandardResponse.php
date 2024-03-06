@@ -111,7 +111,8 @@ trait StandardResponse
         $response = [
             'message' => $message,
             'data' => $resource,
-            'code' => $code
+            'success' => ($code === 200) ? true : false,
+            'code' => $code,
         ];
 
         if (request()->has('page')) {

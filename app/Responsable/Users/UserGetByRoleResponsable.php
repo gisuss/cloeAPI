@@ -14,15 +14,18 @@ class UserGetByRoleResponsable implements Responsable
 {
     use StandardResponse;
     protected UserRepository $repository;
-    protected array $request;
+    protected array $data;
 
     public function __construct(UserRepository $repository = null, RoleRequest $request) {
         $this->repository = $repository ?? new UserRepository(new User());
-        $this->request = $request->validated();
+        $this->data = $request->validated();
     }
 
     public function toResponse($request) {
-        $users = User::role($this->request['roleName'])->where('active', true)->get();
+        $users = User::role($this->data['roleName'])
+                ->where('active', true)
+                ->where('estado_id', Auth::user()->estado_id)
+                ->get();
         return $this->indexResponse(UserByRoleResource::collection($users));
     }
 }

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\{UserUpdateRequest,UserActivateRequest};
+use App\Http\Requests\{UserUpdateRequest, FirstResetPasswordRequests, UserActivateRequest};
 use App\Responsable\Users\{ UserShowResponsable,UserDestroyResponsable, UserIndexResponsable,UserGetByRoleResponsable,
                             UserStoreResponsable, UserUpdateResponsable, UserDesactivateResponsable,UserActivateResponsable,
+                            UserUpdatePasswordResponsable
                           };
 
 class UserController extends Controller
@@ -176,7 +177,7 @@ class UserController extends Controller
     /**
      * Display users by role name.
      * 
-     * @param int $user
+     * @param Request $request
      * @return void
      * @OA\Schema(
      *    schema="RoleRequest",
@@ -188,10 +189,10 @@ class UserController extends Controller
      *        example="Recolector"
      *    ),
      * )
-     * @OA\Post(
+     * @OA\Get(
      *      path="/api/users/getByRoleName",
      *      tags={"Users"},
-     *      summary="INDEX Users by role name",
+     *      summary="Listado de users by role name",
      *      description="Retorna la lista de usuarios dado un rol",
      *      security={{"sanctum":{}}},
      *      @OA\RequestBody(
@@ -312,6 +313,51 @@ class UserController extends Controller
     public function update(int $user, UserUpdateRequest $request)
     {
         return new UserUpdateResponsable($user, $request->validated());
+    }
+
+    /**
+     * First Reset Password
+     * @param int $user
+     * @param FirstResetPasswordRequests $request
+     * @return void
+     * 
+     * @OA\Post(
+     *     path="/api/users/first-reset-password/{user}",
+     *     summary="First reset password",
+     *     description="Restablecimiento de contraseña por primera vez.",
+     *     tags={"Users"},
+     *     security={{"sanctum":{}}},
+     *     @OA\Parameter(
+     *         description="Parámetro necesario para la búsqueda en la tabla usuarios",
+     *         in="path",
+     *         name="user",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
+     *     ),
+     *     @OA\RequestBody(
+     *        required=true,
+     *        @OA\JsonContent(
+     *           @OA\Property(property="password", type="string", format="password", example="password"),
+     *           @OA\Property(property="confirm_password", type="string", format="password", example="password"),
+     *        ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Returns when user is not authenticated",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Not authorized"),
+     *         )
+     *     )
+     * )
+     */
+    public function firstResetPassword(int $user, FirstResetPasswordRequests $request) {
+        return new UserUpdatePasswordResponsable($user, $request->validated());
     }
 
     /**

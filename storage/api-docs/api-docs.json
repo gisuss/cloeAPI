@@ -26,7 +26,7 @@
                     "Auth"
                 ],
                 "summary": "LOGIN user",
-                "description": "Login.",
+                "description": "Iniciar sesión.",
                 "operationId": "535ffeda4b78916efd658b2844ea897a",
                 "requestBody": {
                     "description": "Pass user credentials",
@@ -48,10 +48,6 @@
                                         "type": "string",
                                         "format": "password",
                                         "example": "password"
-                                    },
-                                    "remember_me": {
-                                        "type": "boolean",
-                                        "example": "true"
                                     }
                                 },
                                 "type": "object"
@@ -148,7 +144,7 @@
                     "Auth"
                 ],
                 "summary": "Forgot password",
-                "description": "Inicia proceso de reseteo de contraseña.",
+                "description": "Inicia proceso de restablecimiento de contraseña.",
                 "operationId": "a170cc694fe243a798c6038c995d26b4",
                 "requestBody": {
                     "required": true,
@@ -162,7 +158,7 @@
                                     "email": {
                                         "type": "string",
                                         "format": "email",
-                                        "example": "admin@censo.com"
+                                        "example": "admin@cloe.com"
                                     }
                                 },
                                 "type": "object"
@@ -245,13 +241,13 @@
             }
         },
         "/api/auth/reset-password": {
-            "put": {
+            "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Reset password",
-                "description": "Reseteo de contraseña.",
-                "operationId": "a0e8064c5c3411a3a63316888ffe05fd",
+                "description": "Restablecimiento de contraseña.",
+                "operationId": "030dad9d9c157fa5e60a3264f7e0de3e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -261,12 +257,17 @@
                                     "password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "Sint3x#123"
+                                        "example": "password"
                                     },
                                     "confirm_password": {
                                         "type": "string",
                                         "format": "password",
-                                        "example": "Sint3x#123"
+                                        "example": "password"
+                                    },
+                                    "pin": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -299,22 +300,17 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         },
-        "/api/users": {
+        "/api/centro-acopio/index": {
             "get": {
                 "tags": [
-                    "Users"
+                    "Centro Acopio"
                 ],
-                "summary": "INDEX Users",
-                "description": "Retorna la lista de usuarios registrados en el sistema",
-                "operationId": "95ce247c5738fbbb7c7af9fe88e34485",
+                "summary": "INDEX Centro Acopio",
+                "description": "Retorna la lista de Centro Acopio registrados en el sistema",
+                "operationId": "607b6ca82685a35b671231db8014c3df",
                 "responses": {
                     "200": {
                         "description": "Recurso obtenido con éxito.",
@@ -333,7 +329,270 @@
                         "sanctum": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/centro-acopio/store": {
+            "post": {
+                "tags": [
+                    "Centro Acopio"
+                ],
+                "summary": "Crea un nuevo Centro de Acopio",
+                "description": "Registra un nuevo Centro de Acopio.",
+                "operationId": "f5d29c143d19a4b8ea428534f12be6d9",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCentroRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/centro-acopio/update/{centro_id}": {
+            "put": {
+                "tags": [
+                    "Centro Acopio"
+                ],
+                "summary": "Actualiza datos de un Centro de Acopio",
+                "description": "Actualiza datos de un Centro de Acopio.",
+                "operationId": "95c9b797650aaa57800a56a8bd8979bc",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCentroRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/centro-acopio/show/{centro_id}": {
+            "get": {
+                "tags": [
+                    "Centro Acopio"
+                ],
+                "summary": "SHOW Centro de Acopio",
+                "description": "Retorna la información del Centro de Acopio solicitado.",
+                "operationId": "6fe59c0517191e63a2f4f95b7b9cc9e4",
+                "parameters": [
+                    {
+                        "name": "centro_id",
+                        "in": "path",
+                        "description": "Parámetro necesario para la consulta en la tabla Centros de Acopio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un centro de acopio.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el centro de acopio.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/centro-acopio/activate/{centro_id}": {
+            "post": {
+                "tags": [
+                    "Centro Acopio"
+                ],
+                "summary": "ACTIVAR Centro de Acopio",
+                "description": "Reactiva el Centro de Acopio solicitado.",
+                "operationId": "faec7e71d2a4b963b4d5024da0754824",
+                "parameters": [
+                    {
+                        "name": "centro_id",
+                        "in": "path",
+                        "description": "Parámetro necesario para la consulta en la tabla Centros de Acopio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un centro de acopio.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso actualizado con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el centro de acopio.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/centro-acopio/desactivate/{centro_id}": {
+            "post": {
+                "tags": [
+                    "Centro Acopio"
+                ],
+                "summary": "DESACTIVAR Centro de Acopio",
+                "description": "Desactiva el Centro de Acopio solicitado.",
+                "operationId": "9a54a9abd2e52cffd8ecdb74ff9381c1",
+                "parameters": [
+                    {
+                        "name": "centro_id",
+                        "in": "path",
+                        "description": "Parámetro necesario para la consulta en la tabla Centros de Acopio",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un centro de acopio.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso actualizado con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el centro de acopio.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/index": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "INDEX Users",
+                "description": "Retorna la lista de usuarios registrados en el sistema",
+                "operationId": "73210a5cd9eafccfe1c4fc8a17c614cf",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
             "post": {
                 "tags": [
                     "Users"
@@ -370,14 +629,14 @@
                 ]
             }
         },
-        "/api/users/{user}": {
+        "/api/users/show/{user}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "SHOW {User}",
+                "summary": "SHOW User",
                 "description": "Retorna la información del usuario solicitado.",
-                "operationId": "29b48abebfb0f3166cb9a1bbd9dc86f1",
+                "operationId": "c543c7e85391a1480bc8df62dca23c18",
                 "parameters": [
                     {
                         "name": "user",
@@ -421,14 +680,58 @@
                         "sanctum": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/users/getByRoleName": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Listado de users by role name",
+                "description": "Retorna la lista de usuarios dado un rol",
+                "operationId": "3f213bb95206fc6f02786257c6fb1466",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/users/update/{user}": {
             "put": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "UPDATE {user}",
+                "summary": "UPDATE user",
                 "description": "Actualiza un usuario.",
-                "operationId": "71b99b7b4943e78b2cb6e00c0519e2ce",
+                "operationId": "c8f3975516cded7db01eca85767e7101",
                 "parameters": [
                     {
                         "name": "user",
@@ -473,14 +776,16 @@
                         "sanctum": []
                     }
                 ]
-            },
-            "delete": {
+            }
+        },
+        "/api/users/first-reset-password/{user}": {
+            "post": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "DELETE {user}",
-                "description": "Elimina un usuario.",
-                "operationId": "4cbe82807344c19f54545df95861a5eb",
+                "summary": "First reset password",
+                "description": "Restablecimiento de contraseña por primera vez.",
+                "operationId": "2950b8741f40e8b00f511c5a9c6e443d",
                 "parameters": [
                     {
                         "name": "user",
@@ -491,64 +796,57 @@
                             "type": "integer"
                         },
                         "examples": {
-                            "int": {
+                            "integer": {
                                 "summary": "Introduce el número de id de un usuario.",
-                                "value": "1"
+                                "value": 1
                             }
                         }
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "Recurso eliminado con éxito.",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error."
-                    }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
-            }
-        },
-        "/api/users/getByRoleName": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "INDEX Users by role name",
-                "description": "Retorna la lista de usuarios dado un rol",
-                "operationId": "55dc2f10d5032976ef524bbdf1f26d8e",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/RoleRequest"
+                                "properties": {
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "confirm_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Recurso obtenido con éxito.",
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {}
                             }
                         }
                     },
-                    "default": {
-                        "description": "Ha ocurrido un error.",
+                    "401": {
+                        "description": "Returns when user is not authenticated",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not authorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         }
                     }
@@ -560,14 +858,14 @@
                 ]
             }
         },
-        "/api/users/desactivar/{user}": {
+        "/api/users/desactivate/{user}": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "DESACTIVATE an User by ID",
                 "description": "Desactiva un usuario del sistema",
-                "operationId": "bcc369beec267fba8532430c5fb5e092",
+                "operationId": "89415432b8a279a496383c2667e5ee0a",
                 "parameters": [
                     {
                         "name": "user",
@@ -605,14 +903,14 @@
                 ]
             }
         },
-        "/api/users/activar/{user}": {
+        "/api/users/activate/{user}": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "ACTIVATE an User by ID",
                 "description": "Activa un usuario del sistema",
-                "operationId": "fb2cc608b27987921015722e04b6a7c4",
+                "operationId": "75e09c970c6eb5a3f2ba7bd560d031fb",
                 "parameters": [
                     {
                         "name": "user",
@@ -658,10 +956,378 @@
                     }
                 ]
             }
+        },
+        "/api/users/{user}": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "DELETE {user}",
+                "description": "Elimina un usuario.",
+                "operationId": "4cbe82807344c19f54545df95861a5eb",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla usuarios",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "Introduce el número de id de un usuario.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso eliminado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/utils/contact": {
+            "post": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Contacto con centro de soporte de cloe",
+                "description": "Contacto con centro de soporte de cloe.",
+                "operationId": "baafb2fef727f402af03af4eb136a72e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ContactRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email enviado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/utils/estados": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Estados registrados en sistema cloe",
+                "description": "Estados registrados en sistema cloe.",
+                "operationId": "b065ebe1e88880bd40bd1d5680c67a7c",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not authorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/utils/ciudades": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Ciudades registrados en sistema cloe",
+                "description": "Ciudades registrados en sistema cloe.",
+                "operationId": "8794eb36c35280ea78acab9d97cb35c2",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/utils/municipios": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Municipios registrados en sistema cloe",
+                "description": "Municipios registrados en sistema cloe.",
+                "operationId": "ad6b8d054eb38ed2717c13aa4c7f383d",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cargos/": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Cargos registrados en sistema cloe",
+                "description": "Cargos registrados en sistema cloe.",
+                "operationId": "b10cebc970b28aa7a59f3a0f8b1b56be",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/utils/brands": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Marcas de RAEES pre-cargados en sistema cloe",
+                "description": "Marcas de RAEES pre-cargados en sistema cloe.",
+                "operationId": "5c1fdcc1566eaaecfdb65527e00ab53e",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/utils/lines": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Líneas de clasificación de RAEES.",
+                "description": "Líneas de clasificación de RAEES.",
+                "operationId": "863dbf8b02038176d34bdbcf4dfc0d84",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/utils/categories": {
+            "get": {
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Categorías de RAEES.",
+                "description": "Categorías de RAEES.",
+                "operationId": "8f697c3d6855d60ddc34e94f9b0afbb1",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "CreateCentroRequest": {
+                "properties": {
+                    "encargado_id": {
+                        "description": "Encargado",
+                        "type": "integer",
+                        "example": "1",
+                        "nullable": false
+                    },
+                    "estado_id": {
+                        "description": "Estado",
+                        "type": "integer",
+                        "example": "7",
+                        "nullable": false
+                    },
+                    "ciudad_id": {
+                        "description": "Ciudad",
+                        "type": "integer",
+                        "example": "127",
+                        "nullable": false
+                    },
+                    "description": {
+                        "description": "Descripción del centro de acopio",
+                        "type": "string",
+                        "example": "Centro de Acopio de Valencia",
+                        "nullable": true
+                    },
+                    "address": {
+                        "description": "Dirección del centro de acopio",
+                        "type": "string",
+                        "format": "Valencia centro",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateCentroRequest": {
+                "properties": {
+                    "encargado_id": {
+                        "description": "Encargado",
+                        "type": "integer",
+                        "example": "1",
+                        "nullable": false
+                    },
+                    "estado_id": {
+                        "description": "Estado",
+                        "type": "integer",
+                        "example": "7",
+                        "nullable": false
+                    },
+                    "ciudad_id": {
+                        "description": "Ciudad",
+                        "type": "integer",
+                        "example": "127",
+                        "nullable": false
+                    },
+                    "description": {
+                        "description": "Descripción del centro de acopio",
+                        "type": "string",
+                        "example": "Centro de Acopio de Valencia",
+                        "nullable": true
+                    },
+                    "address": {
+                        "description": "Dirección del centro de acopio",
+                        "type": "string",
+                        "format": "Valencia centro",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
             "CreateUserRequest": {
                 "properties": {
                     "name": {
@@ -673,13 +1339,19 @@
                     "lastname": {
                         "description": "Apellido",
                         "type": "string",
-                        "example": "Pérez",
+                        "example": "Arango",
                         "nullable": false
                     },
-                    "dni": {
-                        "description": "Documento de identificación personal",
+                    "ci_type": {
+                        "description": "Tipo de identificación personal",
                         "type": "string",
-                        "example": "E12345678",
+                        "example": "V",
+                        "nullable": false
+                    },
+                    "ci_number": {
+                        "description": "Número de identificación personal",
+                        "type": "string",
+                        "example": "20753800",
                         "nullable": false
                     },
                     "email": {
@@ -688,22 +1360,16 @@
                         "format": "email",
                         "nullable": false
                     },
+                    "address": {
+                        "description": "Dirección del usuario",
+                        "type": "string",
+                        "example": "Valencia, calle 101, Venezuela",
+                        "nullable": false
+                    },
                     "role": {
                         "description": "Rol",
                         "type": "string",
                         "example": "Recolector",
-                        "nullable": false
-                    },
-                    "password": {
-                        "description": "Contraseña",
-                        "type": "string",
-                        "example": "password",
-                        "nullable": false
-                    },
-                    "confirm_password": {
-                        "description": "Confirmacion de contraseña",
-                        "type": "string",
-                        "example": "password",
                         "nullable": false
                     }
                 },
@@ -734,16 +1400,28 @@
                         "example": "Pérez",
                         "nullable": false
                     },
-                    "dni": {
-                        "description": "Documento de identificación personal",
+                    "ci_type": {
+                        "description": "Tipo de identificación personal",
                         "type": "string",
-                        "example": "V12345678",
+                        "example": "V",
+                        "nullable": false
+                    },
+                    "ci_number": {
+                        "description": "Número de identificación personal",
+                        "type": "string",
+                        "example": "20753800",
                         "nullable": false
                     },
                     "email": {
                         "description": "Correo eletrónico",
                         "type": "string",
                         "format": "email",
+                        "nullable": false
+                    },
+                    "address": {
+                        "description": "Dirección del usuario",
+                        "type": "string",
+                        "example": "Valencia, calle 120, Venezuela",
                         "nullable": false
                     },
                     "role": {
@@ -761,6 +1439,41 @@
                         "description": "Rol",
                         "type": "string",
                         "example": "Recolector",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "ContactRequest": {
+                "properties": {
+                    "name": {
+                        "description": "Nombre",
+                        "type": "string",
+                        "example": "John Doe",
+                        "nullable": false
+                    },
+                    "phone": {
+                        "description": "Telefono",
+                        "type": "string",
+                        "example": "04121234567",
+                        "nullable": false
+                    },
+                    "email": {
+                        "description": "Correo electronico",
+                        "type": "string",
+                        "example": "johndoe@example.com",
+                        "nullable": false
+                    },
+                    "city": {
+                        "description": "Ciudad",
+                        "type": "string",
+                        "example": "Valencia",
+                        "nullable": false
+                    },
+                    "message": {
+                        "description": "Mensaje",
+                        "type": "string",
+                        "example": "Centro de acopio en la zona de valencia?",
                         "nullable": false
                     }
                 },

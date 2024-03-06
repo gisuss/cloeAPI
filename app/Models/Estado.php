@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Estado extends Model {
 
@@ -10,9 +11,11 @@ class Estado extends Model {
 	
 	public $timestamps = false;
 
-    public function municipios()
-    {
+    public function municipios() {
         return $this->hasMany('Municipio','estado_id');
-    } 
-
+    }
+    
+    public function users() : HasMany {
+        return $this->hasMany(User::class);
+    }
 }

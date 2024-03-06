@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(IdentificationSeeder::class); // Creación de Identifications base en la db
         $this->call(UserSeeder::class); // Creación de usuarios de prueba en la db
         $this->call(CentroAcopioSeeder::class); // Creación de centros de acopio de prueba en la db
+        $this->call(BrandSeeder::class); // Creación de las marcas de RAEES
+        $this->call(LineSeeder::class);
+        $this->call(CategorySeeder::class);
     }
 }

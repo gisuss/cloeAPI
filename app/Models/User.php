@@ -33,6 +33,8 @@ class User extends Authenticatable
         'active',
         'password',
         'active',
+        'estado_id',
+        'municipio_id',
         'address',
         'email_verified_at'
     ];
@@ -76,8 +78,15 @@ class User extends Authenticatable
         return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
     }
 
-    //relacion con identification cedula
     public function cedula() : BelongsTo {
         return $this->belongsTo(Identification::class, 'ci_id');
+    }
+
+    public function estado() : BelongsTo {
+        return $this->belongsTo(Estado::class, 'estado_id');
+    }
+    
+    public function municipio() : BelongsTo {
+        return $this->belongsTo(Municipio::class, 'municipio_id');
     }
 }
