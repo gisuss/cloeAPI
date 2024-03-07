@@ -106,7 +106,7 @@ class UserController extends Controller
      * )
      *
      * @OA\Post(
-     *     path="/api/users",
+     *     path="/api/users/register",
      *     tags={"Users"},
      *     summary="STORE a new user",
      *     description="Registra un nuevo usuario.",
@@ -447,7 +447,7 @@ class UserController extends Controller
      * @param mixed $user
      * @return void
      * @OA\Delete(
-     *     path="/api/users/{user}",
+     *     path="/api/users/delete/{user}",
      *     tags={"Users"},
      *     summary="DELETE {user}",
      *     description="Elimina un usuario.",

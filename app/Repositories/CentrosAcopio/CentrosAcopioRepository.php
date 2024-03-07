@@ -2,14 +2,10 @@
 
 namespace App\Repositories\CentrosAcopio;
 
-use App\Models\{CentroAcopio, User};
+use App\Models\{CentroAcopio};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\{Collection,Str};
-use Illuminate\Support\Facades\{Hash,Mail,Auth,Storage, DB};
-use Illuminate\Http\{Response,Request};
-use Carbon\Carbon;
-use Spatie\Permission\Models\Role;
+use Illuminate\Http\{Response};
 
 class CentrosAcopioRepository extends Repository
 {

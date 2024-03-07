@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('desactivate/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
         Route::get('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
         Route::post('first-reset-password/{user}', [App\Http\Controllers\Users\UserController::class, 'firstResetPassword']);
+        Route::delete('delete/{user}', [App\Http\Controllers\Users\UserController::class, 'destroy']);
     });
 
     // CARGOS
@@ -66,7 +67,13 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
     // MODULO DE CLASIFICACION
-
+    Route::group(['prefix' => 'raee'], function () {
+        Route::get('index', [App\Http\Controllers\Raees\RaeeController::class, 'index']);
+        Route::post('store', [App\Http\Controllers\Raees\RaeeController::class, 'store']);
+        Route::get('show/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'show']);
+        Route::put('update/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'update']);
+        Route::delete('delete/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'destroy']);
+    });
 });
 
 // API RESOURCES

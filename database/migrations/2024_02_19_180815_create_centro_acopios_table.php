@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('centro_acopios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encargado_id')->constrained('users', 'id');
-            $table->foreignId('estado_id')->constrained('estados', 'id');
-            $table->foreignId('ciudad_id')->constrained('ciudades', 'id');
+            $table->foreignId('encargado_id')->nullable()->constrained('users', 'id')->nullOnDelete();
+            $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
+            $table->foreignId('ciudad_id')->nullable()->constrained('ciudades', 'id')->nullOnDelete();
             $table->string('description', 300)->nullable();
             $table->string('address', 300);
             $table->boolean('active')->default(true);

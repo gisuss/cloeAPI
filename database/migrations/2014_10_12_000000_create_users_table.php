@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->foreignId('ci_id')->constrained('identifications', 'id');
-            $table->foreignId('estado_id')->constrained('estados', 'id');
-            $table->foreignId('municipio_id')->constrained('municipios', 'id');
+            $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
+            $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
             $table->string('address');
             $table->boolean('active')->default(true);
             $table->timestamp('email_verified_at')->nullable();

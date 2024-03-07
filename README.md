@@ -4,6 +4,8 @@
 Es un desarrollo para la facultad de ciencias y tecnología de la universidad de Carabobo. Dicho sistema pretende llevar el control de todos los RAEEs que ingresen a un centro de acopio dentro del territorio a nivel nacional.
 
 En la presente documentación se especificarán los detalles de instalacion y uso de esta API.
+
+
 ## Tecnologías usadas
 
 ![Logo](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
@@ -68,6 +70,7 @@ En la presente documentación se especificarán los detalles de instalacion y us
   valet links
 ```
 
+
 ## Usuarios de Prueba
 ```bash
 Usuario Administrador:
@@ -93,9 +96,18 @@ Usuario Separador:
   'password':  password
 ```
 
-## API Reference
 
-#### Inicio de Sessión
+## Ruta de documentación (Swagger)
+```bash
+  http://cloebe.test/api/documentation
+
+  or
+
+  http://localhost:8000/api/documentation
+```
+
+
+## [API - Auth] login
 
 ```http
   POST /api/auth/login
@@ -106,7 +118,7 @@ Usuario Separador:
 | `email_username` | `string` | **Required**. Tu usuario o email |
 | `password` | `string` | **Required**. Tu contraseña |
 
-#### Logout
+## [API - Auth] logout
 
 ```http
   POST /api/auth/logout
@@ -116,7 +128,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Solicitud de cambio de contraseña
+## [API - Auth] forgot password
 
 ```http
   POST /api/auth/forgot-password
@@ -126,7 +138,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `email`      | `string` | **Required**. |
 
-#### Cambio de contraseña
+## [API - Auth] reset password
 
 ```http
   POST /api/auth/reset-password
@@ -136,9 +148,9 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `password`      | `string` | **Required**. |
 | `confirm_password`      | `string` | **Required**. |
-| `pin`      | `string` | **Required**. Pin recibido por email |
+| `Authorization`      | `string` | **Required in headers**. |
 
-#### Formulario de contacto desde landing page (NO AUTH)
+## [API - Landing] Formulario de contacto
 
 ```http
   POST /api/utils/contact
@@ -152,7 +164,7 @@ Usuario Separador:
 | `city`      | `string` | **Required**. |
 | `message`      | `string` | **Required**. |
 
-#### Consultar estados desde landing page (NO AUTH)
+## [API - Landing] Consultar estados
 
 ```http
   GET /api/utils/estados
@@ -160,9 +172,9 @@ Usuario Separador:
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| ``      | `` | **nothings**. |
+| --      | -- | **nothings**. |
 
-#### Consultar ciudades desde landing page (NO AUTH)
+## [API - Landing] Consultar ciudades
 
 ```http
   GET /api/utils/ciudades
@@ -173,7 +185,7 @@ Usuario Separador:
 | `filters`      | `array` | **Optional**. |
 | `filters.estado_id`      | `numeric` | **Required if filters**. |
 
-#### Consultar centros de acopio desde landing page (NO AUTH)
+## [API - Landing] Consultar centros de acopio
 
 ```http
   GET /api/utils/centros
@@ -185,7 +197,7 @@ Usuario Separador:
 | `filters.estado_id`      | `numeric` | **Required if filters**. |
 | `filters.ciudad_id`      | `numeric` | **Required if filters**. |
 
-#### Listar todos los centros de acopio
+## [API - Admin] index centros de acopio
 
 ```http
   GET /api/centro-acopio/index
@@ -198,7 +210,7 @@ Usuario Separador:
 | `filters.estado_id`      | `numeric` | **Required if filters**. |
 | `filters.ciudad_id`      | `numeric` | **Required if filters**. |
 
-#### Muestra la información de un centro de acopio
+## [API - Admin] show centros de acopio
 
 ```http
   GET /api/centro-acopio/show/{id}
@@ -208,7 +220,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Registra un nuevo centro de acopio
+## [API - Admin] store centros de acopio
 
 ```http
   POST /api/centro-acopio/store
@@ -223,7 +235,7 @@ Usuario Separador:
 | `description`      | `string` | **Optional**. |
 | `address`      | `string` | **Required**. |
 
-#### Actualiza la información de un centro de acopio
+## [API - Admin] update centros de acopio
 
 ```http
   PUT /api/centro-acopio/update/{id}
@@ -238,7 +250,7 @@ Usuario Separador:
 | `description`      | `string` | **Optional**. |
 | `address`      | `string` | **Required**. |
 
-#### Activa un centro de acopio
+## [API - Admin] activar un centro de acopio
 
 ```http
   POST /api/centro-acopio/activate/{id}
@@ -248,7 +260,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Desactiva un centro de acopio
+## [API - Admin] desactivar un centro de acopio
 
 ```http
   POST /api/centro-acopio/desactivate/{id}
@@ -258,7 +270,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Listar todos los usuarios
+## [API - Admin] index users
 
 ```http
   GET /api/users/index
@@ -268,7 +280,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Muestra la información de un usuario
+## [API - Admin] show users
 
 ```http
   GET /api/users/show/{id}
@@ -278,7 +290,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Registra un nuevo usuario
+## [API - Admin] store users
 
 ```http
   POST /api/users/register
@@ -295,10 +307,10 @@ Usuario Separador:
 | `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
 | `ci_number`      | `string` | **Required**. |
 
-#### Actualiza la información de un usuario
+## [API - Admin] update users
 
 ```http
-  PUT /api/users/update
+  PUT /api/users/update/{id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -312,7 +324,7 @@ Usuario Separador:
 | `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
 | `ci_number`      | `string` | **Required**. |
 
-#### Activa a un usuario
+## [API - Admin] activar un usuario
 
 ```http
   POST /api/users/activate/{id}
@@ -323,7 +335,7 @@ Usuario Separador:
 | `api_key`      | `string` | **Required**. Tu API token |
 | `role`      | `string` | **Required**. |
 
-#### Desactiva a un usuario
+## [API - Admin] desactivar un usuario
 
 ```http
   POST /api/users/desactivate/{id}
@@ -333,16 +345,88 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 
-#### Listar usuarios dado un rol
+## [API - Admin] listar usuarios dado un rol
 
 ```http
-  POST /api/users/getByRoleName
+  GET /api/users/getByRoleName
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 | `roleName`      | `string` | **Required**. |
+
+## [API - Admin] delete users
+
+```http
+  DELETE /api/users/delete/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+## [API - Admin] store RAEES
+
+```http
+  POST /api/raee/store
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `line_id`      | `integer` | **Required**. |
+| `category_id`      | `integer` | **Required**. |
+| `brand_id`      | `integer` | **Required**. |
+| `model`      | `string` | **Required**. |
+| `information`      | `string` | **Optional**. |
+
+## [API - Admin] update RAEES
+
+```http
+  PUT /api/raee/update/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+| `line_id`      | `integer` | **Required**. |
+| `category_id`      | `integer` | **Required**. |
+| `brand_id`      | `integer` | **Required**. |
+| `model`      | `string` | **Required**. |
+| `information`      | `string` | **Optional**. |
+
+## [API - Admin] show RAEES
+
+```http
+  GET /api/raee/show/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+## [API - Admin] index RAEES
+
+```http
+  GET /api/raee/index
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+## [API - Admin] delete RAEES
+
+```http
+  DELETE /api/raee/delete/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Tu API token |
+
+
 
 ## Authors
 

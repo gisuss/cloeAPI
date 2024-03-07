@@ -22,4 +22,8 @@ class Line extends Model
     public function categories() : HasMany {
         return $this->hasMany(Category::class);
     }
+    
+    public function raees() : HasMany {
+        return $this->hasMany(Raee::class);
+    }
 }

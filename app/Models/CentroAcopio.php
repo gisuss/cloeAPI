@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CentroAcopio extends Model
 {
@@ -34,6 +35,10 @@ class CentroAcopio extends Model
 
     public function ciudad() : BelongsTo {
         return $this->belongsTo(Ciudad::class, 'ciudad_id');
+    }
+
+    public function raees() : HasMany {
+        return $this->hasMany(Raee::class);
     }
 
     public function scopeFilterLocation($query, $filters) {

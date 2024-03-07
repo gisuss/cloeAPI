@@ -89,4 +89,8 @@ class User extends Authenticatable
     public function municipio() : BelongsTo {
         return $this->belongsTo(Municipio::class, 'municipio_id');
     }
+
+    public function raees() : HasMany {
+        return $this->hasMany(Raee::class);
+    }
 }

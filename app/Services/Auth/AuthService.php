@@ -8,6 +8,7 @@ use App\Mail\{ForgotPasswordMail, ResetPasswordMail};
 use App\Models\{User};
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Http\Requests\ResetPasswordRequests;
 
 class AuthService
 {
@@ -122,36 +123,36 @@ class AuthService
         $email = trim(Str::lower($data['email']));
         $user = $this->userModel->where('email', $email)->first();
 
-        if ($user) {
-            $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
+        $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
 
-            if ($verify) {
-                $verify->delete();
-            }
+        if (isset($verify)) {
+            $verify->delete();
+        }
 
-            $pin = $this->generateRandomPIN(6);
-            $password_reset = DB::table('password_reset_tokens')->insert([
-                'email' => $email,
-                'token' =>  $pin,
-                'created_at' => Carbon::now()
-            ]);
-            
+        $pin = $this->generateRandomPIN(16);
+        $password_reset = DB::table('password_reset_tokens')->insert([
+            'email' => $email,
+            'token' =>  $pin,
+            'created_at' => Carbon::now()
+        ]);
+
+        if ($password_reset) {
             // dispatch(new SendForgotPasswordMail($email, $token))->delay(now()->addSeconds(10));
             Mail::to($email)->send(new ForgotPasswordMail($user, $pin));
-
+    
             $array = [
                 'success' => true,
                 'message' => 'Te hemos enviado un email con un enlace para que reestablezcas tu contraseña.',
                 'code' => Response::HTTP_OK
             ];
         }else{
-            // AL RECIBIR ESTE JSON DE RESPUESTA, EL CLIENTE DEBE PERMANECER EN LA VISTA ACTUAL
             $array = [
                 'success' => false,
-                'message' => 'Correo electrónico no registrado.',
-                'code' => Response::HTTP_NOT_FOUND
+                'message' => 'Oopss, ha ocurrido un error inesperado.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ];
         }
+        
         return $array;
     }
 
@@ -159,14 +160,17 @@ class AuthService
      * User ResetPassword method.
      * 
      * @param array $data
+     * @param Request $request
      * @return array
      */
-    public function resetPassword(array $data) : array {
+    public function resetPassword(array $data, Request $request) : array {
         $array = [];
+        //VERIFICACION DE TOKEN RECIBIDO POR LOS HEADERS
+        $token = $request->header('Authorization');
 
-        if (self::verifyPin($data['pin'])) {
-            //ELIMINAR EL TOKEN DE LA TABLA password_resets
-            $result = DB::table('password_resets')->where('token', $data['pin'])->first();
+        if (self::verifyPin($token)) {
+            //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
+            $result = DB::table('password_reset_tokens')->where('token', $token)->first();
             $email = $result->email;
             $result->delete();
 
@@ -198,14 +202,14 @@ class AuthService
     /**
      * Método para verificación de PIN para reseteo de passwords de usuarios.
      * 
-     * @param bool $token
+     * @param string $token
      * @return bool
      */
-    public function verifyPin($token) : bool {
+    public function verifyPin(string $token) : bool {
         $bool = false;
-        $check = DB::table('password_resets')->where('token', $token)->first();
+        $check = DB::table('password_reset_tokens')->where('token', $token)->first();
         
-        if ($check) {
+        if (isset($check)) {
             $difference = Carbon::now()->diffInSeconds($check->created_at);
             if ($difference <= 3600) {
                 $bool = true;
@@ -232,7 +236,13 @@ class AuthService
         return $array;
     }
 
-    public function generateRandomPIN($length) {
-        return substr(str_shuffle("0123456789"), 0, $length);
+    /**
+     * Método para generar un token aleatorio de longitud $length.
+     * 
+     * @param int $length
+     * @return string
+     */
+    public function generateRandomPIN(int $length) : string {
+        return substr(str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 }

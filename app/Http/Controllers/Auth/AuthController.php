@@ -161,7 +161,6 @@ class AuthController extends Controller
      *        @OA\JsonContent(
      *           @OA\Property(property="password", type="string", format="password", example="password"),
      *           @OA\Property(property="confirm_password", type="string", format="password", example="password"),
-     *           @OA\Property(property="pin", type="string", format="string", example="123456"),
      *        ),
      *     ),
      *     @OA\Response(
@@ -179,7 +178,7 @@ class AuthController extends Controller
      * )
      */
     public function resetPassword(ResetPasswordRequests $request) {
-        $result = $this->service->resetPassword($request->validated());
+        $result = $this->service->resetPassword($request->validated(), $request);
         return response()->json($result);
     }
 }

@@ -20,7 +20,6 @@ class ResetPasswordRequests extends FormRequest
         return [
             'password' => 'nueva contraseña',
             'confirm_password' => 'confirmación de nueva contraseña',
-            'pin' => 'pin de restablecimiento de contraseña'
         ];
     }
 
@@ -32,9 +31,6 @@ class ResetPasswordRequests extends FormRequest
     public function messages()
     {
         return [
-            'pin.required' => 'El :attribute es requerido.',
-            'pin.string' => 'El :attribute debe ser de tipo string.',
-            'pin.exists' => 'El :attribute no es válido, por favor genere una nueva solicitud.',
             'password.required' => 'La :attribute es requerida.',
             'password.min' => 'La :attribute debe contener al menos 8 caracteres.',
             'password.max' => 'La :attribute solo debe contener hasta 16 caracteres.',
@@ -51,7 +47,6 @@ class ResetPasswordRequests extends FormRequest
     public function rules(): array
     {
         return [
-            'pin' => 'required|string|exists:password_reset_tokens,token',
             'password' => [ 'required', 'min:8', 'max:16' ],
             'confirm_password' => 'required|same:password',
         ];

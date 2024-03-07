@@ -59,7 +59,7 @@ class ContactRequest extends FormRequest
             'name' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|string|max:255|email',
-            'city' => 'required|string|exists:estados,estado',
+            'city' => 'required|string|exists:ciudades,ciudad',
             'message' => 'required|string|max:300'
         ];
     }

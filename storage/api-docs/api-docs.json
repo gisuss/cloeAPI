@@ -263,11 +263,6 @@
                                         "type": "string",
                                         "format": "password",
                                         "example": "password"
-                                    },
-                                    "pin": {
-                                        "type": "string",
-                                        "format": "string",
-                                        "example": "123456"
                                     }
                                 },
                                 "type": "object"
@@ -564,6 +559,206 @@
                 ]
             }
         },
+        "/api/raee/index": {
+            "get": {
+                "tags": [
+                    "Clasificacion"
+                ],
+                "summary": "INDEX RAEEs",
+                "description": "Retorna la lista de RAEEs registrados en el sistema",
+                "operationId": "18e1d23a6c14e15a287b6e7a662fab8e",
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/raee/store": {
+            "post": {
+                "tags": [
+                    "Clasificacion"
+                ],
+                "summary": "Registra un nuevo RAEE",
+                "description": "Registra un nuevo RAEE.",
+                "operationId": "e16d632925a260ff6ef56305f5b3227b",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateRaeeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/raee/show/{raee_id}": {
+            "get": {
+                "tags": [
+                    "Clasificacion"
+                ],
+                "summary": "SHOW RAEE",
+                "description": "Retorna la información del RAEE solicitado.",
+                "operationId": "5ea13691fed146bb2bfc0cb0c4c768e5",
+                "parameters": [
+                    {
+                        "name": "raee_id",
+                        "in": "path",
+                        "description": "Parámetro necesario para la consulta en la tabla RAEEs",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "examples": {
+                            "integer": {
+                                "summary": "Introduce el número de id de un RAEE.",
+                                "value": 1
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso obtenido con éxito.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "No se ha encontrado el RAEE.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error.",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/raee/update/{raee_id}": {
+            "put": {
+                "tags": [
+                    "Clasificacion"
+                ],
+                "summary": "Actualiza un RAEE",
+                "description": "Actualiza un RAEE.",
+                "operationId": "1f5c9ea4b8823c20b1116525d2afb1fc",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRaeeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Recurso creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/raee/delete/{raee_id}": {
+            "delete": {
+                "tags": [
+                    "Clasificacion"
+                ],
+                "summary": "DELETE a RAEE",
+                "description": "Elimina un RAEE.",
+                "operationId": "14270899947c0ba144e8d37a53aad148",
+                "parameters": [
+                    {
+                        "name": "raee_id",
+                        "in": "path",
+                        "description": "Parámetro necesario para la búsqueda en la tabla de RAEEs",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "Introduce el número de id de un RAEE.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Recurso eliminado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/users/index": {
             "get": {
                 "tags": [
@@ -592,14 +787,14 @@
                 ]
             }
         },
-        "/api/users": {
+        "/api/users/register": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "STORE a new user",
                 "description": "Registra un nuevo usuario.",
-                "operationId": "b878d72cb681cdebfd5ea4a59b936aca",
+                "operationId": "b229036599740c94279c740652a3fbf9",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -957,14 +1152,14 @@
                 ]
             }
         },
-        "/api/users/{user}": {
+        "/api/users/delete/{user}": {
             "delete": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "DELETE {user}",
                 "description": "Elimina un usuario.",
-                "operationId": "4cbe82807344c19f54545df95861a5eb",
+                "operationId": "d4c84189d2dd891d1a94d585a4b1665a",
                 "parameters": [
                     {
                         "name": "user",
@@ -1323,6 +1518,76 @@
                         "description": "Dirección del centro de acopio",
                         "type": "string",
                         "format": "Valencia centro",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "CreateRaeeRequest": {
+                "properties": {
+                    "brand_id": {
+                        "description": "Marca",
+                        "type": "integer",
+                        "example": "149",
+                        "nullable": false
+                    },
+                    "line_id": {
+                        "description": "Línea",
+                        "type": "integer",
+                        "example": "2",
+                        "nullable": false
+                    },
+                    "category_id": {
+                        "description": "Categoría",
+                        "type": "integer",
+                        "example": "17",
+                        "nullable": false
+                    },
+                    "model": {
+                        "description": "Modelo",
+                        "type": "string",
+                        "example": "Galaxy A54 5G",
+                        "nullable": false
+                    },
+                    "information": {
+                        "description": "Información adicional",
+                        "type": "string",
+                        "example": "Pantalla partida",
+                        "nullable": false
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateRaeeRequest": {
+                "properties": {
+                    "brand_id": {
+                        "description": "Marca",
+                        "type": "integer",
+                        "example": "149",
+                        "nullable": false
+                    },
+                    "line_id": {
+                        "description": "Línea",
+                        "type": "integer",
+                        "example": "2",
+                        "nullable": false
+                    },
+                    "category_id": {
+                        "description": "Categoría",
+                        "type": "integer",
+                        "example": "17",
+                        "nullable": false
+                    },
+                    "model": {
+                        "description": "Modelo",
+                        "type": "string",
+                        "example": "Galaxy A54 5G",
+                        "nullable": false
+                    },
+                    "information": {
+                        "description": "Información adicional",
+                        "type": "string",
+                        "example": "Pantalla partida",
                         "nullable": false
                     }
                 },

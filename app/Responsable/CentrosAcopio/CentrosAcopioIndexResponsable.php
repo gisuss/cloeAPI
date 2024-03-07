@@ -4,11 +4,9 @@ namespace App\Responsable\CentrosAcopio;
 
 use Illuminate\Contracts\Support\Responsable;
 use App\Models\{CentroAcopio};
-use Illuminate\Http\{Response, Request};
+use Illuminate\Http\{Request};
 use App\Helpers\StandardResponse;
 use App\Http\Resources\CentroAcopioResource;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use App\Repositories\CentrosAcopio\CentrosAcopioRepository;
 
 class CentrosAcopioIndexResponsable implements Responsable
