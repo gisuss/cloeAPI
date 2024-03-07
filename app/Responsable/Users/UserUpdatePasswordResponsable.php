@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use App\Repositories\Users\UserRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\{DB, Hash};
+use Illuminate\Support\Facades\{Auth, DB, Hash};
 
 class UserUpdatePasswordResponsable implements Responsable
 {
@@ -26,10 +26,19 @@ class UserUpdatePasswordResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $usuario = $this->repository->find($this->user);
-                $update = $usuario->update([
-                    'password' => Hash::make($this->data['password'])
-                ]);
+                if (Auth::user()->enabled) {
+                    $usuario = $this->repository->find($this->user);
+                    $update = $usuario->update([
+                        'password' => Hash::make($this->data['password'])
+                    ]);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
+                }
             DB::commit();
             return $this->updateResponse(UserResource::make($usuario), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

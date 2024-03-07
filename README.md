@@ -81,10 +81,18 @@ Usuario Administrador:
 ```
 
 ```bash
-Usuario Recolector:
+Usuario Encargado:
 
-  'email': recolector@cloe.com
-  'username': recolector
+  'email': encargado@cloe.com
+  'username': encargado
+  'password':  password
+```
+
+```bash
+Usuario Clasificador:
+
+  'email': clasificador@cloe.com
+  'username': clasificador
   'password':  password
 ```
 
@@ -231,7 +239,7 @@ Usuario Separador:
 | `api_key`      | `string` | **Required**. Tu API token |
 | `encargado_id`      | `numeric` | **Required**. |
 | `estado_id`      | `numeric` | **Required**. |
-| `ciudad_id`      | `numeric` | **Required**. |
+| `municipio_id`      | `numeric` | **Required**. |
 | `description`      | `string` | **Optional**. |
 | `address`      | `string` | **Required**. |
 
@@ -246,7 +254,7 @@ Usuario Separador:
 | `api_key`      | `string` | **Required**. Tu API token |
 | `encargado_id`      | `numeric` | **Required**. |
 | `estado_id`      | `numeric` | **Required**. |
-| `ciudad_id`      | `numeric` | **Required**. |
+| `municipio_id`      | `numeric` | **Required**. |
 | `description`      | `string` | **Optional**. |
 | `address`      | `string` | **Required**. |
 
@@ -306,6 +314,9 @@ Usuario Separador:
 | `role`      | `string` | **Required**. |
 | `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
 | `ci_number`      | `string` | **Required**. |
+| `estado_id`      | `integer` | **Required**. |
+| `municipio_id`      | `integer` | **Required**. |
+| `centro_id`      | `integer` | **Optional**. |
 
 ## [API - Admin] update users
 
@@ -323,6 +334,9 @@ Usuario Separador:
 | `role`      | `string` | **Required**. |
 | `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
 | `ci_number`      | `string` | **Required**. |
+| `estado_id`      | `integer` | **Required**. |
+| `municipio_id`      | `integer` | **Required**. |
+| `centro_id`      | `integer` | **Optional**. |
 
 ## [API - Admin] activar un usuario
 

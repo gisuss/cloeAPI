@@ -6,7 +6,7 @@ use App\Models\{User, Identification};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\{Collection,Str};
-use Illuminate\Support\Facades\{Hash,Mail,Auth,Storage};
+use Illuminate\Support\Facades\{Hash,Mail,Auth};
 use Illuminate\Http\{Response,Request};
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
@@ -35,11 +35,14 @@ class UserRepository extends Repository
             'lastname' => $data['lastname'],
             'ci_id' => $cedula->id,
             'email' => $data['email'],
+            'estado_id' => $data['estado_id'],
+            'municipio_id' => $data['municipio_id'],
+            'centro_id' => isset($data['centro_id']) ? $data['centro_id'] : null,
+            'enabled' => isset($data['centro_id']) ? true : false,
             'address' => $data['address'],
             'password' => Hash::make($pass),
             'username' => $this->setUsername($data['name'], $data['lastname']),
             'email_verified_at' => Carbon::now(),
-            // 'photo' => 'https://eu.ui-avatars.com/api/?name=' . $avatarNames[0] . '+' . $avatarNames[1] . '&background=ebebeb&color=000&bold=true',
         ]);
 
         $user->assignRole($data['role']);

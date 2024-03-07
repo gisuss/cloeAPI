@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('encargado_id')->nullable()->constrained('users', 'id')->nullOnDelete();
             $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
-            $table->foreignId('ciudad_id')->nullable()->constrained('ciudades', 'id')->nullOnDelete();
+            $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
             $table->string('description', 300)->nullable();
             $table->string('address', 300);
             $table->boolean('active')->default(true);

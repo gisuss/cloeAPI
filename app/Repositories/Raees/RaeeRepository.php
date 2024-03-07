@@ -22,8 +22,8 @@ class RaeeRepository extends Repository
             'model' => $data['model'],
             'information' => $data['information'],
             'clasified_by' => Auth::user()->id,
-            'centro_id' => 1,
-            'status' => true,
+            'centro_id' => Auth::user()->centro_id,
+            'status' => 'Clasificado',
         ]);
 
         return $raee;

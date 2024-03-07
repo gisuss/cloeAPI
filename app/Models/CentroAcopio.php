@@ -19,7 +19,7 @@ class CentroAcopio extends Model
     protected $fillable = [
         'encargado_id',
         'estado_id',
-        'ciudad_id',
+        'municipio_id',
         'description',
         'address',
         'active',
@@ -39,6 +39,10 @@ class CentroAcopio extends Model
 
     public function raees() : HasMany {
         return $this->hasMany(Raee::class);
+    }
+    
+    public function users() : HasMany {
+        return $this->hasMany(User::class);
     }
 
     public function scopeFilterLocation($query, $filters) {

@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use App\Repositories\Users\UserRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\{DB};
+use Illuminate\Support\Facades\{Auth, DB};
 
 class UserUpdateResponsable implements Responsable
 {
@@ -26,22 +26,31 @@ class UserUpdateResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $usuario = $this->repository->find($this->user);
-
-                if (isset($this->request['role'])) {
-					$usuario->syncRoles([$this->request['role']]);
+                if (Auth::user()->enabled) {
+                    $usuario = $this->repository->find($this->user);
+    
+                    if (isset($this->request['role'])) {
+                        $usuario->syncRoles([$this->request['role']]);
+                    }
+    
+                    $cedula = Identification::find($usuario->ci_id);
+                    
+                    if ($cedula->type <> $this->request['ci_type'] || $cedula->number <> $this->request['ci_number']) {
+                        $cedula->update([
+                            'type' => $this->request['ci_type'],
+                            'number' => $this->request['ci_number'],
+                        ]);
+                    }
+    
+                    $update = $usuario->update(array_merge($this->request, ['ci_id' => $cedula->id]));
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
                 }
-
-                $cedula = Identification::find($usuario->ci_id);
-                
-                if ($cedula->type <> $this->request['ci_type'] || $cedula->number <> $this->request['ci_number']) {
-                    $cedula->update([
-                        'type' => $this->request['ci_type'],
-                        'number' => $this->request['ci_number'],
-                    ]);
-                }
-
-                $update = $usuario->update(array_merge($this->request, ['ci_id' => $cedula->id]));
             DB::commit();
             return $this->updateResponse(UserResource::make($usuario), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

@@ -27,22 +27,22 @@ class Raee extends Model
     ];
 
     public function centroAcopio() : BelongsTo {
-        return $this->belongsTo(CentroAcopio::class);
+        return $this->belongsTo(CentroAcopio::class, 'centro_id');
     }
     
     public function marca() : BelongsTo {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
     
     public function linea() : BelongsTo {
-        return $this->belongsTo(Line::class);
+        return $this->belongsTo(Line::class, 'line_id');
     }
     
     public function category() : BelongsTo {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
     
     public function clasificador() : BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'clasified_by');
     }
 }

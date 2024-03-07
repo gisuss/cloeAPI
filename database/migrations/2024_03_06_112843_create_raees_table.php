@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('line_id')->constrained('lines', 'id')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories', 'id')->cascadeOnDelete();
             $table->foreignId('clasified_by')->nullable()->constrained('users', 'id')->nullOnDelete();
-            $table->boolean('status')->default(false);
+            $table->string('status');
             $table->string('model');
             $table->string('information', 300)->nullable();
             $table->timestamps();

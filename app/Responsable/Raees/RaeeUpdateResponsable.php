@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use App\Repositories\Raees\RaeeRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\RaeeResource;
-use Illuminate\Support\Facades\{DB};
+use Illuminate\Support\Facades\{Auth, DB};
 
 class RaeeUpdateResponsable implements Responsable
 {
@@ -26,8 +26,17 @@ class RaeeUpdateResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $raee = $this->repository->find($this->raee);
-                $update = $raee->update($this->data);
+                if (Auth::user()->enabled) {
+                    $raee = $this->repository->find($this->raee);
+                    $update = $raee->update($this->data);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
+                }
             DB::commit();
             return $this->updateResponse(RaeeResource::make($raee), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

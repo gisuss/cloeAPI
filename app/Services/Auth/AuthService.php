@@ -58,6 +58,7 @@ class AuthService
                         'token' => $token->plainTextToken,
                         'role' => $user->getRoleNames()[0],
                         'user_id' => $user->id,
+                        'enabled' => $user->enabled,
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                         'message' => 'Inicio de sesión exitoso.',
                         'expiresIn' => $expires_in . " horas",

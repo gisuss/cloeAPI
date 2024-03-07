@@ -9,7 +9,9 @@ use App\Http\Requests\RaeeStoreRequest;
 use App\Repositories\Raees\RaeeRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\RaeeResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class RaeeStoreResponsable implements Responsable
 {
@@ -25,7 +27,16 @@ class RaeeStoreResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $raee = $this->repository->store($this->data);
+                if (Auth::user()->enabled) {
+                    $raee = $this->repository->store($this->data);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
+                }
             DB::commit();
             return $this->storeResponse(RaeeResource::make($raee), isset($raee) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

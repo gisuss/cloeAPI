@@ -33,8 +33,10 @@ class User extends Authenticatable
         'active',
         'password',
         'active',
+        'enabled',
         'estado_id',
         'municipio_id',
+        'centro_id',
         'address',
         'email_verified_at'
     ];
@@ -92,5 +94,9 @@ class User extends Authenticatable
 
     public function raees() : HasMany {
         return $this->hasMany(Raee::class);
+    }
+
+    public function centro() : BelongsTo {
+        return $this->belongsTo(CentroAcopio::class, 'centro_id');
     }
 }

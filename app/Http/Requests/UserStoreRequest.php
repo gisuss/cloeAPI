@@ -25,6 +25,9 @@ class UserStoreRequest extends FormRequest
             'role' => 'rol',
             'ci_type' => 'tipo de documento de identificación',
             'ci_number' => 'número del documento de identificación',
+            'estado_id' => 'identificador de estado',
+            'municipio_id' => 'identificador de municipio',
+            'centro_id' => 'identificador de centro de acopio',
         ];
     }
 
@@ -55,6 +58,14 @@ class UserStoreRequest extends FormRequest
             'ci_number.required' => 'El :attribute es requerido.',
             'ci_number.min' => 'El :attribute debe tener al menos 7 dígitos.',
             'ci_number.max' => 'El :attribute no debe exceder los 9 dígitos.',
+            'estado_id.required' => 'El :attribute es requerido.',
+            'estado_id.numeric' => 'El :attribute debe ser numérico.',
+            'estado_id.exists' => 'El :attribute es inválido.',
+            'ciudad_id.required' => 'El :attribute es requerido.',
+            'ciudad_id.numeric' => 'El :attribute debe ser numérico.',
+            'ciudad_id.exists' => 'El :attribute es inválido.',
+            'centro_id.numeric' => 'El :attribute debe ser numérico.',
+            'centro_id.exists' => 'El :attribute es inválido.',
         ];
     }
 
@@ -79,6 +90,9 @@ class UserStoreRequest extends FormRequest
                 'max:9',
                 Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))
             ],
+            'estado_id' => 'required|numeric|exists:estados,id',
+            'municipio_id' => 'required|numeric|exists:municipios,id',
+            'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
           ];
     }
 }

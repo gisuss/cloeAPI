@@ -2,7 +2,7 @@
 
 namespace App\Repositories\CentrosAcopio;
 
-use App\Models\{CentroAcopio};
+use App\Models\{CentroAcopio, User};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\{Response};
@@ -24,8 +24,14 @@ class CentrosAcopioRepository extends Repository
         $array = [];
 
         $centro = $this->model->create($data);
-
+        
         if ($centro) {
+            $user = User::find($data['encargado_id']);
+            $user->update([
+                'centro_id' => $centro->id,
+                'enabled' => true,
+            ]);
+            
             $array = [
                 'success' => true,
                 'message' => 'Excelente, el centro de acopio se ha registrado con éxito.',

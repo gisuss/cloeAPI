@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'municipio_id' => 80,
+            'enabled' => true,
         ]);
         $user->assignRole('Admin');
         
@@ -39,22 +40,24 @@ class UserSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'municipio_id' => 90,
+            'enabled' => true,
         ]);
         $user2->assignRole('Encargado');
         
         $user3 = User::create([
-            'name' => 'Recolector',
+            'name' => 'Clasificador',
             'lastname' => 'Cloe',
             'ci_id' => 3,
-            'email' => 'recolector@cloe.com',
+            'email' => 'clasificador@cloe.com',
             'address' => 'Bejuma',
             'password'  =>  Hash::make('password'),
-            'username' => 'recolector',
+            'username' => 'clasificador',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'municipio_id' => 77,
+            'enabled' => true,
         ]);
-        $user3->assignRole('Recolector');
+        $user3->assignRole('Clasificador');
         
         $user4 = User::create([
             'name' => 'Separador',
@@ -67,6 +70,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'municipio_id' => 90,
+            'enabled' => true,
         ]);
         $user4->assignRole('Separador');
     }

@@ -9,6 +9,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Repositories\Users\UserRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserStoreResponsable implements Responsable
@@ -25,7 +26,16 @@ class UserStoreResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $user = $this->repository->register($this->data);
+                if (Auth::user()->enabled) {
+                    $user = $this->repository->register($this->data);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
+                }
             DB::commit();
             return $this->storeResponse(UserResource::make($user), isset($user) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {

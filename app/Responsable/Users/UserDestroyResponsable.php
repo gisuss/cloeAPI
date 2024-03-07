@@ -24,7 +24,16 @@ class UserDestroyResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $res = $this->repository->eliminarUser($this->user);
+                if (Auth::user()->enabled) {
+                    $res = $this->repository->eliminarUser($this->user);
+                }else{
+                    return response()->json([
+                        'success' => false,
+                        'code' =>  Response::HTTP_UNAUTHORIZED,
+                        'message' => 'No estás habilitado para esta acción.',
+                        'data' => []
+                    ],Response::HTTP_UNAUTHORIZED);
+                }
             DB::commit();
 			return $this->destroyResponse($res ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Throwable $e) {

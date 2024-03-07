@@ -14,6 +14,15 @@ class RaeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'model' => $this->model,
+            'brand' => $this->marca->name,
+            'linea' => $this->linea->name,
+            'categoria' => $this->category->name,
+            'clasificador' => $this->clasificador->name . ' ' . $this->clasificador->lastname,
+            'information' => $this->information,
+            'status' => $this->status,
+        ];
     }
 }

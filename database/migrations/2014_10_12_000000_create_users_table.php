@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
             $table->string('address');
             $table->boolean('active')->default(true);
+            $table->boolean('enabled')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
