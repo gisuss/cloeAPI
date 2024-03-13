@@ -74,6 +74,12 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::put('update/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'update']);
         Route::delete('delete/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'destroy']);
     });
+
+    // MODULO DE SEPARACION
+    Route::group(['prefix' => 'split'], function () {
+        Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
+        Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
+    });
 });
 
 // API RESOURCES

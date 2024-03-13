@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Resources;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class RaeeShowResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        // return parent::toArray($request);
+        $components = [];
+        $compts = $this->components;
+        foreach ($compts as $key => $comp) {
+            $components[] = [
+                'id' => $comp->id,
+                'name' => $comp->name,
+                'weight' => $comp->weight,
+                'dimensions' => $comp->dimensions,
+                'reusable' => $comp->reusable,
+                'materials' => $comp->materials->pluck('name'),
+                'processes' => $comp->processes->pluck('name'),
+                'splitedBy' => $comp->splitedBy->name . ' ' . $comp->splitedBy->lastname,
+            ];
+        }
+
+        return [
+            'raee' => [
+                'brand' => $this->marca->name,
+                'model' => $this->model,
+                'category' => $this->category->name,
+                'line' => $this->linea->name
+            ],
+            'components' => $components,
+        ];
+    }
+}

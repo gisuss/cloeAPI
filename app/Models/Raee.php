@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 class Raee extends Model
 {
@@ -44,5 +44,15 @@ class Raee extends Model
     
     public function clasificador() : BelongsTo {
         return $this->belongsTo(User::class, 'clasified_by');
+    }
+
+    public function components() : HasMany {
+        return $this->hasMany(Component::class);
+    }
+
+    public function scopeStatus($query, $filters) {
+        $query->when($filters['status'] ?? null, function($query, $status) {
+            $query->where('status', $status);
+        });
     }
 }

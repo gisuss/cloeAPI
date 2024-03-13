@@ -43,7 +43,7 @@ class RaeeRepository extends Repository
 
     public function paginate($relations = null, $paginate = 20, $filtersColumns = []) {
         return (!empty($relations))
-            ? $this->model::with($relations)->orderBy('id', 'desc')->paginate($paginate)
-            : $this->model::orderBy('id', 'desc')->paginate($paginate);
+            ? $this->model::with($relations)->status($filtersColumns)->orderBy('id', 'desc')->paginate($paginate)
+            : $this->model::status($filtersColumns)->orderBy('id', 'desc')->paginate($paginate);
     }
 }

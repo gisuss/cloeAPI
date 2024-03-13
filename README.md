@@ -429,6 +429,8 @@ Usuario Separador:
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
+| `filters`      | `array` | **Optional**. |
+| `filters.status`      | `string` | **Required if filters**. |
 
 ## [API - Admin] delete RAEES
 
