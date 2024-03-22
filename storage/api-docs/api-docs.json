@@ -1467,10 +1467,10 @@
                         "example": "7",
                         "nullable": false
                     },
-                    "ciudad_id": {
-                        "description": "Ciudad",
+                    "municipio_id": {
+                        "description": "Municipio",
                         "type": "integer",
-                        "example": "127",
+                        "example": "90",
                         "nullable": false
                     },
                     "description": {
@@ -1502,10 +1502,10 @@
                         "example": "7",
                         "nullable": false
                     },
-                    "ciudad_id": {
-                        "description": "Ciudad",
+                    "municipio_id": {
+                        "description": "Municipio",
                         "type": "integer",
-                        "example": "127",
+                        "example": "90",
                         "nullable": false
                     },
                     "description": {
