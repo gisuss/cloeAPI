@@ -1625,6 +1625,18 @@
                         "format": "email",
                         "nullable": false
                     },
+                    "estado_id": {
+                        "description": "ID de estado",
+                        "type": "integer",
+                        "example": "7",
+                        "nullable": false
+                    },
+                    "municipio_id": {
+                        "description": "ID de municipio",
+                        "type": "integer",
+                        "example": "86",
+                        "nullable": false
+                    },
                     "address": {
                         "description": "Dirección del usuario",
                         "type": "string",
@@ -1646,6 +1658,12 @@
                         "description": "Nombre de rol",
                         "type": "string",
                         "example": "Recolector",
+                        "nullable": false
+                    },
+                    "estado_id": {
+                        "description": "ID de estado",
+                        "type": "integer",
+                        "example": "7",
                         "nullable": false
                     }
                 },
@@ -1683,16 +1701,22 @@
                         "format": "email",
                         "nullable": false
                     },
+                    "estado_id": {
+                        "description": "ID de estado",
+                        "type": "integer",
+                        "example": "7",
+                        "nullable": false
+                    },
+                    "municipio_id": {
+                        "description": "ID de municipio",
+                        "type": "integer",
+                        "example": "86",
+                        "nullable": false
+                    },
                     "address": {
                         "description": "Dirección del usuario",
                         "type": "string",
                         "example": "Valencia, calle 120, Venezuela",
-                        "nullable": false
-                    },
-                    "role": {
-                        "description": "Rol",
-                        "type": "string",
-                        "example": "Recolector",
                         "nullable": false
                     }
                 },

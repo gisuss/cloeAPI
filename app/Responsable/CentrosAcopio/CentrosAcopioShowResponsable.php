@@ -6,9 +6,7 @@ use Illuminate\Contracts\Support\Responsable;
 use App\Models\{CentroAcopio};
 use Illuminate\Http\{Response, Request};
 use App\Helpers\StandardResponse;
-use App\Http\Resources\CentroAcopioResource;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\BaseResource;
 use App\Repositories\CentrosAcopio\CentrosAcopioRepository;
 
 class CentrosAcopioShowResponsable implements Responsable
@@ -24,13 +22,13 @@ class CentrosAcopioShowResponsable implements Responsable
 
     public function toResponse($request) {
         try {
-            $res = $this->repository->find($this->centro);
-            return $this->showResponse(CentroAcopioResource::make($res));
+            $res = $this->repository->where('id', $this->centro)->firstOrFail();
+            return $this->showResponse(BaseResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $th) {
             return response()->json([
+                'message' => 'No se pudo encontar el centro de acopio.',
                 'success' => false,
                 'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'No se pudo encontar el centro de acopio.',
                 'data' => $th->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

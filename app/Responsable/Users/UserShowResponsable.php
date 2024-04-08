@@ -21,8 +21,17 @@ class UserShowResponsable implements Responsable
     }
 
     public function toResponse($request) {
-        $usuario = $this->repository->find($this->user);
-        return $this->showResponse(UserResource::make($usuario), isset($usuario) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+        try {
+            $usuario = $this->repository->where('id', $this->user)->firstOrFail();
+            return $this->showResponse(UserResource::make($usuario), isset($usuario) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'No se pudo encontar el usuario.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                'data' => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function setUser($user) {

@@ -90,6 +90,20 @@ class UserController extends Controller
      *        format="email"
      *    ),
      *    @OA\Property(
+     *        property="estado_id",
+     *        type="integer",
+     *        description="ID de estado",
+     *        nullable=false,
+     *        example="7"
+     *    ),
+     *    @OA\Property(
+     *        property="municipio_id",
+     *        type="integer",
+     *        description="ID de municipio",
+     *        nullable=false,
+     *        example="86"
+     *    ),
+     *    @OA\Property(
      *        property="address",
      *        type="string",
      *        description="Dirección del usuario",
@@ -188,6 +202,13 @@ class UserController extends Controller
      *        nullable=false,
      *        example="Recolector"
      *    ),
+     *    @OA\Property(
+     *        property="estado_id",
+     *        type="integer",
+     *        description="ID de estado",
+     *        nullable=false,
+     *        example="7"
+     *    ),
      * )
      * @OA\Get(
      *      path="/api/users/getByRoleName",
@@ -267,19 +288,26 @@ class UserController extends Controller
      *        format="email"
      *    ),
      *    @OA\Property(
+     *        property="estado_id",
+     *        type="integer",
+     *        description="ID de estado",
+     *        nullable=false,
+     *        example="7"
+     *    ),
+     *    @OA\Property(
+     *        property="municipio_id",
+     *        type="integer",
+     *        description="ID de municipio",
+     *        nullable=false,
+     *        example="86"
+     *    ),
+     *    @OA\Property(
      *        property="address",
      *        type="string",
      *        description="Dirección del usuario",
      *        nullable=false,
      *        example="Valencia, calle 120, Venezuela"
-     *    ),
-     *    @OA\Property(
-     *        property="role",
-     *        type="string",
-     *        description="Rol",
-     *        nullable=false,
-     *        example="Recolector"
-     *    ),
+     *    )
      * )
      *
      * @OA\Put(
@@ -437,8 +465,8 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function activarUser(int $user, UserActivateRequest $request) {
-        return new UserActivateResponsable($user, $request->validated());
+    public function activarUser(int $user) {
+        return new UserActivateResponsable($user);
     }
 
     /**

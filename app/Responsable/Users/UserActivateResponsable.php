@@ -15,24 +15,33 @@ class UserActivateResponsable implements Responsable
     use StandardResponse;
     private UserRepository $repository;
     private int $user;
-    private array $request;
 
-    public function __construct(int $user, array $data, UserRepository $repository = null) {
+    public function __construct(int $user, UserRepository $repository = null) {
         $this->repository = ($repository === null) ? new UserRepository(new User()) : $repository;
         $this->user = $user;
-        $this->request = $data;
     }
 
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                $activado = $this->repository->activar($this->user, $this->request);
+                $activado = $this->repository->activar($this->user);
             DB::commit();
-            return $this->updateResponse(UserResource::make($this->repository->find($this->user)), $activado ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+            if ($activado) {
+                return $this->updateResponse(UserResource::make($this->repository->find($this->user)), $activado ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            }else{
+                return response()->json([
+                    'menssage' => 'No se puede activar al usuario.',
+                    'success' => false,
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'data' => []
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
                 'menssage' => 'No se puede activar al usuario.',
+                'success' => false,
                 'code' => Response::HTTP_BAD_REQUEST,
                 'data' => $e->getMessage()
             ], Response::HTTP_BAD_REQUEST);

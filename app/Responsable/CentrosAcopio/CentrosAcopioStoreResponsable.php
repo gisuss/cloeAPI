@@ -27,7 +27,17 @@ class CentrosAcopioStoreResponsable implements Responsable
             DB::beginTransaction();
                 $res = $this->repository->register($this->data);
             DB::commit();
-            return $this->storeResponse(BaseResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+            if (isset($res)) {
+                return $this->storeResponse(BaseResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            }else{
+                return response()->json([
+                    'message' => 'No se pudo registrar el centro de acopio.',
+                    'success' => false,
+                    'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'data' => []
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([

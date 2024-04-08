@@ -14,6 +14,19 @@ class BaseResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'centro_id' => $this->id,
+            'encargado' => [
+                'user_id' => $this->encargado->id,
+                'name' => $this->encargado->name . ' ' . $this->encargado->lastname,
+                'cedula' => $this->encargado->cedula->type . '-' . $this->encargado->cedula->number,
+            ],
+            'estado' => $this->estado->estado,
+            'municipio' => $this->municipio->municipio,
+            'address' => $this->address,
+            'description' => $this->description,
+            'active' => $this->active ? 'Activo' : 'Inactivo',
+        ];
     }
 }

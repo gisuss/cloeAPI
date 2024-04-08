@@ -38,7 +38,7 @@ class UserRepository extends Repository
             'estado_id' => $data['estado_id'],
             'municipio_id' => $data['municipio_id'],
             'centro_id' => isset($data['centro_id']) ? $data['centro_id'] : null,
-            'enabled' => isset($data['centro_id']) ? true : false,
+            'enabled' => $data['role'] === 'Admin' ? true : (isset($data['centro_id']) ? true : false),
             'address' => $data['address'],
             'password' => Hash::make($pass),
             'username' => $this->setUsername($data['name'], $data['lastname']),
@@ -58,18 +58,15 @@ class UserRepository extends Repository
      * @param array $data
      * @return bool
      */
-    public function activar(int $user, array $data) : bool {
+    public function activar(int $user) : bool {
         $band = false;
-        $usuario = $this->model->find($user);
+        $usuario = $this->model->where('id', $user)->first();
         if (isset($usuario) && ($usuario->id <> Auth::user()->id)) {
             $usuario->update([
                 'active' => true,
+                'enabled' => true,
                 'remember_token' => null,
             ]);
-            $usuario->syncRoles([$data['role']]);
-
-            // Mail::to($usuario->email)->send(new UserActivateMail($usuario));
-
             $band = true;
         }
         return $band;
@@ -83,14 +80,13 @@ class UserRepository extends Repository
      */
     public function desactivar(int $user) : bool {
         $band = false;
-        $usuario = $this->model->find($user);
+        $usuario = $this->model->where('id', $user)->first();
         if ($user <> Auth::user()->id) {
             $usuario->update([
                 'active' => false,
                 'remember_token' => null
             ]);
             $usuario->tokens()->delete();
-            $usuario->assignRole('Desactivado');
             $band = true;
         }
         return $band;
@@ -104,9 +100,13 @@ class UserRepository extends Repository
      */
     public function eliminarUser(int $user) : bool {
         $band = false;
-        $usuario = $this->model->find($user);
+        $usuario = $this->model->where('id', $user)->first();
         if (isset($usuario) && $usuario->id != Auth::user()->id) {
-            $usuario->delete();
+            $usuario->update([
+                'active' => false,
+                'remember_token' => null
+            ]);
+            $usuario->tokens()->delete();
             $band = true;
         }
         return $band;
@@ -143,16 +143,6 @@ class UserRepository extends Repository
         }
 
         return $username;
-    }
-
-    /**
-     * Método que genera un string aleatorio con longitud $length.
-     *
-     * @param int $length
-     * @return string
-     */
-    public function generateRandomPassword(int $length) : string {
-        return substr(str_shuffle("123456789qQwWeErRtTyYuUiIpPaAsSdDfFgGhHjJkKLzZxXcCvVbBnNmM-*"), 0, $length);
     }
 
     /**

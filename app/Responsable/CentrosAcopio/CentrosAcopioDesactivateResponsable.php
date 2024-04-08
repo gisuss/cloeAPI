@@ -26,13 +26,24 @@ class CentrosAcopioDesactivateResponsable implements Responsable
             DB::beginTransaction();
                 $res = $this->repository->actualizar(['active' => false], $this->centro);
             DB::commit();
-            return $this->updateResponse(BaseResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            
+            if ($res) {
+                $centro = $this->repository->find($this->centro);
+                return $this->updateResponse(BaseResource::make($centro), $res ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
+            }else{
+                return response()->json([
+                    'message' => 'No se pudo desactivar el centro de acopio.',
+                    'success' => false,
+                    'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'data' => []
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
+                'message' => 'No se pudo desactivar el centro de acopio.',
                 'success' => false,
                 'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'No se pudo registrar el centro de acopio.',
                 'data' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

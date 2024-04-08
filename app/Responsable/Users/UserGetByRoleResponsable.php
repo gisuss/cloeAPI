@@ -8,7 +8,7 @@ use App\Helpers\StandardResponse;
 use App\Http\Resources\UserByRoleResource;
 use App\Repositories\Users\UserRepository;
 use App\Http\Requests\RoleRequest;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class UserGetByRoleResponsable implements Responsable
 {
@@ -24,8 +24,9 @@ class UserGetByRoleResponsable implements Responsable
     public function toResponse($request) {
         $users = User::role($this->data['roleName'])
                 ->where('active', true)
-                ->where('estado_id', Auth::user()->estado_id)
+                ->where('enabled', true)
+                ->where('estado_id', $this->data['estado_id'])
                 ->get();
-        return $this->indexResponse(UserByRoleResource::collection($users));
+        return $this->indexResponse(UserByRoleResource::collection($users), isset($users) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
     }
 }

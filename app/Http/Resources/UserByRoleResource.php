@@ -14,6 +14,10 @@ class UserByRoleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => explode(' ', $this->name)[0] . ' ' . explode(' ', $this->lastname)[0] . ' | ' . $this->cedula->type . '-' . $this->cedula->number,
+        ];
     }
 }

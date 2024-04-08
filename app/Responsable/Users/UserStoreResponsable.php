@@ -30,9 +30,9 @@ class UserStoreResponsable implements Responsable
                     $user = $this->repository->register($this->data);
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }
@@ -41,8 +41,9 @@ class UserStoreResponsable implements Responsable
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'No se pudo registrar el usuario.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

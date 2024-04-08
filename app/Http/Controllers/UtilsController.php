@@ -272,7 +272,7 @@ class UtilsController extends Controller
             if ($userAuth->getRoleNames()[0] === 'Admin') {
                 $roles = Role::orderBy('name', 'desc')->get();
             }else{
-                $roles = Role::where('name', '!=', 'Admin')->orderBy('name', 'desc')->get();
+                $roles = Role::whereNotIn('name', ['Admin', 'Desactivado'])->orderBy('name', 'desc')->get();
             }
 
             foreach ($roles as $rol) {
@@ -281,16 +281,17 @@ class UtilsController extends Controller
                 ];
             }
 
-    
             return response()->json([
-                'success' => true,
                 'message' => 'Recurso obtenido con éxito.',
-                'data' => $data
+                'data' => $data,
+                'success' => true,
+                'code' => Response::HTTP_OK
             ],Response::HTTP_OK);
         } catch (\Throwable $th) {
             return response()->json([
-                'success' => false,
                 'message' => $th,
+                'data' => [],
+                'success' => false,
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }

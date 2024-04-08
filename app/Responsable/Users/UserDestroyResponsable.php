@@ -28,9 +28,9 @@ class UserDestroyResponsable implements Responsable
                     $res = $this->repository->eliminarUser($this->user);
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }

@@ -27,12 +27,7 @@ class UserUpdateResponsable implements Responsable
         try {
             DB::beginTransaction();
                 if (Auth::user()->enabled) {
-                    $usuario = $this->repository->find($this->user);
-    
-                    if (isset($this->request['role'])) {
-                        $usuario->syncRoles([$this->request['role']]);
-                    }
-    
+                    $usuario = $this->repository->where('id', $this->user)->firstOrfail();
                     $cedula = Identification::find($usuario->ci_id);
                     
                     if ($cedula->type <> $this->request['ci_type'] || $cedula->number <> $this->request['ci_number']) {
@@ -42,12 +37,15 @@ class UserUpdateResponsable implements Responsable
                         ]);
                     }
     
-                    $update = $usuario->update(array_merge($this->request, ['ci_id' => $cedula->id]));
+                    $update = $usuario->update(array_merge($this->request, [
+                        'ci_id' => $cedula->id,
+                        'enabled' => isset($this->request['centro_id']) ? true : false
+                    ]));
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }
@@ -56,8 +54,9 @@ class UserUpdateResponsable implements Responsable
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'No se puede actualizar el usuario.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => $e->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

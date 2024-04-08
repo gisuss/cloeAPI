@@ -35,14 +35,17 @@ class UserDesactivateResponsable implements Responsable
             }else{
                 return response()->json([
                     'message' => 'Usuario inválido.',
+                    'success' => false,
+                    'data' => [],
                     'code' => Response::HTTP_BAD_REQUEST,
                 ], Response::HTTP_BAD_REQUEST);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'code' =>  Response::HTTP_NOT_FOUND,
                 'message' => 'No se puede desactivar el usuario.',
+                'success' => false,
+                'code' =>  Response::HTTP_NOT_FOUND,
                 'data' => $e->getMessage(),
             ], Response::HTTP_NOT_FOUND);
         }

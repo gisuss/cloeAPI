@@ -18,6 +18,7 @@ class RoleRequest extends FormRequest
     {
         return [
             'roleName' => 'nombre de rol',
+            'estado_id' => 'identificador de estado',
         ];
     }
 
@@ -31,6 +32,9 @@ class RoleRequest extends FormRequest
         return [
             'roleName.required' => 'El :attribute es requerido.',
             'roleName.exists' => 'El :attribute no es válido.',
+            'estado_id.required' => 'El :attribute es requerido.',
+            'estado_id.numeric' => 'El :attribute debe ser numérico.',
+            'estado_id.exists' => 'El :attribute es inválido.',
         ];
     }
 
@@ -42,7 +46,8 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roleName' => 'required|string|exists:roles,name'
+            'roleName' => 'required|string|exists:roles,name',
+            'estado_id' => 'required|numeric|exists:estados,id'
         ];
     }
 }

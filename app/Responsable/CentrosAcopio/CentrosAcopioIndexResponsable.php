@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Responsable;
 use App\Models\{CentroAcopio};
 use Illuminate\Http\{Request};
 use App\Helpers\StandardResponse;
-use App\Http\Resources\CentroAcopioResource;
+use App\Http\Resources\BaseResource;
 use App\Repositories\CentrosAcopio\CentrosAcopioRepository;
 
 class CentrosAcopioIndexResponsable implements Responsable
@@ -22,6 +22,6 @@ class CentrosAcopioIndexResponsable implements Responsable
 
     public function toResponse($request) {
         $res = $this->repository->paginate(null, request()->has('limit') ? request('limit') : 20, $this->request->filters);
-        return $this->indexResponse(CentroAcopioResource::collection($res));
+        return $this->indexResponse(BaseResource::collection($res));
     }
 }

@@ -130,21 +130,21 @@ class CentroAcopioController extends Controller
      *        type="integer",
      *        description="Municipio",
      *        nullable=false,
-     *        example="90"
+     *        example="86"
      *    ),
      *    @OA\Property(
      *        property="description",
      *        type="string",
      *        description="Descripción del centro de acopio",
      *        nullable=true,
-     *        example="Centro de Acopio de Valencia"
+     *        example="Centro de Acopio de Naguanagua"
      *    ),
      *    @OA\Property(
      *        property="address",
      *        type="string",
      *        description="Dirección del centro de acopio",
      *        nullable=false,
-     *        format="Valencia centro"
+     *        format="Naguanagua centro"
      *    ),
      * )
      *

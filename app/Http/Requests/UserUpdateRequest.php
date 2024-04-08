@@ -20,7 +20,6 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'email' => 'correo electrónico',
-            'role' => 'cargo',
             'name' => 'nombre',
             'lastname' => 'apellido',
             'address' => 'dirección',
@@ -53,9 +52,6 @@ class UserUpdateRequest extends FormRequest
             'address.required' => 'La :attribute es requerido.',
             'address.max' => 'El :attribute debe ser menor a 255 caracteres.',
             'address.regex' => 'La :attribute solo debe contener letras y espacios.',
-            'role.required' => 'La :attribute es requerido.',
-            'role.string' => 'El :attribute debe ser de tipo string.',
-            'role.exists' => 'El :attribute no es válido.',
             'ci_type.required' => 'El :attribute es requerido.',
             'ci_type.in' => 'El :attribute debe ser V, E, P, J o G.',
             'ci_number.required' => 'El :attribute es requerido.',
@@ -85,7 +81,6 @@ class UserUpdateRequest extends FormRequest
             'lastname' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'address' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'email' => ['required', 'max:256', Rule::unique('users','email')->ignore($this->user)],
-            'role' => 'required|string|exists:roles,name',
             'ci_type' => 'required|in:V,E,P,J,G',
             'ci_number' => [
                 'required',

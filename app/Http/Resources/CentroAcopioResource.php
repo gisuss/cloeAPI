@@ -16,11 +16,11 @@ class CentroAcopioResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'encargado' => $this->encargado->name . ' ' . $this->encargado->lastname,
+            'centro_id' => $this->id,
             'estado' => $this->estado->estado,
-            'ciudad' => $this->ciudad->ciudad,
-            'description' => $this->description ?? 'Sin descripción.' ,
+            'municipio' => $this->municipio->municipio,
             'address' => $this->address,
+            'description' => $this->description,
             'active' => $this->active ? 'Activo' : 'Inactivo',
         ];
     }

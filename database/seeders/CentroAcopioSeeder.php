@@ -16,7 +16,7 @@ class CentroAcopioSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => 1,
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'municipio_id' => 86,
             'description' => 'Centro de acopio principal de valencia norte',
             'address' => 'Valencia norte',
         ]);

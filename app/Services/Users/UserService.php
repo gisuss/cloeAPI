@@ -23,14 +23,13 @@ class UserService
      */
     public function desactivarUser(int $user) : bool {
         $band = false;
-        $usuario = $this->userModel->find($user);
+        $usuario = $this->userModel->where('id', $user)->first();
         if (isset($usuario) && ($usuario->id <> Auth::user()->id)) {
             $usuario->update([
                 'active' => false,
                 'remember_token' => NULL,
             ]);
             $usuario->tokens()->delete();
-            $usuario->syncRoles(['Desactivado']);
             $band = true;
         }
         return $band;

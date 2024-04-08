@@ -331,7 +331,6 @@ Usuario Separador:
 | `lastname`      | `string` | **Required**. |
 | `email`      | `string` | **Required**. |
 | `address`      | `string` | **Required**. |
-| `role`      | `string` | **Required**. |
 | `ci_type`      | `string` | **Required**. tipos: [V,E,P,J,G] |
 | `ci_number`      | `string` | **Required**. |
 | `estado_id`      | `integer` | **Required**. |
@@ -369,6 +368,7 @@ Usuario Separador:
 | :-------- | :------- | :-------------------------------- |
 | `api_key`      | `string` | **Required**. Tu API token |
 | `roleName`      | `string` | **Required**. |
+| `estado_id`      | `integer` | **Required**. |
 
 ## [API - Admin] delete users
 

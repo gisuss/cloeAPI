@@ -58,7 +58,7 @@ class AuthService
                         'token' => $token->plainTextToken,
                         'role' => $user->getRoleNames()[0],
                         'user_id' => $user->id,
-                        'enabled' => $user->enabled,
+                        'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                         'message' => 'Inicio de sesión exitoso.',
                         'expiresIn' => $expires_in . " horas",
@@ -66,8 +66,8 @@ class AuthService
                     ];
                 }else{
                     $array = [
-                        'success' => false,
                         'message' => 'No estás habilitado para hacer inicio de sesión.',
+                        'success' => false,
                         'code' => Response::HTTP_FORBIDDEN
                     ];
                 }

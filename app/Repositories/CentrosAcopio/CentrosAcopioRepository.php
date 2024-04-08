@@ -5,7 +5,6 @@ namespace App\Repositories\CentrosAcopio;
 use App\Models\{CentroAcopio, User};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\{Response};
 
 class CentrosAcopioRepository extends Repository
 {
@@ -18,34 +17,19 @@ class CentrosAcopioRepository extends Repository
      * Metodo para registrar un nuevo Centro de Acopio.
      *
      * @param array $data
-     * @return array
      */
-    public function register(array $data) : array {
-        $array = [];
-
+    public function register(array $data) {
         $centro = $this->model->create($data);
         
-        if ($centro) {
+        if (isset($centro)) {
             $user = User::find($data['encargado_id']);
             $user->update([
                 'centro_id' => $centro->id,
                 'enabled' => true,
             ]);
-            
-            $array = [
-                'success' => true,
-                'message' => 'Excelente, el centro de acopio se ha registrado con éxito.',
-                'code' => Response::HTTP_OK
-            ];
-        }else{
-            $array = [
-                'success' => false,
-                'message' => 'Error al intentar crear el centro de acopio.',
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
-            ];
         }
 
-        return $array;
+        return $centro;
     }
 
     /**
@@ -53,37 +37,21 @@ class CentrosAcopioRepository extends Repository
      *
      * @param array $data
      * @param int $centro_id
-     * @return array
+     * @return bool
      */
-    public function actualizar(array $data, int $centro_id) : array {
-        $array = [];
+    public function actualizar(array $data, int $centro_id) : bool {
+        $bool = false;
         $centro = $this->model->where('id', $centro_id)->first();
 
-        if ($centro) {
+        if (isset($centro)) {
             $update = $centro->update($data);
 
             if ($update) {
-                $array = [
-                    'success' => true,
-                    'message' => 'Excelente, el centro de acopio ha sido actualizado con éxito.',
-                    'code' => Response::HTTP_OK
-                ];
-            }else{
-                $array = [
-                    'success' => false,
-                    'message' => 'Error al intentar actualizar el recurso.',
-                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR
-                ];
+                $bool = true;
             }
-        }else{
-            $array = [
-                'success' => false,
-                'message' => 'Error al intentar encontrar el centro de acopio.',
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
-            ];
         }
 
-        return $array;
+        return $bool;
     }
 
     public function paginate($relations = null, $paginate = 20, $filtersColumns = []) {
