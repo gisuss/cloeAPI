@@ -21,7 +21,8 @@ class Component extends Model
         'dimensions',
         'reusable',
         'separated_by',
-        'raee_id'
+        'raee_id',
+        'observations'
     ];
 
     public function materials() : BelongsToMany {

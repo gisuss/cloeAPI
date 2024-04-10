@@ -11,7 +11,6 @@ use App\Helpers\StandardResponse;
 use App\Http\Resources\RaeeResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class RaeeStoreResponsable implements Responsable
 {
@@ -28,7 +27,18 @@ class RaeeStoreResponsable implements Responsable
         try {
             DB::beginTransaction();
                 if (Auth::user()->enabled) {
-                    $raee = $this->repository->store($this->data);
+                    $raee = Raee::create([
+                        'brand_id' => $this->data['brand_id'],
+                        'line_id' => $this->data['line_id'],
+                        'category_id' => $this->data['category_id'],
+                        'model' => $this->data['model'],
+                        'information' => isset($this->data['information']) ? $this->data['information'] : null,
+                        'clasified_by' => Auth::user()->id,
+                        'centro_id' => Auth::user()->centro_id,
+                        'status' => 'Clasificado',
+                    ]);
+
+                    $res = Raee::findOrFail($raee->id);
                 }else{
                     return response()->json([
                         'message' => 'No estás habilitado para esta acción.',
@@ -38,7 +48,7 @@ class RaeeStoreResponsable implements Responsable
                     ],Response::HTTP_UNAUTHORIZED);
                 }
             DB::commit();
-            return $this->storeResponse(RaeeResource::make($raee), isset($raee) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            return $this->storeResponse(RaeeResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([

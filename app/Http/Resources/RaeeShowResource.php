@@ -18,13 +18,14 @@ class RaeeShowResource extends JsonResource
         // return parent::toArray($request);
         $components = [];
         $compts = $this->components;
-        foreach ($compts as $key => $comp) {
+        foreach ($compts as $comp) {
             $components[] = [
                 'id' => $comp->id,
                 'name' => $comp->name,
                 'weight' => $comp->weight,
                 'dimensions' => $comp->dimensions,
                 'reusable' => $comp->reusable,
+                'observations' => $comp->observations,
                 'materials' => $comp->materials->pluck('name'),
                 'processes' => $comp->processes->pluck('name'),
                 'splitedBy' => $comp->splitedBy->name . ' ' . $comp->splitedBy->lastname,

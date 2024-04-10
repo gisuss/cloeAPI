@@ -14,24 +14,9 @@ class RaeeRepository extends Repository
         parent::__construct($model, $relations);
     }
 
-    public function store(array $data) {
-        $raee = $this->model->create([
-            'brand_id' => $data['brand_id'],
-            'line_id' => $data['line_id'],
-            'category_id' => $data['category_id'],
-            'model' => $data['model'],
-            'information' => $data['information'],
-            'clasified_by' => Auth::user()->id,
-            'centro_id' => Auth::user()->centro_id,
-            'status' => 'Clasificado',
-        ]);
-
-        return $raee;
-    }
-
     public function eliminarRaee(int $raee_id) {
         $band = false;
-        $raee = $this->model->find($raee_id);
+        $raee = $this->model->where('id', $raee_id)->first();
         
         if (isset($raee)) {
             $raee->delete();

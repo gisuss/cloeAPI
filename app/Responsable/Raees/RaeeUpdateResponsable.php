@@ -27,23 +27,24 @@ class RaeeUpdateResponsable implements Responsable
         try {
             DB::beginTransaction();
                 if (Auth::user()->enabled) {
-                    $raee = $this->repository->find($this->raee);
+                    $raee = $this->repository->where('id', $this->raee)->firstOrFail();
                     $update = $raee->update($this->data);
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }
             DB::commit();
-            return $this->updateResponse(RaeeResource::make($raee), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+            return $this->updateResponse(RaeeResource::make($this->repository->find($this->raee)), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'No se puede actualizar el RAEE.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => $e->getMessage(),
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

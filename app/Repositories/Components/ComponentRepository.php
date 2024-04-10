@@ -16,19 +16,20 @@ class ComponentRepository extends Repository
 
     public function store(array $data) {
         $raee = Raee::where('id', $data['raee_id'])->first();
-
+        
         foreach ($data['components'] as $value) {
             $component = $this->model->create([
                 'name' => $value['name'],
                 'weight' => $value['weight'],
                 'dimensions' => $value['dimensions'],
+                'observations' => $value['observations'],
                 'reusable' => $value['reusable'],
                 'separated_by' => Auth::user()->id,
                 'raee_id' => $raee->id
             ]);
-
+            
             $component->materials()->attach($value['materials']);
-            $component->process()->attach($value['process']);
+            $component->processes()->attach($value['process']);
         }
 
         $raee->update([

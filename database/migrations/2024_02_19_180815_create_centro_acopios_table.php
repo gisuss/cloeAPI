@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('centro_acopios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('encargado_id')->nullable()->constrained('users', 'id')->nullOnDelete();
+            $table->foreignId('encargado_id')->nullable()->constrained('users', 'id');
             $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
             $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
             $table->string('description', 300)->nullable();

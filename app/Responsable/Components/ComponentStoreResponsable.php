@@ -8,9 +8,7 @@ use App\Http\Requests\ComponentStoreRequest;
 use App\Repositories\Components\ComponentRepository;
 use App\Helpers\StandardResponse;
 use App\Models\Component;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Mockery\Generator\StringManipulation\Pass\Pass;
+use Illuminate\Support\Facades\{Auth, DB};
 
 class ComponentStoreResponsable implements Responsable
 {
@@ -30,9 +28,9 @@ class ComponentStoreResponsable implements Responsable
                     $res = $this->repository->store($this->data);
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }
@@ -40,25 +38,25 @@ class ComponentStoreResponsable implements Responsable
 
             if ($res) {
                 return response()->json([
+                    'message' => 'Excelente, el RAEE se ha separado con éxito.',
                     'success' => true,
                     'code' =>  Response::HTTP_OK,
-                    'message' => 'Excelente, el RAEE se ha separado con éxito.',
                     'data' => []
                 ],Response::HTTP_OK);
             }else{
                 return response()->json([
+                    'message' => 'Oopss, ha ocurrido un error inesperado.',
                     'success' => false,
                     'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
-                    'message' => 'Oopss, ha ocurrido un error inesperado.',
                     'data' => []
                 ],Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'Oopss, ha ocurrido un error inesperado.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

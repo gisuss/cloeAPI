@@ -46,7 +46,7 @@ class Raee extends Model
         return $this->belongsTo(User::class, 'clasified_by');
     }
 
-    public function components() : HasMany {
+    public function components() {
         return $this->hasMany(Component::class);
     }
 

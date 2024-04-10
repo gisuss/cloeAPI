@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('raees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('centro_id')->constrained('centro_acopios', 'id')->cascadeOnDelete();
-            $table->foreignId('brand_id')->constrained('brands', 'id')->cascadeOnDelete();
-            $table->foreignId('line_id')->constrained('lines', 'id')->cascadeOnDelete();
-            $table->foreignId('category_id')->constrained('categories', 'id')->cascadeOnDelete();
-            $table->foreignId('clasified_by')->nullable()->constrained('users', 'id')->nullOnDelete();
+            $table->foreignId('centro_id')->constrained('centro_acopios', 'id');
+            $table->foreignId('brand_id')->constrained('brands', 'id');
+            $table->foreignId('line_id')->constrained('lines', 'id');
+            $table->foreignId('category_id')->constrained('categories', 'id');
+            $table->foreignId('clasified_by')->nullable()->constrained('users', 'id');
             $table->string('status');
             $table->string('model');
             $table->string('information', 300)->nullable();

@@ -21,8 +21,17 @@ class ComponentShowResponsable implements Responsable
     }
 
     public function toResponse($request) {
-        $res = $this->repository->find($this->raee);
-        return $this->showResponse(RaeeShowResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+        try {
+            $res = $this->repository->where('id', $this->raee)->firstOrFail();
+            return $this->showResponse(RaeeShowResource::make($res), isset($res) ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'No se pudo encontrar el componente.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                'data' => $th->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private function setRaee($raee_id) {

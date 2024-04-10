@@ -1123,15 +1123,6 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/activarUserRequest"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Recurso obtenido con éxito.",
@@ -1505,19 +1496,19 @@
                     "municipio_id": {
                         "description": "Municipio",
                         "type": "integer",
-                        "example": "90",
+                        "example": "86",
                         "nullable": false
                     },
                     "description": {
                         "description": "Descripción del centro de acopio",
                         "type": "string",
-                        "example": "Centro de Acopio de Valencia",
+                        "example": "Centro de Acopio de Naguanagua",
                         "nullable": true
                     },
                     "address": {
                         "description": "Dirección del centro de acopio",
                         "type": "string",
-                        "format": "Valencia centro",
+                        "format": "Naguanagua centro",
                         "nullable": false
                     }
                 },
@@ -1717,17 +1708,6 @@
                         "description": "Dirección del usuario",
                         "type": "string",
                         "example": "Valencia, calle 120, Venezuela",
-                        "nullable": false
-                    }
-                },
-                "type": "object"
-            },
-            "activarUserRequest": {
-                "properties": {
-                    "role": {
-                        "description": "Rol",
-                        "type": "string",
-                        "example": "Recolector",
                         "nullable": false
                     }
                 },

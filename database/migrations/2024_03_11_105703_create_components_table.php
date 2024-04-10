@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('raee_id')->constrained('raees', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('raee_id')->constrained('raees')->onDelete('cascade');
+            $table->foreignId('separated_by')->constrained('users', 'id');
             $table->string('name');
             $table->float('weight', 8, 2, true);
             $table->string('dimensions');
-            $table->boolean('reusable')->default(false);
-            $table->foreignId('separated_by')->constrained('users', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('observations', 300)->nullable();
+            $table->boolean('reusable')->default(true);
             $table->timestamps();
         });
     }

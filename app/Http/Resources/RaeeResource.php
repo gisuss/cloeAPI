@@ -16,6 +16,7 @@ class RaeeResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            'id' => $this->id,
             'model' => $this->model,
             'brand' => $this->marca->name,
             'linea' => $this->linea->name,

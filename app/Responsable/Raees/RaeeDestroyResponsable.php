@@ -3,7 +3,7 @@
 namespace App\Responsable\Raees;
 
 use Illuminate\Contracts\Support\Responsable;
-use App\Models\Raee;
+use App\Models\{Raee, User};
 use Illuminate\Support\Facades\{Auth, DB};
 use App\Helpers\StandardResponse;
 use Illuminate\Http\Response;
@@ -23,20 +23,26 @@ class RaeeDestroyResponsable implements Responsable
     public function toResponse($request) {
         try {
             DB::beginTransaction();
-                if (Auth::user()->enabled) {
+                $user = User::find(Auth::user()->id);
+                if ($user->enabled && $user->getRoleNames()[0] === 'Admin') {
                     $res = $this->repository->eliminarRaee($this->raee);
                 }else{
                     return response()->json([
+                        'message' => 'No estás habilitado para esta acción.',
                         'success' => false,
                         'code' =>  Response::HTTP_UNAUTHORIZED,
-                        'message' => 'No estás habilitado para esta acción.',
                         'data' => []
                     ],Response::HTTP_UNAUTHORIZED);
                 }
             DB::commit();
 			return $this->destroyResponse($res ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Throwable $e) {
-            throw $e;
+            return response()->json([
+                'message' => 'No se pudo eliminar el RAEE.',
+                'success' => false,
+                'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                'data' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

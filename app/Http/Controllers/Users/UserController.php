@@ -427,16 +427,6 @@ class UserController extends Controller
      * 
      * @param int $user
      * @return void
-     * @OA\Schema(
-     *    schema="activarUserRequest",
-     *    @OA\Property(
-     *        property="role",
-     *        type="string",
-     *        description="Rol",
-     *        nullable=false,
-     *        example="Recolector"
-     *    ),
-     * )
      * @OA\Post(
      *      path="/api/users/activate/{user}",
      *      tags={"Users"},
@@ -450,9 +440,6 @@ class UserController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer"),
      *         @OA\Examples(example="integer", value=1, summary="Introduce el número de id de un usuario.")
-     *     ),
-     *     @OA\RequestBody(
-     *        @OA\JsonContent(ref="#/components/schemas/activarUserRequest")
      *     ),
      *     @OA\Response(
      *         response=200,

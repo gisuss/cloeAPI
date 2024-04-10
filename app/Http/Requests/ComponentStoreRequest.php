@@ -27,6 +27,7 @@ class ComponentStoreRequest extends FormRequest
             'components.*.name' => ['required', 'string'],
             'components.*.weight' => ['required', 'numeric'],
             'components.*.dimensions' => ['required', 'string'],
+            'components.*.observations' => ['nullable', 'string', 'max:300'],
             'components.*.reusable' => ['required', 'boolean'],
             'components.*.materials' => ['required', 'array', 'min:1'],
             'components.*.materials.*' => ['required', 'integer', 'exists:materials,id'],
