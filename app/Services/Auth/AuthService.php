@@ -56,7 +56,8 @@ class AuthService
                     $array = [
                         'success' => true,
                         'token' => $token->plainTextToken,
-                        'role' => $user->getRoleNames()[0],
+                        'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                        'full_name' => $user->name . ' ' . $user->lastname,
                         'user_id' => $user->id,
                         'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
@@ -106,6 +107,42 @@ class AuthService
             $array = [
                 'success' => false,
                 'message' => 'Error al hacer logout.',
+                'code' => Response::HTTP_NOT_FOUND
+            ];
+        }
+
+        return $array;
+    }
+
+    public function refreshToken() : array {
+        $array = [];
+        $id = Auth::user()->id;
+        $user = User::where('id', $id)->first();
+
+        if (isset($user)) {
+            $user->tokens()->delete();
+            $token = $user->createToken("login-" . $user->username);
+    
+            $now = Carbon::now();
+            $expires_at = Carbon::parse($token->accessToken->expires_at);
+            $expires_in = $expires_at->diffInRealHours($now);
+    
+            $array = [
+                'success' => true,
+                'message' => 'Token refrescado exitosamente.',
+                'token' => $token->plainTextToken,
+                'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                'full_name' => $user->name . ' ' . $user->lastname,
+                'user_id' => $user->id,
+                'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
+                'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
+                'expiresIn' => $expires_in . " horas",
+                'code' => Response::HTTP_OK
+            ];
+        }else{
+            $array = [
+                'success' => false,
+                'message' => 'Opss, ha ocurrido un error. Por favor cierre su sesión actual.',
                 'code' => Response::HTTP_NOT_FOUND
             ];
         }

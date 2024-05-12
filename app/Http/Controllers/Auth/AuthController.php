@@ -181,4 +181,9 @@ class AuthController extends Controller
         $result = $this->service->resetPassword($request->validated(), $request);
         return response()->json($result);
     }
+
+    public function refreshToken() {
+        $result = $this->service->refreshToken();
+        return response()->json($result);
+    }
 }

@@ -31,6 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('reset-password', [App\Http\Controllers\Auth\AuthController::class, 'resetPassword']);
     
     Route::group( ['middleware' => ['auth:sanctum']], function() {
+        Route::post('refresh-token', [App\Http\Controllers\Auth\AuthController::class, 'refreshToken']);
         Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
         Route::get('is-logged-in', [App\Http\Controllers\Auth\AuthController::class, 'isLoggeIn']);
     });
