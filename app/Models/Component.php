@@ -40,4 +40,12 @@ class Component extends Model
     public function splitedBy() : BelongsTo {
         return $this->belongsTo(User::class, 'separated_by');
     }
+
+    public function scopeCentro($query, $centroID) {
+        $query->when($centroID ?? null, function($query, $centro) {
+            $query->whereHas('raee', function($query) use ($centro) {
+                $query->where('centro_id', $centro);
+            });
+        });
+    }
 }

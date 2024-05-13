@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Users;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\{UserUpdateRequest, FirstResetPasswordRequests, UserActivateRequest};
+use App\Models\{User};
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Responsable\Users\{ UserShowResponsable,UserDestroyResponsable, UserIndexResponsable,UserGetByRoleResponsable,
                             UserStoreResponsable, UserUpdateResponsable, UserDesactivateResponsable,UserActivateResponsable,
                             UserUpdatePasswordResponsable
                           };
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -489,5 +492,26 @@ class UserController extends Controller
     public function destroy(int $user)
     {
         return new UserDestroyResponsable($user);
+    }
+
+    public function reportPDF() {
+        $isAdmin = false;
+        $userAuth = User::where('id', Auth::user()->id)->first();
+
+        if ($userAuth->getRoleNames()[0] === 'Admin') {
+            $users = User::all();
+            $isAdmin = true;
+        }else{
+            $users = User::where(['centro_id' => $userAuth->centro_id, 'active' => true])->get();
+            $centro = $userAuth->centro->name;
+        }
+
+        if (isset($centro)) {
+            $pdf = Pdf::loadView('exports.PDFUsers', compact('users', 'isAdmin', 'centro'));
+        }else {
+            $pdf = Pdf::loadView('exports.PDFUsers', compact('users', 'isAdmin'));
+        }
+
+        return $pdf->download('reporte_de_usuarios.pdf');
     }
 }

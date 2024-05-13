@@ -25,6 +25,7 @@ class BaseResource extends JsonResource
             'estado' => $this->estado->estado,
             'municipio' => $this->municipio->municipio,
             'address' => $this->address,
+            'name' => $this->name,
             'description' => $this->description,
             'active' => $this->active ? 'Activo' : 'Inactivo',
         ];

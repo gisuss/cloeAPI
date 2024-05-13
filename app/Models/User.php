@@ -32,7 +32,6 @@ class User extends Authenticatable
         'username',
         'active',
         'password',
-        'active',
         'enabled',
         'estado_id',
         'municipio_id',

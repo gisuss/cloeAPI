@@ -161,33 +161,41 @@ class AuthService
         $email = trim(Str::lower($data['email']));
         $user = $this->userModel->where('email', $email)->first();
 
-        $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
-
-        if (isset($verify)) {
-            $verify->delete();
-        }
-
-        $pin = $this->generateRandomPIN(16);
-        $password_reset = DB::table('password_reset_tokens')->insert([
-            'email' => $email,
-            'token' =>  $pin,
-            'created_at' => Carbon::now()
-        ]);
-
-        if ($password_reset) {
-            // dispatch(new SendForgotPasswordMail($email, $token))->delay(now()->addSeconds(10));
-            Mail::to($email)->send(new ForgotPasswordMail($user, $pin));
+        if (isset($user)) {
+            $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
     
-            $array = [
-                'success' => true,
-                'message' => 'Te hemos enviado un email con un enlace para que reestablezcas tu contraseña.',
-                'code' => Response::HTTP_OK
-            ];
+            if (isset($verify)) {
+                $verify->delete();
+            }
+    
+            $pin = $this->generateRandomPIN(16);
+            $password_reset = DB::table('password_reset_tokens')->insert([
+                'email' => $email,
+                'token' =>  $pin,
+                'created_at' => Carbon::now()
+            ]);
+    
+            if ($password_reset) {
+                // dispatch(new SendForgotPasswordMail($email, $token))->delay(now()->addSeconds(10));
+                Mail::to($email)->send(new ForgotPasswordMail($user, $pin));
+        
+                $array = [
+                    'success' => true,
+                    'message' => 'Te hemos enviado un email con un enlace para que reestablezcas tu contraseña.',
+                    'code' => Response::HTTP_OK
+                ];
+            }else{
+                $array = [
+                    'success' => false,
+                    'message' => 'Oopss, ha ocurrido un error inesperado.',
+                    'code' => Response::HTTP_INTERNAL_SERVER_ERROR
+                ];
+            }
         }else{
             $array = [
                 'success' => false,
-                'message' => 'Oopss, ha ocurrido un error inesperado.',
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
+                'message' => 'Usuario no encontrado.',
+                'code' => Response::HTTP_NOT_FOUND
             ];
         }
         

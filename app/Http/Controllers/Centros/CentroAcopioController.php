@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Centros;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CentroAcopioUpdateRequest;
+use App\Models\{CentroAcopio, User};
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Responsable\CentrosAcopio\{CentrosAcopioStoreResponsable, CentrosAcopioDesactivateResponsable, CentrosAcopioUpdateResponsable, CentrosAcopioShowResponsable, CentrosAcopioIndexResponsable, CentrosAcopioActivateResponsable, CentrosAcopioFindResponsable};
+use Illuminate\Support\Facades\Auth;
 
 class CentroAcopioController extends Controller
 {
@@ -63,6 +66,13 @@ class CentroAcopioController extends Controller
      *        description="Municipio",
      *        nullable=false,
      *        example="90"
+     *    ),
+     *    @OA\Property(
+     *        property="name",
+     *        type="string",
+     *        description="nombre del centro de acopio",
+     *        nullable=false,
+     *        example="ECO RAEE"
      *    ),
      *    @OA\Property(
      *        property="description",
@@ -131,6 +141,13 @@ class CentroAcopioController extends Controller
      *        description="Municipio",
      *        nullable=false,
      *        example="86"
+     *    ),
+     *    @OA\Property(
+     *        property="name",
+     *        type="string",
+     *        description="Nombre del centro de acopio",
+     *        nullable=false,
+     *        example="Eco Raee"
      *    ),
      *    @OA\Property(
      *        property="description",
@@ -304,5 +321,24 @@ class CentroAcopioController extends Controller
      */
     public function desactivate(int $centro_id) {
         return new CentrosAcopioDesactivateResponsable($centro_id);
+    }
+
+    public function reportPDF() {
+        $isAdmin = false;
+        $userAuth = User::where('id', Auth::user()->id)->first();
+
+        if ($userAuth->getRoleNames()[0] === 'Admin') {
+            $centros = CentroAcopio::all();
+            $isAdmin = true;
+            $pdf = Pdf::loadView('exports.PDFCentros', compact('centros', 'isAdmin'));
+    
+            return $pdf->download('reporte_de_usuarios.pdf');
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Acceso no autorizado.',
+                'code' => 403
+            ], 403);
+        }  
     }
 }

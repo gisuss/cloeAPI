@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Raees;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RaeeUpdateRequest;
+use App\Models\{Raee, User};
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 use App\Responsable\Raees\{ RaeeStoreResponsable, RaeeIndexResponsable, RaeeShowResponsable, RaeeUpdateResponsable,
     RaeeDestroyResponsable
 };
@@ -270,5 +273,26 @@ class RaeeController extends Controller
     public function destroy(int $raee_id)
     {
         return new RaeeDestroyResponsable($raee_id);
+    }
+
+    public function reportPDF() {
+        $isAdmin = false;
+        $user = User::where('id', Auth::user()->id)->first();
+
+        if ($user->getRoleNames()[0] === 'Admin') {
+            $raees = Raee::all();
+            $isAdmin = true;
+        }else{
+            $raees = Raee::where('centro_id', $user->centro_id)->get();
+            $centro = $user->centro->name;
+        }
+
+        if (isset($centro)) {
+            $pdf = Pdf::loadView('exports.PDFRaee', compact('raees', 'isAdmin', 'centro'));
+        }else {
+            $pdf = Pdf::loadView('exports.PDFRaee', compact('raees', 'isAdmin'));
+        }
+
+        return $pdf->download('reporte_de_raee.pdf');
     }
 }

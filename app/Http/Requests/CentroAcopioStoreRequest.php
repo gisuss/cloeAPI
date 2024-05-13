@@ -21,6 +21,7 @@ class CentroAcopioStoreRequest extends FormRequest
             'estado_id' => 'identificador de estado',
             'municipio_id' => 'identificador de municipio',
             'description' => 'descripción del centro de acopio',
+            'name' => 'nombre del centro de acopio',
             'address' => 'dirección del centro de acopio',
         ];
     }
@@ -47,6 +48,9 @@ class CentroAcopioStoreRequest extends FormRequest
             'address.max' => 'La :attribute no debe superar los 300 caracteres.',
             'description.string' => 'La :attribute debe ser de tipo texto.',
             'description.max' => 'La :attribute no debe superar los 300 caracteres.',
+            'name.string' => 'El :attribute debe ser de tipo texto.',
+            'name.max' => 'El :attribute no debe superar los 150 caracteres.',
+            'name.unique' => 'El :attribute ya está en uso.',
         ];
     }
 
@@ -61,6 +65,7 @@ class CentroAcopioStoreRequest extends FormRequest
             'encargado_id' => 'required|numeric|exists:users,id',
             'estado_id' => 'required|numeric|exists:estados,id',
             'municipio_id' => 'required|numeric|exists:municipios,id',
+            'name' => 'required|string|max:150|unique:centro_acopios,name',
             'description' => 'nullable|string|max:300',
             'address' => 'required|string|max:300',
         ];

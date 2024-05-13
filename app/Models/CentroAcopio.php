@@ -23,6 +23,7 @@ class CentroAcopio extends Model
         'description',
         'address',
         'active',
+        'name'
     ];
 
     public function encargado() : BelongsTo {

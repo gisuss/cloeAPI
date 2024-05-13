@@ -17,6 +17,7 @@ class CentroAcopioSeeder extends Seeder
             'encargado_id' => 1,
             'estado_id' => 7,
             'municipio_id' => 86,
+            'name' => 'Eco RAEE',
             'description' => 'Centro de acopio principal de valencia norte',
             'address' => 'Valencia norte',
         ]);

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
             $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
             $table->string('description', 300)->nullable();
+            $table->string('name');
             $table->string('address', 300);
             $table->boolean('active')->default(true);
             $table->timestamps();

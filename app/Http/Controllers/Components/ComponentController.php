@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Components;
 
 use App\Http\Controllers\Controller;
+use App\Models\{Component, User};
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Responsable\Components\{ ComponentStoreResponsable, ComponentShowResponsable };
+use Illuminate\Support\Facades\Auth;
 
 class ComponentController extends Controller
 {
@@ -68,5 +71,30 @@ class ComponentController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function reportPDF() {
+        $isAdmin = false;
+        $userAuth = User::where('id', Auth::user()->id)->first();
+
+        if ($userAuth->getRoleNames()[0] === 'Admin') {
+            $componentes = Component::all();
+            $isAdmin = true;
+            $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin'));
+    
+            return $pdf->download('reporte_de_componentes.pdf');
+        }else if ($userAuth->getRoleNames()[0] === 'Separador') {
+            $componentes = Component::centro($userAuth->centro_id)->get();
+            $centro = $userAuth->centro->name;
+            $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin', 'centro'));
+    
+            return $pdf->download('reporte_de_componentes.pdf');
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Acceso no autorizado.',
+                'code' => 403
+            ], 403);
+        }
     }
 }
