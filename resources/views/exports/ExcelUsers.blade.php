@@ -1,19 +1,23 @@
 <table>
     <tr>
+        <th></th>
+    </tr>
+    <tr>
+        <th></th>
+        <th></th>
         <th colspan="2">
             <strong>Reporte de Usuarios registrados en sistema</strong>
         </th>
     </tr>
     <tr>
         <th></th>
+        <th></th>
+        <th colspan="2">
+            <strong>Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</strong>
+        </th>
     </tr>
     <tr>
-        <th></th>
-        <th>Reporte a la fecha</th>
-        <th>Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</th>
-    </tr>
-    <tr>
-        <th></th>
+        <th colspan="2"></th>
     </tr>
     <thead>
         <tr>

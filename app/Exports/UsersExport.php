@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithDrawings;
+use PhpOffice\PhpSpreadsheet\Style\{Alignment, Border, Color, Fill};
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawings
@@ -29,8 +30,53 @@ class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawing
     public function styles(Worksheet $sheet)
     {
         return [
-            // Style the first row as bold text.
-            5 => ['font' => ['size' => 16, 'bold' => true]],
+            // Styling an entire row.
+            2 => [
+                'font' => [
+                    'size' => 16, 'bold' => true
+                ]
+            ],
+            'A5:F5' => [
+                'font' => [
+                    'size' => 16, 'bold' => true
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ],
+                'borders' => [
+                    'bottom' => [
+                        'borderStyle' => Border::BORDER_MEDIUM,
+                        'color' => [
+                            'rgb' => '808080'
+                        ]
+                    ],
+                    'top' => [
+                        'borderStyle' => Border::BORDER_MEDIUM,
+                        'color' => [
+                            'rgb' => '808080'
+                        ]
+                    ],
+                    'left' => [
+                        'borderStyle' => Border::BORDER_MEDIUM,
+                        'color' => [
+                            'rgb' => '808080'
+                        ]
+                    ],
+                    'right' => [
+                        'borderStyle' => Border::BORDER_MEDIUM,
+                        'color' => [
+                            'rgb' => '808080'
+                        ]
+                    ],
+                ],
+                'fillType'   => Fill::FILL_GRADIENT_LINEAR,
+                'startColor' => ['argb' => Color::COLOR_RED],
+            ],
+
+            // Styling a specific cell by coordinate.
+            'C3' => ['font' => ['size' => 12, 'italic' => true]],
 
             // Styling an entire column.
             'A' => ['font' => ['size' => 14, 'bold' => true]],
@@ -44,7 +90,7 @@ class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawing
         $drawing->setDescription('This is my logo');
         $drawing->setPath(public_path() . '/images/logo/logo_cloe_positivo.png');
         $drawing->setHeight(35);
-        $drawing->setCoordinates('D2');
+        $drawing->setCoordinates('B2');
         return $drawing;
     }
 
