@@ -42,6 +42,7 @@ class UserRepository extends Repository
             'address' => $data['address'],
             'password' => Hash::make($pass),
             'username' => $this->setUsername($data['name'], $data['lastname']),
+            'active' => true,
             'email_verified_at' => Carbon::now(),
         ]);
 
