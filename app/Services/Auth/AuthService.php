@@ -8,7 +8,6 @@ use App\Mail\{ForgotPasswordMail, ResetPasswordMail};
 use App\Models\{User};
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\Http\Requests\ResetPasswordRequests;
 
 class AuthService
 {
@@ -43,26 +42,24 @@ class AuthService
                 ];
             }else{
                 if ($user->active) {
-                    if (config('app.env') === 'production') {
-                        $user->tokens()->delete();
-                    }
-                    
+                    $user->tokens()->delete();
                     $token = $user->createToken("login-" . $user->username);
         
-                    $now = Carbon::now();
-                    $expires_at = Carbon::parse($token->accessToken->expires_at);
-                    $expires_in = $expires_at->diffInRealHours($now);
+                    // $now = Carbon::now();
+                    // $expires_at = Carbon::parse($token->accessToken->expires_at);
+                    // $expires_in = $expires_at->diffInRealHours($now);
 
                     $array = [
                         'success' => true,
                         'token' => $token->plainTextToken,
                         'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
-                        'full_name' => $user->name . ' ' . $user->lastname,
+                        'full_name' => explode(' ', $user->name)[0] . ' ' . explode(' ', $user->lastname)[0],
                         'user_id' => $user->id,
-                        'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
+                        'active' => $user->active,
+                        // 'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                         'message' => 'Inicio de sesión exitoso.',
-                        'expiresIn' => $expires_in . " horas",
+                        // 'expiresIn' => $expires_in . " horas",
                         'code' => Response::HTTP_OK
                     ];
                 }else{
@@ -123,20 +120,21 @@ class AuthService
             $user->tokens()->delete();
             $token = $user->createToken("login-" . $user->username);
     
-            $now = Carbon::now();
-            $expires_at = Carbon::parse($token->accessToken->expires_at);
-            $expires_in = $expires_at->diffInRealHours($now);
+            // $now = Carbon::now();
+            // $expires_at = Carbon::parse($token->accessToken->expires_at);
+            // $expires_in = $expires_at->diffInRealHours($now);
     
             $array = [
                 'success' => true,
-                'message' => 'Token refrescado exitosamente.',
                 'token' => $token->plainTextToken,
                 'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
-                'full_name' => $user->name . ' ' . $user->lastname,
+                'full_name' => explode(' ', $user->name)[0] . ' ' . explode(' ', $user->lastname)[0],
                 'user_id' => $user->id,
-                'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
+                'active' => $user->active,
+                // 'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                 'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
-                'expiresIn' => $expires_in . " horas",
+                'message' => 'Inicio de sesión exitoso.',
+                // 'expiresIn' => $expires_in . " horas",
                 'code' => Response::HTTP_OK
             ];
         }else{

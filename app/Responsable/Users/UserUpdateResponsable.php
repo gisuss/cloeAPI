@@ -29,6 +29,7 @@ class UserUpdateResponsable implements Responsable
                 if (Auth::user()->enabled) {
                     $usuario = $this->repository->where('id', $this->user)->firstOrfail();
                     $cedula = Identification::find($usuario->ci_id);
+                    $res = true;
                     
                     if ($cedula->type <> $this->request['ci_type'] || $cedula->number <> $this->request['ci_number']) {
                         $cedula->update([
@@ -36,11 +37,28 @@ class UserUpdateResponsable implements Responsable
                             'number' => $this->request['ci_number'],
                         ]);
                     }
-    
-                    $update = $usuario->update(array_merge($this->request, [
-                        'ci_id' => $cedula->id,
-                        'enabled' => isset($this->request['centro_id']) ? true : false
-                    ]));
+
+                    if (isset($this->request['active'])) {
+                        if ($this->request['active'] === 1) {
+                            $res = $this->repository->activar($this->user);
+                        }else{
+                            $res = $this->repository->desactivar($this->user);
+                        }
+                    }
+
+                    if ($res) {
+                        $update = $usuario->update(array_merge($this->request, [
+                            'ci_id' => $cedula->id,
+                            'enabled' => isset($this->request['centro_id']) ? true : false
+                        ]));
+                    }else{
+                        return response()->json([
+                            'message' => 'No se puede actualizar el usuario.',
+                            'success' => false,
+                            'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                            'data' => [],
+                        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                    }
                 }else{
                     return response()->json([
                         'message' => 'No estás habilitado para esta acción.',

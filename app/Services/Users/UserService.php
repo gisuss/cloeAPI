@@ -3,9 +3,8 @@
 namespace App\Services\Users;
 
 use Illuminate\Http\{Request};
-use Illuminate\Support\Facades\{Auth,Mail};
+use Illuminate\Support\Facades\{Auth};
 use App\Models\{User};
-use App\Mail\{ZonaCoordinadorOutMail,RegionJefeOut,RegionAsistenteOut,SupervisorOutMail,EquipoLeaveFiscalMail};
 
 class UserService
 {

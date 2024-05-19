@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Users;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\{UserUpdateRequest, FirstResetPasswordRequests, UserActivateRequest};
 use App\Models\{User};
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Responsable\Users\{ UserShowResponsable,UserDestroyResponsable, UserIndexResponsable,UserGetByRoleResponsable,
                             UserStoreResponsable, UserUpdateResponsable, UserDesactivateResponsable,UserActivateResponsable,
                             UserUpdatePasswordResponsable
                           };
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -513,5 +515,9 @@ class UserController extends Controller
         }
 
         return $pdf->download('reporte_de_usuarios.pdf');
+    }
+
+    public function reportExcel() {
+        return Excel::download(new UsersExport, 'reporte_de_usuarios.xlsx');
     }
 }

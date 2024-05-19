@@ -28,6 +28,7 @@ class UserUpdateRequest extends FormRequest
             'estado_id' => 'identificador de estado',
             'municipio_id' => 'identificador de municipio',
             'centro_id' => 'identificador de centro de acopio',
+            'active' => 'actividad de usuario',
         ];
     }
 
@@ -65,6 +66,8 @@ class UserUpdateRequest extends FormRequest
             'ciudad_id.exists' => 'El :attribute es inválido.',
             'centro_id.numeric' => 'El :attribute debe ser numérico.',
             'centro_id.exists' => 'El :attribute es inválido.',
+            'active.numeric' => 'El valor de campo :attribute debe ser 1 o 0.',
+            'active.regex' => 'El valor de campo :attribute es inválido.',
         ];
     }
 
@@ -92,6 +95,7 @@ class UserUpdateRequest extends FormRequest
             'estado_id' => 'required|numeric|exists:estados,id',
             'municipio_id' => 'required|numeric|exists:municipios,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
+            'active' => 'nullable|numeric|regex:/^[10]$/'
         ];
     }
 }
