@@ -5,15 +5,11 @@ namespace App\Exports;
 use App\Models\{User};
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\{FromView, WithColumnWidths, WithStyles, WithDrawings, WithBackgroundColor};
+use PhpOffice\PhpSpreadsheet\Worksheet\{Drawing, Worksheet};
 use PhpOffice\PhpSpreadsheet\Style\{Alignment, Border, Color, Fill};
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawings
+class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawings, WithBackgroundColor
 {
     public function columnWidths(): array
     {
@@ -25,6 +21,11 @@ class UsersExport implements FromView, WithColumnWidths, WithStyles, WithDrawing
             'E' => 20,
             'F' => 15,
         ];
+    }
+
+    public function backgroundColor()
+    {
+        return '#EAE1E0';
     }
 
     public function styles(Worksheet $sheet)

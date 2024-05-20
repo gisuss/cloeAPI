@@ -34,16 +34,16 @@
     <tbody>
     @foreach($users as $user)
         <tr>
-            <td>{{ $user->id }}</td>
-            <td>{{ $user->name . ' ' . $user->lastname }}</td>
-            <td>{{ $user->email }}</td>
+            <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">{{ $user->id }}</td>
+            <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">{{ $user->name . ' ' . $user->lastname }}</td>
+            <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">{{ $user->email }}</td>
             @if ($isAdmin && $user->getRoleNames()[0] === 'Admin')
-                <td>-</td>
+                <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">-</td>
             @else
-                <td>{{ $user->centro->name }}</td>
+                <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">{{ $user->centro->name }}</td>
             @endif
-            <td>{{ $user->estado->estado }}</td>
-            <td>
+            <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">{{ $user->estado->estado }}</td>
+            <td align="center" style="border-bottom: 1px solid black; border-left: 1px solid black; border-right: 1px solid black;">
                 @if ($user->active === 1)
                     Activo
                 @else
