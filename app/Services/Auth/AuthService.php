@@ -52,7 +52,7 @@ class AuthService
                     $array = [
                         'success' => true,
                         'token' => $token->plainTextToken,
-                        'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                        'role' => $user->getRoleNames()[0],
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                         'message' => 'Inicio de sesión exitoso.',
                         // 'expiresIn' => $expires_in . " horas",
@@ -134,7 +134,7 @@ class AuthService
                     'estado' => $user->estado_id,
                     'municipio' => $user->municipio_id,
                     'address' => $user->address,
-                    'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                    'role' => $user->getRoleNames()[0],
                     'active' => $user->active,
                 ],
                 // 'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
@@ -174,7 +174,7 @@ class AuthService
                     'estado' => $user->estado_id,
                     'municipio' => $user->municipio_id,
                     'address' => $user->address,
-                    'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                    'role' => $user->getRoleNames()[0],
                     'active' => $user->active,
                 ],
                 'code' => Response::HTTP_OK
