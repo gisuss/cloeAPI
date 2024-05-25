@@ -85,6 +85,7 @@ class UserRepository extends Repository
         if ($user <> Auth::user()->id) {
             $usuario->update([
                 'active' => false,
+                'enabled' => false,
                 'remember_token' => null
             ]);
             $usuario->tokens()->delete();

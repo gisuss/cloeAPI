@@ -80,20 +80,20 @@ class UserUpdateRequest extends FormRequest
     {
         $identification = Identification::find(User::find($this->user)->ci_id);
         return [
-            'name' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'lastname' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'address' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
-            'email' => ['required', 'max:256', Rule::unique('users','email')->ignore($this->user)],
-            'ci_type' => 'required|in:V,E,P,J,G',
+            'name' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'lastname' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'address' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'email' => ['nullable', 'max:256', Rule::unique('users','email')->ignore($this->user)],
+            'ci_type' => 'nullable|in:V,E,P,J,G',
             'ci_number' => [
-                'required',
+                'nullable',
                 'string',
                 'min:7',
                 'max:9',
                 Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
             ],
-            'estado_id' => 'required|numeric|exists:estados,id',
-            'municipio_id' => 'required|numeric|exists:municipios,id',
+            'estado_id' => 'nullable|numeric|exists:estados,id',
+            'municipio_id' => 'nullable|numeric|exists:municipios,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
             'active' => 'nullable|numeric|regex:/^[10]$/'
         ];
