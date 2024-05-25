@@ -53,10 +53,6 @@ class AuthService
                         'success' => true,
                         'token' => $token->plainTextToken,
                         'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
-                        'full_name' => explode(' ', $user->name)[0] . ' ' . explode(' ', $user->lastname)[0],
-                        'user_id' => $user->id,
-                        'active' => $user->active,
-                        // 'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                         'message' => 'Inicio de sesión exitoso.',
                         // 'expiresIn' => $expires_in . " horas",
@@ -127,10 +123,20 @@ class AuthService
             $array = [
                 'success' => true,
                 'token' => $token->plainTextToken,
-                'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
-                'full_name' => explode(' ', $user->name)[0] . ' ' . explode(' ', $user->lastname)[0],
-                'user_id' => $user->id,
-                'active' => $user->active,
+                'user' => [
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'lastname' => $user->lastname,
+                    'cedula_type' => $user->cedula->type,
+                    'cedula_number' => $user->cedula->number,
+                    'email' => $user->email,
+                    'username' => $user->username,
+                    'estado' => $user->estado_id,
+                    'municipio' => $user->municipio_id,
+                    'address' => $user->address,
+                    'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                    'active' => $user->active,
+                ],
                 // 'enabled' => $user->getRoleNames()[0] === 'Admin' ? true : $user->enabled,
                 'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
                 'message' => 'Inicio de sesión exitoso.',
@@ -141,6 +147,42 @@ class AuthService
             $array = [
                 'success' => false,
                 'message' => 'Opss, ha ocurrido un error. Por favor cierre su sesión actual.',
+                'code' => Response::HTTP_NOT_FOUND
+            ];
+        }
+
+        return $array;
+    }
+    
+    public function profileInfo() : array {
+        $array = [];
+        $id = Auth::user()->id;
+        $user = User::where('id', $id)->first();
+
+        if (isset($user)) {
+            $array = [
+                'message' => 'Recurso obtenido con éxito.',
+                'success' => true,
+                'user' => [
+                    'user_id' => $user->id,
+                    'name' => $user->name,
+                    'lastname' => $user->lastname,
+                    'cedula_type' => $user->cedula->type,
+                    'cedula_number' => $user->cedula->number,
+                    'email' => $user->email,
+                    'username' => $user->username,
+                    'estado' => $user->estado_id,
+                    'municipio' => $user->municipio_id,
+                    'address' => $user->address,
+                    'role' => $user->getRoleNames()[0] === 'Admin' ? 'Administrador' : $user->getRoleNames()[0],
+                    'active' => $user->active,
+                ],
+                'code' => Response::HTTP_OK
+            ];
+        }else{
+            $array = [
+                'success' => false,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_NOT_FOUND
             ];
         }

@@ -59,4 +59,8 @@ class CentrosAcopioRepository extends Repository
             ? $this->model::with($relations)->filterLocation($filtersColumns)->orderBy('id', 'desc')->paginate($paginate)
             : $this->model::filterLocation($filtersColumns)->orderBy('id', 'desc')->paginate($paginate);
     }
+    
+    public function getWithoutPaginate($filtersColumns = []) {
+        return $this->model::filterLocation($filtersColumns)->orderBy('id', 'desc')->get();
+    }
 }

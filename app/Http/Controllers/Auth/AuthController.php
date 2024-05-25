@@ -186,4 +186,9 @@ class AuthController extends Controller
         $result = $this->service->refreshToken();
         return response()->json($result);
     }
+    
+    public function profileInfo() {
+        $result = $this->service->profileInfo();
+        return response()->json($result);
+    }
 }

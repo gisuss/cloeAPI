@@ -13,7 +13,7 @@
         <th></th>
         <th></th>
         <th colspan="2">
-            <strong>Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</strong>
+            <strong>Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</strong>
         </th>
     </tr>
     <tr>

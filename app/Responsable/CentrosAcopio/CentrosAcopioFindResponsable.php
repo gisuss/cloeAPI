@@ -23,7 +23,8 @@ class CentrosAcopioFindResponsable implements Responsable
     }
 
     public function toResponse($request) {
-        $res = $this->repository->paginate(null, request()->has('limit') ? request('limit') : 20, $this->request->filters);
+        // $res = $this->repository->paginate(null, request()->has('limit') ? request('limit') : 20, $this->request->filters);
+        $res = $this->repository->getWithoutPaginate($this->request->filters);
         return $this->indexResponse(CentroAcopioResource::collection($res));
     }
 }

@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'utils'], function () {
     Route::post('contact', [App\Http\Controllers\UtilsController::class, 'contact']);
     Route::get('estados', [App\Http\Controllers\UtilsController::class, 'states']);
-    Route::get('ciudades', [App\Http\Controllers\UtilsController::class, 'cities']);
+    Route::post('ciudades', [App\Http\Controllers\UtilsController::class, 'cities']);
     Route::get('municipios', [App\Http\Controllers\UtilsController::class, 'municipios']);
-    Route::get('centros', [App\Http\Controllers\Centros\CentroAcopioController::class, 'findByLocation']);
+    Route::post('centros', [App\Http\Controllers\Centros\CentroAcopioController::class, 'findByLocation']);
     Route::get('brands', [App\Http\Controllers\UtilsController::class, 'getBrands']);
     Route::get('lines', [App\Http\Controllers\UtilsController::class, 'getLineas']);
     Route::get('categories', [App\Http\Controllers\UtilsController::class, 'getCategories']);
@@ -32,6 +32,7 @@ Route::group(['prefix' => 'auth'], function () {
     
     Route::group( ['middleware' => ['auth:sanctum']], function() {
         Route::post('refresh-token', [App\Http\Controllers\Auth\AuthController::class, 'refreshToken']);
+        Route::get('profile-info', [App\Http\Controllers\Auth\AuthController::class, 'profileInfo']);
         Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
         Route::get('is-logged-in', [App\Http\Controllers\Auth\AuthController::class, 'isLoggeIn']);
     });
