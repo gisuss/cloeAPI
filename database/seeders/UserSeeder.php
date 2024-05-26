@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\{User};
+use App\Models\{CentroAcopio, User};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,10 +28,12 @@ class UserSeeder extends Seeder
             'enabled' => true,
         ]);
         $user->assignRole('Admin');
-        
+
+        // VALENCIA
+
         $user2 = User::create([
-            'name' => 'Encargado',
-            'lastname' => 'Cloe',
+            'name' => 'Encargado Juan',
+            'lastname' => 'Lopez',
             'ci_id' => 2,
             'email' => 'encargado@cloe.com',
             'address' => 'Valencia',
@@ -43,6 +45,19 @@ class UserSeeder extends Seeder
             'enabled' => true,
         ]);
         $user2->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user2->id,
+            'estado_id' => 7,
+            'municipio_id' => 90,
+            'name' => 'Eco RAEE',
+            'description' => 'Centro de acopio principal de valencia norte',
+            'address' => 'Valencia norte',
+        ]);
+
+        $user2->update([
+            'centro_id' => $centro->id
+        ]);
         
         $user3 = User::create([
             'name' => 'Clasificador',
@@ -56,6 +71,7 @@ class UserSeeder extends Seeder
             'estado_id' => 7,
             'municipio_id' => 77,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user3->assignRole('Clasificador');
         
@@ -71,6 +87,7 @@ class UserSeeder extends Seeder
             'estado_id' => 7,
             'municipio_id' => 90,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -86,6 +103,7 @@ class UserSeeder extends Seeder
             'estado_id' => 7,
             'municipio_id' => 90,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -101,36 +119,53 @@ class UserSeeder extends Seeder
             'estado_id' => 7,
             'municipio_id' => 90,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
+
+        // ARAGUA
 
         $user4 = User::create([
             'name' => 'Paul Jose',
             'lastname' => 'Reyes',
             'ci_id' => 7,
-            'email' => 'separador99@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'encargado99@cloe.com',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'jpreyes',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 43,
             'enabled' => true,
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user4->id,
+            'estado_id' => 4,
+            'municipio_id' => 36,
+            'name' => 'Eco RAEE - Girardot',
+            'description' => 'Centro de acopio zona centro de Girardot',
+            'address' => 'Calle Bolivar municipio Girardot, Edo. Aragua',
+        ]);
+
+        $user4->update([
+            'centro_id' => $centro->id
+        ]);
 
         $user4 = User::create([
             'name' => 'José Raul',
             'lastname' => 'Zaraza',
             'ci_id' => 8,
             'email' => 'separador89@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'rzaraza',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 52,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -138,83 +173,102 @@ class UserSeeder extends Seeder
             'name' => 'David',
             'lastname' => 'Suarez',
             'ci_id' => 9,
-            'email' => 'separador566@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'clasificador566@cloe.com',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'sdavid',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 51,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
 
         $user4 = User::create([
             'name' => 'Angela',
             'lastname' => 'Lopez',
             'ci_id' => 10,
             'email' => 'separador212@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'alopez',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 50,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
 
         $user4 = User::create([
             'name' => 'Freddymar Maria',
             'lastname' => 'Oropeza',
             'ci_id' => 11,
-            'email' => 'separador21@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'encargado021@cloe.com',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'ofreddy',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 51,
             'enabled' => true,
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user4->id,
+            'estado_id' => 4,
+            'municipio_id' => 51,
+            'name' => 'Eco RAEE - Tovar',
+            'description' => 'Centro de acopio zona centro de Tovar',
+            'address' => 'Calle Bolivar, municipio Tovar, Edo. Aragua',
+        ]);
+
+        $user4->update([
+            'centro_id' => $centro->id
+        ]);
 
         $user4 = User::create([
             'name' => 'Santiago',
             'lastname' => 'Laos',
             'ci_id' => 12,
-            'email' => 'separador34@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'clasificador0034@cloe.com',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'slaos',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 52,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
 
         $user4 = User::create([
             'name' => 'Yessica',
             'lastname' => 'Swan',
             'ci_id' => 13,
-            'email' => 'separador45@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'separadortovar45@cloe.com',
+            'address' => 'Aragua',
             'password'  =>  Hash::make('password'),
             'username' => 'yswan2',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 4,
+            'municipio_id' => 52,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
+
+        // DISTRITO CAPITAL
 
         $user4 = User::create([
             'name' => 'Daniela Josefa',
             'lastname' => 'Martinez',
             'ci_id' => 14,
             'email' => 'separador44@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Capital',
             'password'  =>  Hash::make('password'),
             'username' => 'dmartinez',
             'email_verified_at' => Carbon::now(),
@@ -222,20 +276,34 @@ class UserSeeder extends Seeder
             'municipio_id' => 90,
             'enabled' => true,
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user4->id,
+            'estado_id' => 24,
+            'municipio_id' => 462,
+            'name' => 'Eco RAEE - Libertador',
+            'description' => 'Centro de acopio zona centro de Capital',
+            'address' => 'Calle urdaneta, municipio libertador, dtto capital',
+        ]);
+
+        $user4->update([
+            'centro_id' => $centro->id
+        ]);
 
         $user4 = User::create([
             'name' => 'Mary',
             'lastname' => 'Lopez',
             'ci_id' => 15,
-            'email' => 'separador33@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'separador303@cloe.com',
+            'address' => 'Capital',
             'password'  =>  Hash::make('password'),
             'username' => 'mlopez2',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 24,
+            'municipio_id' => 462,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -243,44 +311,61 @@ class UserSeeder extends Seeder
             'name' => 'Maria Antonela',
             'lastname' => 'Lopez',
             'ci_id' => 16,
-            'email' => 'separador9@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'clasificador909@cloe.com',
+            'address' => 'Capital',
             'password'  =>  Hash::make('password'),
             'username' => 'malopez',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 24,
+            'municipio_id' => 462,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
+
+        // LARA
 
         $user4 = User::create([
             'name' => 'Yesenia',
             'lastname' => 'Durand',
             'ci_id' => 17,
-            'email' => 'separador8@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'encargado809@cloe.com',
+            'address' => 'Lara',
             'password'  =>  Hash::make('password'),
             'username' => 'ydurand2',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 12,
+            'municipio_id' => 152,
             'enabled' => true,
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user4->id,
+            'estado_id' => 12,
+            'municipio_id' => 144,
+            'name' => 'Eco RAEE - Andres Eloy Blanco',
+            'description' => 'Centro de acopio zona centro de Andres Eloy Blanco',
+            'address' => 'Calle urdaneta, municipio Andres Eloy Blanco, Lara',
+        ]);
+
+        $user4->update([
+            'centro_id' => $centro->id
+        ]);
 
         $user4 = User::create([
             'name' => 'Valeria',
             'lastname' => 'Carrazco',
             'ci_id' => 18,
-            'email' => 'separador7@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'separador711@cloe.com',
+            'address' => 'Lara',
             'password'  =>  Hash::make('password'),
             'username' => 'vcarrazco',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 12,
+            'municipio_id' => 147,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -288,14 +373,15 @@ class UserSeeder extends Seeder
             'name' => 'Carlos',
             'lastname' => 'Suarez',
             'ci_id' => 19,
-            'email' => 'separador6@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'separador6081@cloe.com',
+            'address' => 'Lara',
             'password'  =>  Hash::make('password'),
             'username' => 'scarlos3',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 12,
+            'municipio_id' => 150,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -303,59 +389,77 @@ class UserSeeder extends Seeder
             'name' => 'Paul Daniel',
             'lastname' => 'Clark Ramos',
             'ci_id' => 20,
-            'email' => 'separador5@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'clasificador605@cloe.com',
+            'address' => 'Lara',
             'password'  =>  Hash::make('password'),
             'username' => 'rpclark',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 12,
+            'municipio_id' => 152,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
 
         $user4 = User::create([
             'name' => 'Isamar',
             'lastname' => 'Uzcategui',
             'ci_id' => 21,
-            'email' => 'separador4@cloe.com',
-            'address' => 'Valencia',
+            'email' => 'clasificador704@cloe.com',
+            'address' => 'Lara',
             'password'  =>  Hash::make('password'),
             'username' => 'iuzcategui',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 12,
+            'municipio_id' => 145,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Clasificador');
+
+        // APURE
 
         $user4 = User::create([
             'name' => 'Daniela Avila',
             'lastname' => 'Rivas',
             'ci_id' => 22,
             'email' => 'separador1@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'San fernando',
             'password'  =>  Hash::make('password'),
             'username' => 'darivas1',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 3,
+            'municipio_id' => 35,
             'enabled' => true,
         ]);
-        $user4->assignRole('Separador');
+        $user4->assignRole('Encargado');
+
+        $centro = CentroAcopio::create([
+            'encargado_id' => $user4->id,
+            'estado_id' => 3,
+            'municipio_id' => 35,
+            'name' => 'Eco RAEE - San Fernando',
+            'description' => 'Centro de acopio zona centro de San fernando',
+            'address' => 'Calle bolivar, municipio San fernando, Apure',
+        ]);
+
+        $user4->update([
+            'centro_id' => $centro->id
+        ]);
 
         $user4 = User::create([
             'name' => 'Tomas',
             'lastname' => 'Lu',
             'ci_id' => 23,
             'email' => 'separador2@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Apure',
             'password'  =>  Hash::make('password'),
             'username' => 'lutomas',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 3,
+            'municipio_id' => 35,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
 
@@ -364,13 +468,14 @@ class UserSeeder extends Seeder
             'lastname' => 'Uribe',
             'ci_id' => 24,
             'email' => 'separador3@cloe.com',
-            'address' => 'Valencia',
+            'address' => 'Apure',
             'password'  =>  Hash::make('password'),
             'username' => 'luribe3',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 3,
+            'municipio_id' => 31,
             'enabled' => true,
+            'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
     }
