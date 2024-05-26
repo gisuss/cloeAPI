@@ -34,7 +34,7 @@ class User extends Authenticatable
         'password',
         'enabled',
         'estado_id',
-        'municipio_id',
+        'ciudad_id',
         'centro_id',
         'address',
         'email_verified_at'
@@ -87,8 +87,8 @@ class User extends Authenticatable
         return $this->belongsTo(Estado::class, 'estado_id');
     }
     
-    public function municipio() : BelongsTo {
-        return $this->belongsTo(Municipio::class, 'municipio_id');
+    public function ciudad() : BelongsTo {
+        return $this->belongsTo(Ciudad::class, 'ciudad_id');
     }
 
     public function raees() : HasMany {

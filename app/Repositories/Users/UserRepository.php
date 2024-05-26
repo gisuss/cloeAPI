@@ -36,7 +36,7 @@ class UserRepository extends Repository
             'ci_id' => $cedula->id,
             'email' => $data['email'],
             'estado_id' => $data['estado_id'],
-            'municipio_id' => $data['municipio_id'],
+            'ciudad_id' => $data['ciudad_id'],
             'centro_id' => isset($data['centro_id']) ? $data['centro_id'] : null,
             'enabled' => $data['role'] === 'Admin' ? true : (isset($data['centro_id']) ? true : false),
             'address' => $data['address'],

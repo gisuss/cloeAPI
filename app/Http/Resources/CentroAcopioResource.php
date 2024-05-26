@@ -18,7 +18,7 @@ class CentroAcopioResource extends JsonResource
         return [
             'centro_id' => $this->id,
             'estado' => $this->estado->estado,
-            'municipio' => $this->municipio->municipio,
+            'ciudad' => $this->ciudad->ciudad,
             'address' => $this->address,
             'name' => $this->name,
             'description' => $this->description,

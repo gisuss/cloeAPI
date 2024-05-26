@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'username' => $this->username,
             'estado' => $this->estado->estado,
-            'municipio' => $this->municipio->municipio,
+            'ciudad' => $this->ciudad->ciudad,
             'address' => $this->address,
             // 'enabled' => $this->enabled,
             'active' => ($this->active === 1) ? 1 : 0,

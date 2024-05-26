@@ -61,11 +61,11 @@ class CentroAcopioController extends Controller
      *        example="7"
      *    ),
      *    @OA\Property(
-     *        property="municipio_id",
+     *        property="ciudad_id",
      *        type="integer",
-     *        description="Municipio",
+     *        description="Ciudad",
      *        nullable=false,
-     *        example="90"
+     *        example="127"
      *    ),
      *    @OA\Property(
      *        property="name",
@@ -136,11 +136,11 @@ class CentroAcopioController extends Controller
      *        example="7"
      *    ),
      *    @OA\Property(
-     *        property="municipio_id",
+     *        property="ciudad_id",
      *        type="integer",
-     *        description="Municipio",
+     *        description="Ciudad",
      *        nullable=false,
-     *        example="86"
+     *        example="127"
      *    ),
      *    @OA\Property(
      *        property="name",

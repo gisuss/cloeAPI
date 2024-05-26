@@ -50,11 +50,11 @@ class AuthService
                     // $expires_in = $expires_at->diffInRealHours($now);
 
                     $array = [
+                        'message' => 'Inicio de sesión exitoso.',
                         'success' => true,
                         'token' => $token->plainTextToken,
                         'role' => $user->getRoleNames()[0],
                         'requireNewPassword' => (strtotime($user->updated_at) === strtotime($user->created_at)) ? true : false,
-                        'message' => 'Inicio de sesión exitoso.',
                         // 'expiresIn' => $expires_in . " horas",
                         'code' => Response::HTTP_OK
                     ];
@@ -132,7 +132,7 @@ class AuthService
                     'email' => $user->email,
                     'username' => $user->username,
                     'estado' => $user->estado_id,
-                    'municipio' => $user->municipio_id,
+                    'ciudad' => $user->ciudad_id,
                     'address' => $user->address,
                     'role' => $user->getRoleNames()[0],
                     'active' => $user->active,
@@ -172,7 +172,7 @@ class AuthService
                     'email' => $user->email,
                     'username' => $user->username,
                     'estado' => $user->estado_id,
-                    'municipio' => $user->municipio_id,
+                    'ciudad' => $user->ciudad_id,
                     'address' => $user->address,
                     'role' => $user->getRoleNames()[0],
                     'active' => $user->active,

@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 80,
+            'ciudad_id' => 124,
             'enabled' => true,
         ]);
         $user->assignRole('Admin');
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'username' => 'encargado',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'ciudad_id' => 122,
             'enabled' => true,
         ]);
         $user2->assignRole('Encargado');
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user2->id,
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'ciudad_id' => 127,
             'name' => 'Eco RAEE',
             'description' => 'Centro de acopio principal de valencia norte',
             'address' => 'Valencia norte',
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'username' => 'clasificador',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 77,
+            'ciudad_id' => 106,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
             'username' => 'separador',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'ciudad_id' => 122,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -101,7 +101,7 @@ class UserSeeder extends Seeder
             'username' => 'jlramos',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'ciudad_id' => 127,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -117,7 +117,7 @@ class UserSeeder extends Seeder
             'username' => 'wrivas',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
-            'municipio_id' => 90,
+            'ciudad_id' => 108,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -135,7 +135,7 @@ class UserSeeder extends Seeder
             'username' => 'jpreyes',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 43,
+            'ciudad_id' => 54,
             'enabled' => true,
         ]);
         $user4->assignRole('Encargado');
@@ -143,7 +143,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user4->id,
             'estado_id' => 4,
-            'municipio_id' => 36,
+            'ciudad_id' => 64,
             'name' => 'Eco RAEE - Girardot',
             'description' => 'Centro de acopio zona centro de Girardot',
             'address' => 'Calle Bolivar municipio Girardot, Edo. Aragua',
@@ -163,7 +163,7 @@ class UserSeeder extends Seeder
             'username' => 'rzaraza',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 52,
+            'ciudad_id' => 73,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -179,7 +179,7 @@ class UserSeeder extends Seeder
             'username' => 'sdavid',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 51,
+            'ciudad_id' => 69,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -195,7 +195,7 @@ class UserSeeder extends Seeder
             'username' => 'alopez',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 50,
+            'ciudad_id' => 72,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -211,7 +211,7 @@ class UserSeeder extends Seeder
             'username' => 'ofreddy',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 51,
+            'ciudad_id' => 72,
             'enabled' => true,
         ]);
         $user4->assignRole('Encargado');
@@ -219,7 +219,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user4->id,
             'estado_id' => 4,
-            'municipio_id' => 51,
+            'ciudad_id' => 59,
             'name' => 'Eco RAEE - Tovar',
             'description' => 'Centro de acopio zona centro de Tovar',
             'address' => 'Calle Bolivar, municipio Tovar, Edo. Aragua',
@@ -239,7 +239,7 @@ class UserSeeder extends Seeder
             'username' => 'slaos',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 52,
+            'ciudad_id' => 59,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -255,7 +255,7 @@ class UserSeeder extends Seeder
             'username' => 'yswan2',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 4,
-            'municipio_id' => 52,
+            'ciudad_id' => 59,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -272,8 +272,8 @@ class UserSeeder extends Seeder
             'password'  =>  Hash::make('password'),
             'username' => 'dmartinez',
             'email_verified_at' => Carbon::now(),
-            'estado_id' => 7,
-            'municipio_id' => 90,
+            'estado_id' => 24,
+            'ciudad_id' => 149,
             'enabled' => true,
         ]);
         $user4->assignRole('Encargado');
@@ -281,7 +281,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user4->id,
             'estado_id' => 24,
-            'municipio_id' => 462,
+            'ciudad_id' => 150,
             'name' => 'Eco RAEE - Libertador',
             'description' => 'Centro de acopio zona centro de Capital',
             'address' => 'Calle urdaneta, municipio libertador, dtto capital',
@@ -301,7 +301,7 @@ class UserSeeder extends Seeder
             'username' => 'mlopez2',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 24,
-            'municipio_id' => 462,
+            'ciudad_id' => 150,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -317,7 +317,7 @@ class UserSeeder extends Seeder
             'username' => 'malopez',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 24,
-            'municipio_id' => 462,
+            'ciudad_id' => 149,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -335,7 +335,7 @@ class UserSeeder extends Seeder
             'username' => 'ydurand2',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 12,
-            'municipio_id' => 152,
+            'ciudad_id' => 219,
             'enabled' => true,
         ]);
         $user4->assignRole('Encargado');
@@ -343,7 +343,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user4->id,
             'estado_id' => 12,
-            'municipio_id' => 144,
+            'ciudad_id' => 220,
             'name' => 'Eco RAEE - Andres Eloy Blanco',
             'description' => 'Centro de acopio zona centro de Andres Eloy Blanco',
             'address' => 'Calle urdaneta, municipio Andres Eloy Blanco, Lara',
@@ -363,7 +363,7 @@ class UserSeeder extends Seeder
             'username' => 'vcarrazco',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 12,
-            'municipio_id' => 147,
+            'ciudad_id' => 221,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -379,7 +379,7 @@ class UserSeeder extends Seeder
             'username' => 'scarlos3',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 12,
-            'municipio_id' => 150,
+            'ciudad_id' => 217,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -395,7 +395,7 @@ class UserSeeder extends Seeder
             'username' => 'rpclark',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 12,
-            'municipio_id' => 152,
+            'ciudad_id' => 215,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -411,7 +411,7 @@ class UserSeeder extends Seeder
             'username' => 'iuzcategui',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 12,
-            'municipio_id' => 145,
+            'ciudad_id' => 221,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -429,7 +429,7 @@ class UserSeeder extends Seeder
             'username' => 'darivas1',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 3,
-            'municipio_id' => 35,
+            'ciudad_id' => 52,
             'enabled' => true,
         ]);
         $user4->assignRole('Encargado');
@@ -437,7 +437,7 @@ class UserSeeder extends Seeder
         $centro = CentroAcopio::create([
             'encargado_id' => $user4->id,
             'estado_id' => 3,
-            'municipio_id' => 35,
+            'ciudad_id' => 52,
             'name' => 'Eco RAEE - San Fernando',
             'description' => 'Centro de acopio zona centro de San fernando',
             'address' => 'Calle bolivar, municipio San fernando, Apure',
@@ -457,7 +457,7 @@ class UserSeeder extends Seeder
             'username' => 'lutomas',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 3,
-            'municipio_id' => 35,
+            'ciudad_id' => 49,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);
@@ -473,7 +473,7 @@ class UserSeeder extends Seeder
             'username' => 'luribe3',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 3,
-            'municipio_id' => 31,
+            'ciudad_id' => 48,
             'enabled' => true,
             'centro_id' => $centro->id
         ]);

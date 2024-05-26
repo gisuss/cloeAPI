@@ -23,7 +23,7 @@ class BaseResource extends JsonResource
                 'cedula' => $this->encargado->cedula->type . '-' . $this->encargado->cedula->number,
             ],
             'estado' => $this->estado->estado,
-            'municipio' => $this->municipio->municipio,
+            'ciudad' => $this->ciudad->ciudad,
             'address' => $this->address,
             'name' => $this->name,
             'description' => $this->description,

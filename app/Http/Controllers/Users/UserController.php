@@ -102,11 +102,11 @@ class UserController extends Controller
      *        example="7"
      *    ),
      *    @OA\Property(
-     *        property="municipio_id",
+     *        property="ciudad_id",
      *        type="integer",
-     *        description="ID de municipio",
+     *        description="ID de ciudad",
      *        nullable=false,
-     *        example="86"
+     *        example="124"
      *    ),
      *    @OA\Property(
      *        property="address",
@@ -300,11 +300,11 @@ class UserController extends Controller
      *        example="7"
      *    ),
      *    @OA\Property(
-     *        property="municipio_id",
+     *        property="ciudad_id",
      *        type="integer",
-     *        description="ID de municipio",
+     *        description="ID de ciudad",
      *        nullable=false,
-     *        example="86"
+     *        example="124"
      *    ),
      *    @OA\Property(
      *        property="address",

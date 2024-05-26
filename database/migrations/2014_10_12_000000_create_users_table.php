@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->foreignId('ci_id')->constrained('identifications', 'id');
             $table->foreignId('estado_id')->nullable()->constrained('estados', 'id')->nullOnDelete();
-            $table->foreignId('municipio_id')->nullable()->constrained('municipios', 'id')->nullOnDelete();
+            $table->foreignId('ciudad_id')->nullable()->constrained('ciudades', 'id')->nullOnDelete();
             $table->string('address');
             $table->boolean('active')->default(true);
             $table->boolean('enabled')->default(false);

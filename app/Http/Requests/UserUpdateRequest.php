@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
             'ci_type' => 'tipo de documento de identificación',
             'ci_number' => 'número del documento de identificación',
             'estado_id' => 'identificador de estado',
-            'municipio_id' => 'identificador de municipio',
+            'ciudad_id' => 'identificador de ciudad',
             'centro_id' => 'identificador de centro de acopio',
             'active' => 'actividad de usuario',
             'role' => 'rol de usuario',
@@ -103,7 +103,7 @@ class UserUpdateRequest extends FormRequest
                 Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
             ],
             'estado_id' => 'nullable|numeric|exists:estados,id',
-            'municipio_id' => 'nullable|numeric|exists:municipios,id',
+            'ciudad_id' => 'nullable|numeric|exists:ciudades,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
             'active' => 'nullable|numeric|regex:/^[10]$/',
             'role' => 'nullable|string|exists:roles,name',

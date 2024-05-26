@@ -26,7 +26,7 @@ class UserStoreRequest extends FormRequest
             'ci_type' => 'tipo de documento de identificación',
             'ci_number' => 'número del documento de identificación',
             'estado_id' => 'identificador de estado',
-            'municipio_id' => 'identificador de municipio',
+            'ciudad_id' => 'identificador de ciudad',
             'centro_id' => 'identificador de centro de acopio',
         ];
     }
@@ -91,7 +91,7 @@ class UserStoreRequest extends FormRequest
                 Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))
             ],
             'estado_id' => 'required|numeric|exists:estados,id',
-            'municipio_id' => 'required|numeric|exists:municipios,id',
+            'ciudad_id' => 'required|numeric|exists:ciudades,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
           ];
     }

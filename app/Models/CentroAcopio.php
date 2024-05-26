@@ -19,7 +19,7 @@ class CentroAcopio extends Model
     protected $fillable = [
         'encargado_id',
         'estado_id',
-        'municipio_id',
+        'ciudad_id',
         'description',
         'address',
         'active',
@@ -34,8 +34,8 @@ class CentroAcopio extends Model
         return $this->belongsTo(Estado::class, 'estado_id');
     }
 
-    public function municipio() : BelongsTo {
-        return $this->belongsTo(Municipio::class, 'municipio_id');
+    public function ciudad() : BelongsTo {
+        return $this->belongsTo(Ciudad::class, 'ciudad_id');
     }
 
     public function raees() : HasMany {
@@ -49,8 +49,8 @@ class CentroAcopio extends Model
     public function scopeFilterLocation($query, $filters) {
         $query->when($filters['estado_id'] ?? null, function($query, $estadoID) {
             $query->where('estado_id', $estadoID);
-        })->when($filters['municipio_id'] ?? null, function($query, $municipioID) {
-            $query->where('municipio_id', $municipioID);
+        })->when($filters['ciudad_id'] ?? null, function($query, $ciudadID) {
+            $query->where('ciudad_id', $ciudadID);
         })->where('active', true);
     }
 }
