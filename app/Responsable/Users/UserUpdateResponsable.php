@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use App\Repositories\Users\UserRepository;
 use App\Helpers\StandardResponse;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\{Auth, DB};
+use Illuminate\Support\Facades\{Auth, DB, Hash};
 
 class UserUpdateResponsable implements Responsable
 {
@@ -28,6 +28,11 @@ class UserUpdateResponsable implements Responsable
             DB::beginTransaction();
                 if (Auth::user()->enabled) {
                     $usuario = $this->repository->where('id', $this->user)->firstOrfail();
+                    $userAuth = $this->repository->where('id', Auth::user()->id)->firstOrfail();
+
+                    if ($userAuth->hasRole('Admin') && isset($this->request['role'])) {
+                        $usuario->syncRoles([$this->request['role']]);
+                    }
 
                     if (isset($this->request['active'])) {
                         if ($this->request['active'] === 1) {
@@ -36,9 +41,8 @@ class UserUpdateResponsable implements Responsable
                             $res = $this->repository->desactivar($this->user);
                         }
                     }else{
-                        $cedula = Identification::find($usuario->ci_id);
-
                         if (isset($this->request['ci_type']) || isset($this->request['ci_number'])) {
+                            $cedula = Identification::find($usuario->ci_id);
                             if (isset($this->request['ci_type'])) {
                                 if ($cedula->type <> $this->request['ci_type']) {
                                     $cedula->update([
@@ -56,7 +60,13 @@ class UserUpdateResponsable implements Responsable
                             }
                         }
 
-                        $update = $usuario->update($this->request);
+                        if (isset($this->request['password'])) {
+                            $update = $usuario->update(array_merge($this->request, ['password' => Hash::make($this->request['password'])]));
+                        }elseif (empty($this->request) || isset($this->request['role'])) {
+                            $update = true;
+                        }else{
+                            $update = $usuario->update($this->request);
+                        }
                     }
                 }else{
                     return response()->json([

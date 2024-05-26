@@ -29,6 +29,9 @@ class UserUpdateRequest extends FormRequest
             'municipio_id' => 'identificador de municipio',
             'centro_id' => 'identificador de centro de acopio',
             'active' => 'actividad de usuario',
+            'role' => 'rol de usuario',
+            'password' => 'nueva contraseña',
+            'confirm_password' => 'confirmación de nueva contraseña',
         ];
     }
 
@@ -68,6 +71,13 @@ class UserUpdateRequest extends FormRequest
             'centro_id.exists' => 'El :attribute es inválido.',
             'active.numeric' => 'El valor de campo :attribute debe ser 1 o 0.',
             'active.regex' => 'El valor de campo :attribute es inválido.',
+            'password.required' => 'La :attribute es requerida.',
+            'password.min' => 'La :attribute debe contener al menos 8 caracteres.',
+            'password.max' => 'La :attribute solo debe contener hasta 16 caracteres.',
+            'confirm_password.required' => 'La :attribute es requerida.',
+            'confirm_password.same' => 'Las contraseñas deben coincidir.',
+            'role.exists' => 'El :attribute no es válido.',
+            'role.string' => 'El :attribute debe ser de tipo string.',
         ];
     }
 
@@ -95,7 +105,10 @@ class UserUpdateRequest extends FormRequest
             'estado_id' => 'nullable|numeric|exists:estados,id',
             'municipio_id' => 'nullable|numeric|exists:municipios,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
-            'active' => 'nullable|numeric|regex:/^[10]$/'
+            'active' => 'nullable|numeric|regex:/^[10]$/',
+            'role' => 'nullable|string|exists:roles,name',
+            'password' => 'nullable|min:8|max:16',
+            'confirm_password' => 'nullable|same:password',
         ];
     }
 }
