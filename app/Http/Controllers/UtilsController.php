@@ -76,9 +76,8 @@ class UtilsController extends Controller
      */
     public function contact(ContactRequest $request) {
         try {
-            $emailCloe = 'support.cloe@gmail.com';
             $data = $request->validated();
-            Mail::to($emailCloe)->send(new ContactMail($data));
+            Mail::to('hello@cloe.com')->send(new ContactMail($data));
     
             return response()->json([
                 'success' => true,
@@ -88,7 +87,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'El mensaje no pudo ser enviado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }

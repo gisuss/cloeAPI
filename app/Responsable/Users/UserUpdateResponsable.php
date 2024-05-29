@@ -98,6 +98,7 @@ class UserUpdateResponsable implements Responsable
 
             if (isset($update)) {
                 if ($update) {
+                    $usuario = $this->repository->where('id', $this->user)->firstOrfail();
                     return $this->updateResponse(UserResource::make($usuario), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
                 }else{
                     return response()->json([

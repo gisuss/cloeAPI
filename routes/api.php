@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::put('update/{user}', [App\Http\Controllers\Users\UserController::class, 'update']);
         Route::post('activate/{user}', [App\Http\Controllers\Users\UserController::class, 'activarUser']);
         Route::post('desactivate/{user}', [App\Http\Controllers\Users\UserController::class, 'desactivarUser']);
-        Route::get('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
+        Route::post('getByRoleName', [App\Http\Controllers\Users\UserController::class, 'getUsersByRole']);
         Route::post('first-reset-password/{user}', [App\Http\Controllers\Users\UserController::class, 'firstResetPassword']);
         Route::delete('delete/{user}', [App\Http\Controllers\Users\UserController::class, 'destroy']);
     });

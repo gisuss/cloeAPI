@@ -3,7 +3,7 @@
 namespace App\Responsable\Raees;
 
 use Illuminate\Contracts\Support\Responsable;
-use App\Models\Raee;
+use App\Models\{Raee, User};
 use Illuminate\Http\Response;
 use App\Http\Requests\RaeeStoreRequest;
 use App\Repositories\Raees\RaeeRepository;
@@ -25,20 +25,30 @@ class RaeeStoreResponsable implements Responsable
 
     public function toResponse($request) {
         try {
+            $userAuth = User::where('id', Auth::user()->id)->firstOrFail();
             DB::beginTransaction();
-                if (Auth::user()->enabled) {
-                    $raee = Raee::create([
-                        'brand_id' => $this->data['brand_id'],
-                        'line_id' => $this->data['line_id'],
-                        'category_id' => $this->data['category_id'],
-                        'model' => $this->data['model'],
-                        'information' => isset($this->data['information']) ? $this->data['information'] : null,
-                        'clasified_by' => Auth::user()->id,
-                        'centro_id' => Auth::user()->centro_id,
-                        'status' => 'Clasificado',
-                    ]);
-
-                    $res = Raee::findOrFail($raee->id);
+                if ($userAuth->enabled) {
+                    if ($userAuth->getRoleNames()[0] <> 'Admin') {
+                        $raee = Raee::create([
+                            'brand_id' => $this->data['brand_id'],
+                            'line_id' => $this->data['line_id'],
+                            'category_id' => $this->data['category_id'],
+                            'model' => $this->data['model'],
+                            'information' => isset($this->data['information']) ? $this->data['information'] : null,
+                            'clasified_by' => $userAuth->id,
+                            'centro_id' => $userAuth->centro_id,
+                            'status' => 'Clasificado',
+                        ]);
+    
+                        $res = Raee::findOrFail($raee->id);
+                    }else{
+                        return response()->json([
+                            'message' => 'No estás habilitado para esta acción.',
+                            'success' => false,
+                            'code' =>  Response::HTTP_UNAUTHORIZED,
+                            'data' => []
+                        ],Response::HTTP_UNAUTHORIZED);
+                    }
                 }else{
                     return response()->json([
                         'message' => 'No estás habilitado para esta acción.',
