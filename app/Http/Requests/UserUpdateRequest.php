@@ -88,7 +88,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $identification = Identification::find(User::find($this->user)->ci_id);
+        // $identification = Identification::find(User::find($this->user)->ci_id);
         return [
             'name' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
             'lastname' => 'nullable|string|max:255|regex:/^[\pL\s\-]+$/u',
@@ -100,7 +100,9 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 'min:7',
                 'max:9',
-                Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
+                // 'unique:identifications,number,auth()->user()->id,user',
+                'unique:users,email,' . auth()->user()->id . ',' . 'id',
+                // Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
             ],
             'estado_id' => 'nullable|numeric|exists:estados,id',
             'ciudad_id' => 'nullable|numeric|exists:ciudades,id',

@@ -27,7 +27,7 @@ class BaseResource extends JsonResource
             'address' => $this->address,
             'name' => $this->name,
             'description' => $this->description,
-            'active' => $this->active,
+            'active' => $this->active ? 1 : 0,
         ];
     }
 }

@@ -19,7 +19,7 @@ class CentrosAcopioRepository extends Repository
      * @param array $data
      */
     public function register(array $data) {
-        $centro = $this->model->create($data);
+        $centro = $this->model->create(array_merge($data, ['active' => true]));
         
         if (isset($centro)) {
             $user = User::find($data['encargado_id']);
