@@ -44,4 +44,24 @@ class ComponentRepository extends Repository
             ? $this->model::with($relations)->orderBy('id', 'desc')->paginate($paginate)
             : $this->model::orderBy('id', 'desc')->paginate($paginate);
     }
+    
+    public function paginateByTypes($paginate = 20, $type) {        
+        switch ($type) {
+            case 1:
+                $res = Raee::orderBy('id', 'desc')->paginate($paginate);
+                break;
+            case 2:
+                $res = Raee::where('status', 'Clasificado')->orderBy('id', 'desc')->paginate($paginate);
+                break;
+            case 3:
+                $res = Raee::where('status', 'Separado')->orderBy('id', 'desc')->paginate($paginate);
+                break;
+            
+            default:
+                $res = [];
+                break;
+        }
+
+        return $res;
+    }
 }

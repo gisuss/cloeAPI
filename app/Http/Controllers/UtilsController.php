@@ -6,7 +6,7 @@ use Illuminate\Http\{Request, Response};
 use App\Http\Requests\ContactRequest;
 use Illuminate\Support\Facades\{Auth, Mail};
 use App\Mail\ContactMail;
-use App\Models\{Brand, Category, Ciudad, Estado, Line, Municipio, User};
+use App\Models\{Brand, Category, Ciudad, Estado, Line, Material, Municipio, Proceso, User};
 use Spatie\Permission\Models\Role;
 
 class UtilsController extends Controller
@@ -133,7 +133,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -183,7 +183,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -233,7 +233,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -288,9 +288,9 @@ class UtilsController extends Controller
             ],Response::HTTP_OK);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th,
-                'data' => [],
                 'success' => false,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
+                'data' => [],
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -339,7 +339,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -388,7 +388,7 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }
@@ -437,7 +437,61 @@ class UtilsController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
-                'message' => $th,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
+            ]);
+        }
+    }
+
+    public function getMaterials() {
+        try {
+            $data = [];
+            $materials = Material::get();
+
+            foreach ($materials as $material) {
+                $data[] = [
+                    'id' => $material->id,
+                    'name' => $material->name,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Recurso obtenido con éxito.',
+                'data' => $data
+            ],Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR
+            ]);
+        }
+    }
+    
+    public function getProcesses() {
+        try {
+            $data = [];
+            $procesos = Proceso::get();
+
+            foreach ($procesos as $proceso) {
+                $data[] = [
+                    'id' => $proceso->id,
+                    'name' => $proceso->name,
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Recurso obtenido con éxito.',
+                'data' => $data
+            ],Response::HTTP_OK);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Opss, ha ocurrido un error inesperado.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR
             ]);
         }

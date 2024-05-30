@@ -23,6 +23,8 @@ Route::group(['prefix' => 'utils'], function () {
     Route::get('brands', [App\Http\Controllers\UtilsController::class, 'getBrands']);
     Route::get('lines', [App\Http\Controllers\UtilsController::class, 'getLineas']);
     Route::get('categories', [App\Http\Controllers\UtilsController::class, 'getCategories']);
+    Route::get('materiales', [App\Http\Controllers\UtilsController::class, 'getMaterials']);
+    Route::get('procesos', [App\Http\Controllers\UtilsController::class, 'getProcesses']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
@@ -81,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     // MODULO DE SEPARACION
     Route::group(['prefix' => 'split'], function () {
+        Route::get('index', [App\Http\Controllers\Components\ComponentController::class, 'index']);
         Route::get('report-pdf', [App\Http\Controllers\Components\ComponentController::class, 'reportPDF']);
         Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
