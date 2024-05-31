@@ -9,7 +9,7 @@ use App\Models\{Component, User};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Responsable\Elements\{ ElementIndexResponsable, ElementUpdateResponsable };
+use App\Responsable\Elements\{ ElementIndexResponsable, ElementUpdateResponsable, ElementDestroyResponsable };
 use Illuminate\Support\Facades\Auth;
 
 class ElementController extends Controller
@@ -24,9 +24,14 @@ class ElementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(int $user, ElementUpdateRequest $request)
+    public function update(int $component_id, ElementUpdateRequest $request)
     {
-        return new ElementUpdateResponsable($user, $request->validated());
+        return new ElementUpdateResponsable($component_id, $request->validated());
+    }
+
+    public function destroy(int $component_id)
+    {
+        return new ElementDestroyResponsable($component_id);
     }
 
     public function reportPDF() {

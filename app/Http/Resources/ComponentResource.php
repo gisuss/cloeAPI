@@ -36,6 +36,7 @@ class ComponentResource extends JsonResource
             'weight' => $this->weight,
             'dimensions' => $this->dimensions,
             'reusable' => $this->reusable ? 1 : 0,
+            'observations' => $this->observations,
             'materials' => $materials,
             'process' => $procesos,
         ];
