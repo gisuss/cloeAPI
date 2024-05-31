@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories\Components;
+namespace App\Repositories\Elements;
 
 use App\Models\{Component, Raee};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\{Auth};
 
-class ComponentRepository extends Repository
+class ElementRepository extends Repository
 {
     public function __construct(Component $model, array $relations = [])
     {
@@ -45,7 +45,7 @@ class ComponentRepository extends Repository
             : $this->model::orderBy('id', 'desc')->paginate($paginate);
     }
     
-    public function paginateByTypes($paginate = 20, $type = 1) {        
+    public function paginateByTypes($paginate = 20, $type) {        
         switch ($type) {
             case 1:
                 $res = Raee::orderBy('id', 'desc')->paginate($paginate);
@@ -60,16 +60,6 @@ class ComponentRepository extends Repository
             default:
                 $res = [];
                 break;
-        }
-
-        return $res;
-    }
-    
-    public function ComponentPaginate($paginate = 20, $centroAuthId) {
-        if (isset($raeeAuthId)) {
-            $res = $this->model::centro($centroAuthId)->orderBy('id', 'desc')->paginate($paginate);
-        }else{
-            $res = $this->model::orderBy('id', 'desc')->paginate($paginate);
         }
 
         return $res;

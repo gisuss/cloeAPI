@@ -17,7 +17,7 @@
     @else
         <div class="mb-4">
             <p class="h3 text-right mb-0">Reporte de RAEE - Centro {{ $centro }}</p>
-            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</p>
+            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @endif
     

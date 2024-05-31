@@ -12,12 +12,12 @@
     @if ($isAdmin)
         <div class="mb-4">
             <p class="h3 text-right mb-0">Reporte general de componentes</p>
-            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</p>
+            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @else
         <div class="mb-4">
             <p class="h3 text-right mb-0">Reporte de componentes - Centro {{ $centro }}</p>
-            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y h:m a') }}</p>
+            <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @endif
     
@@ -27,8 +27,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Peso</th>
                 <th scope="col">Generado por</th>
+                <th scope="col">Fecha</th>
                 <th scope="col">¿Reusable?</th>
             </tr>
         </thead>
@@ -37,8 +37,8 @@
                 <tr>
                     <th scope="row">{{ $componente->id }}</th>
                     <td>{{ $componente->name }}</th>
-                    <td>{{ $componente->peso }}</td>
                     <td>{{ $componente->splitedBy->name . ' ' . $componente->splitedBy->lastname }}</td>
+                    <td>{{ $componente->created_at->format('d-m-Y') }}</td>
                     <td>
                         @if ($componente->reusable === 1)
                             <span class="badge badge-pill badge-success">Si</span>

@@ -88,6 +88,17 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
     });
+    
+    // MODULO DE COMPONENTES
+    Route::group(['prefix' => 'components'], function () {
+        Route::get('index', [App\Http\Controllers\Elements\ElementController::class, 'index']);
+        Route::get('report-pdf', [App\Http\Controllers\Elements\ElementController::class, 'reportPDF']);
+        Route::get('report-excel', [App\Http\Controllers\Elements\ElementController::class, 'reportExcel']);
+        Route::post('store', [App\Http\Controllers\Elements\ElementController::class, 'store']);
+        Route::get('show/{raee_id}', [App\Http\Controllers\Elements\ElementController::class, 'show']);
+        Route::put('update/{component_id}', [App\Http\Controllers\Elements\ElementController::class, 'update']);
+        Route::delete('delete/{component_id}', [App\Http\Controllers\Elements\ElementController::class, 'destroy']);
+    });
 });
 
 // API RESOURCES

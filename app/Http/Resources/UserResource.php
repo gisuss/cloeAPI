@@ -29,7 +29,7 @@ class UserResource extends JsonResource
             'ciudad' => $this->ciudad->ciudad,
             'address' => $this->address,
             // 'enabled' => $this->enabled,
-            'active' => ($this->active === 1) ? 1 : 0,
+            'active' => $this->active ? 1 : 0,
             'role' => $user->getRoleNames()[0],
             'centro_id' => $user->getRoleNames()[0] === 'Admin' ? null : $user->centro_id,
             'centro_name' => $user->getRoleNames()[0] === 'Admin' ? null : $user->centro->name,

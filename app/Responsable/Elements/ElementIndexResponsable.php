@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Responsable\Components;
+namespace App\Responsable\Elements;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use App\Repositories\Components\ComponentRepository;
 use App\Helpers\StandardResponse;
-use App\Http\Resources\{RaeeResource};
+use App\Http\Resources\{ComponentResource, RaeeResource};
 use App\Models\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
 
-class ComponentIndexResponsable implements Responsable
+class ElementIndexResponsable implements Responsable
 {
     use StandardResponse;
     protected ComponentRepository $repository;
@@ -23,7 +23,7 @@ class ComponentIndexResponsable implements Responsable
     }
 
     public function toResponse($request) {
-        $res = $this->repository->paginateByTypes(request()->has('limit') ? request('limit') : 20, $this->request->type);
-        return $this->indexResponse(RaeeResource::collection($res));
+        $res = $this->repository->ComponentPaginate(request()->has('limit') ? request('limit') : 20, Auth::user()->centro_id);
+        return $this->indexResponse(ComponentResource::collection($res));
     }
 }
