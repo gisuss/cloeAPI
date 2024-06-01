@@ -1,25 +1,15 @@
 <x-mail::message>
 # ¡Saludos👋!<br>
-Estás recibiendo este correo electrónico porque se ha registrado una solicitud de contacto de parte de {{ $data->name }} con la siguiente información:
+Estás recibiendo este correo electrónico porque se ha registrado una solicitud de contacto con la siguiente información:
 
 <x-mail::panel>
-
-<x-mail::table>
-| E-mail         | Ciudad  |
-|:-------------:| :--------:|
-| {{ $data->email }} | {{ $data->city }} |
-</x-mail::table>
-
-<x-mail::table>
-| Mensaje       |
-| :-------------: |
-| {{ $data->menssage }} |
-</x-mail::table>
-
+Nombre: {{ $data['name'] }} <br>
+Email: {{ $data['email'] }} <br>
+Teléfono: {{ $data['phone'] }} <br>
+Ciudad: {{ $data['city'] }} <br>
+Mensaje: {{ $data['message'] }} <br>
 </x-mail::panel>
 
 Saludos.<br>
-
-<hr>
 
 </x-mail::message>

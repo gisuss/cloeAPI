@@ -77,7 +77,7 @@ class UtilsController extends Controller
     public function contact(ContactRequest $request) {
         try {
             $data = $request->validated();
-            Mail::to('hello@cloe.com')->send(new ContactMail($data));
+            Mail::to('info@cloe.com')->send(new ContactMail($data));
     
             return response()->json([
                 'success' => true,
