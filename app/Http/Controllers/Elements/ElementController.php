@@ -26,6 +26,7 @@ class ElementController extends Controller
      */
     public function update(int $component_id, ElementUpdateRequest $request)
     {
+        // dd($request->validated());
         return new ElementUpdateResponsable($component_id, $request->validated());
     }
 

@@ -30,8 +30,29 @@ class ElementUpdateResponsable implements Responsable
             DB::beginTransaction();
                 $componente = $this->repository->where('id', $this->component)->firstOrFail();
                 $update = $componente->update($this->request);
+
+                if (isset($update)) {
+                    if (isset($this->request['materials'])) {
+                        $componente->materials()->sync($this->request['materials']);
+                    }
+
+                    if ($this->request['process']) {
+                        $componente->processes()->sync($this->request['process']);
+                    }
+                }
             DB::commit();
-            return $this->updateResponse(ComponentResource::make($componente), $update ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST);
+
+            if (isset($update)) {
+                $componente2 = $this->repository->where('id', $this->component)->firstOrFail();
+                return $this->updateResponse(ComponentResource::make($componente2), $update ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
+            }else{
+                return response()->json([
+                    'message' => 'No se puede actualizar el componente.',
+                    'success' => false,
+                    'code' =>  Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'data' => [],
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'message' => 'componente no encontrado.',

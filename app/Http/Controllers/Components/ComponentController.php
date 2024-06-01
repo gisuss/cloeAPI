@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{Component, User};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Responsable\Components\{ ComponentIndexResponsable, ComponentStoreResponsable, ComponentShowResponsable };
+use App\Responsable\Components\{ ComponentIndexResponsable, ComponentStoreResponsable, ComponentShowResponsable, ComponentUpdateResponsable };
 use Illuminate\Support\Facades\Auth;
 
 class ComponentController extends Controller
@@ -60,9 +60,9 @@ class ComponentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $raee_id)
     {
-        //
+        // return new ComponentUpdateResponsable($raee_id, $request->validated());
     }
 
     /**

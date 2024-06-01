@@ -42,6 +42,9 @@ Route::group(['prefix' => 'auth'], function () {
 
 // CONSULTAS INDIVIDUALES
 Route::middleware('auth:sanctum')->group(function() {
+    // DASHBOARD
+    Route::get('dashboard', [App\Http\Controllers\Dashboard\DashboardController::class, 'index']);
+
     // USERS
     Route::group(['prefix' => 'users'], function () {
         Route::get('index', [App\Http\Controllers\Users\UserController::class, 'index']);
@@ -87,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('report-pdf', [App\Http\Controllers\Components\ComponentController::class, 'reportPDF']);
         Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
+        Route::put('update/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'update']);
     });
     
     // MODULO DE COMPONENTES
