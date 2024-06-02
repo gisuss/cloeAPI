@@ -20,6 +20,7 @@ class ResetPasswordRequests extends FormRequest
         return [
             'password' => 'nueva contraseña',
             'confirm_password' => 'confirmación de nueva contraseña',
+            'token_url' => 'token de verificación',
         ];
     }
 
@@ -36,6 +37,7 @@ class ResetPasswordRequests extends FormRequest
             'password.max' => 'La :attribute solo debe contener hasta 16 caracteres.',
             'confirm_password.required' => 'La :attribute es requerida.',
             'confirm_password.same' => 'Las contraseñas deben coincidir.',
+            'token_url.required' => 'El :attribute es requerido.',
         ];
     }
 
@@ -49,6 +51,7 @@ class ResetPasswordRequests extends FormRequest
         return [
             'password' => [ 'required', 'min:8', 'max:16' ],
             'confirm_password' => 'required|same:password',
+            // 'token_url' => 'required|string',
         ];
     }
 

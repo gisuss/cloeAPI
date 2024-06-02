@@ -202,11 +202,11 @@ class AuthService
         $user = $this->userModel->where('email', $email)->first();
 
         if (isset($user)) {
-            $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
+            // $verify = DB::table('password_reset_tokens')->where('email', $email)->first();
     
-            if (isset($verify)) {
-                $verify->delete();
-            }
+            // if (isset($verify)) {
+            //     $verify->delete();
+            // }
     
             $pin = $this->generateRandomPIN(16);
             $password_reset = DB::table('password_reset_tokens')->insert([
