@@ -254,7 +254,7 @@ class AuthService
         //VERIFICACION DE TOKEN RECIBIDO POR LOS HEADERS
         $token = $request->header('Authorization');
 
-        if (self::verifyPin($token)) {
+        // if (self::verifyPin($token)) {
             //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
             $result = DB::table('password_reset_tokens')->where('token', $token)->first();
             $email = $result->email;
@@ -274,13 +274,13 @@ class AuthService
                 'message' => 'La contraseña ha sido restablecida con éxito.',
                 'code' => Response::HTTP_OK
             ];
-        }else{
-            $array = [
-                'success' => false,
-                'message' => 'Token inválido o caducado.',
-                'code' => Response::HTTP_FORBIDDEN
-            ];
-        }
+        // }else{
+        //     $array = [
+        //         'success' => false,
+        //         'message' => 'Token inválido o caducado.',
+        //         'code' => Response::HTTP_FORBIDDEN
+        //     ];
+        // }
 
         return $array;
     }

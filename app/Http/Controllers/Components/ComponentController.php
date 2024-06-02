@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\{Component, User};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Responsable\Components\{ ComponentIndexResponsable, ComponentStoreResponsable, ComponentShowResponsable, ComponentUpdateResponsable };
+use App\Responsable\Componentes\{ NewComponentRIndexResponsable, ComponentStoreResponsable, ComponentShowResponsable };
 use Illuminate\Support\Facades\Auth;
 
 class ComponentController extends Controller
@@ -14,7 +14,7 @@ class ComponentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ComponentIndexResponsable $componentIndexResponsable)
+    public function index(NewComponentRIndexResponsable $componentIndexResponsable)
     {
         return $componentIndexResponsable;
     }

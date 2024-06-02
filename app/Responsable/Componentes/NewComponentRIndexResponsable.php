@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Responsable\Components;
+namespace App\Responsable\Componentes;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
@@ -11,7 +11,7 @@ use App\Models\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Auth, DB};
 
-class ComponentIndexResponsable implements Responsable
+class NewComponentRIndexResponsable implements Responsable
 {
     use StandardResponse;
     protected ComponentRepository $repository;

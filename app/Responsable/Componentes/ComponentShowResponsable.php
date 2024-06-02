@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Responsable\Components;
+namespace App\Responsable\Componentes;
 
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
