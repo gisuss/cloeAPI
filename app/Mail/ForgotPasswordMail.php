@@ -23,7 +23,7 @@ class ForgotPasswordMail extends Mailable
     public function __construct(User $user, string $pin)
     {
         $this->user = $user;
-        $this->url = 'www.google.com/' . $pin;
+        $this->url = 'https://cloe-fe.vercel.app/auth/change-password/' . $pin;
     }
 
     /**
