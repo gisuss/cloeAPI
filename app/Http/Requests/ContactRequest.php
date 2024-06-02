@@ -25,7 +25,8 @@ class ContactRequest extends FormRequest
             'email' => 'correo electrónico',
             'name' => 'nombre',
             'phone' => 'teléfono',
-            'city' => 'ciudad',
+            'estado_id' => 'identificador de estado',
+            'ciudad_id' => 'identificador de ciudad',
             'message' => 'mensaje',
         ];
     }
@@ -40,7 +41,12 @@ class ContactRequest extends FormRequest
         return [
             'name.required' => 'El :attribute es requerido.',
             'phone.required' => 'El :attribute es requerido.',
-            'city.required' => 'La :attribute es requerida.',
+            'estado_id.required' => 'La :attribute es requerido.',
+            'estado_id.exists' => 'El :attribute no es válido.',
+            'estado_id.numeric' => 'El :attribute debe ser numérico.',
+            'ciudad_id.required' => 'La :attribute es requerido.',
+            'ciudad_id.exists' => 'El :attribute no es válido.',
+            'ciudad_id.numeric' => 'El :attribute debe ser numérico.',
             'message.required' => 'El :attribute es requerido.',
             'email.required' => 'Necesitamos saber tu :attribute.',
             'email.max' => 'El :attribute no debe exceder los 255 caracteres.',
@@ -59,7 +65,8 @@ class ContactRequest extends FormRequest
             'name' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|string|max:255|email',
-            'city' => 'required|string',
+            'estado_id' => 'required|numeric|exists:estados,id',
+            'ciudad_id' => 'required|numeric|exists:ciudades,id',
             'message' => 'required|string|max:300'
         ];
     }

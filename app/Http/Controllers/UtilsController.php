@@ -77,7 +77,15 @@ class UtilsController extends Controller
     public function contact(ContactRequest $request) {
         try {
             $data = $request->validated();
-            Mail::to('info@cloe.com')->send(new ContactMail($data));
+            $estado = Estado::find($data['estado_id'])->estado;
+            $ciudad = Ciudad::find($data['ciudad_id'])->ciudad;
+
+            $datosMail = array_merge($data, [
+                'estado' => $estado,
+                'ciudad' => $ciudad,
+            ]);
+
+            Mail::to('info@cloe.com')->send(new ContactMail($datosMail));
     
             return response()->json([
                 'success' => true,

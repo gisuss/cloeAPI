@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Raees;
 
+use App\Exports\RaeeExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RaeeUpdateRequest;
 use App\Models\{Raee, User};
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use App\Responsable\Raees\{ RaeeStoreResponsable, RaeeIndexResponsable, RaeeShowResponsable, RaeeUpdateResponsable,
     RaeeDestroyResponsable
@@ -294,5 +296,9 @@ class RaeeController extends Controller
         }
 
         return $pdf->download('reporte_de_raee.pdf');
+    }
+
+    public function reportExcel() {
+        return Excel::download(new RaeeExport, 'reporte_de_raee.xlsx');
     }
 }

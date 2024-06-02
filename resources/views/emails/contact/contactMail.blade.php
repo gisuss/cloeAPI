@@ -6,7 +6,8 @@ Estás recibiendo este correo electrónico porque se ha registrado una solicitud
 Nombre: {{ $data['name'] }} <br>
 Email: {{ $data['email'] }} <br>
 Teléfono: {{ $data['phone'] }} <br>
-Ciudad: {{ $data['city'] }} <br>
+Estado: {{ $data['estado'] }} <br>
+Ciudad: {{ $data['ciudad'] }} <br>
 Mensaje: {{ $data['message'] }} <br>
 </x-mail::panel>
 

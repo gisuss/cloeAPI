@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Centros;
 
+use App\Exports\CentroAcopioExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\CentroAcopioUpdateRequest;
 use App\Models\{CentroAcopio, User};
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Responsable\CentrosAcopio\{CentrosAcopioStoreResponsable, CentrosAcopioDesactivateResponsable, CentrosAcopioUpdateResponsable, CentrosAcopioShowResponsable, CentrosAcopioIndexResponsable, CentrosAcopioActivateResponsable, CentrosAcopioFindResponsable};
 use Illuminate\Support\Facades\Auth;
 
@@ -332,7 +334,7 @@ class CentroAcopioController extends Controller
             $isAdmin = true;
             $pdf = Pdf::loadView('exports.PDFCentros', compact('centros', 'isAdmin'));
     
-            return $pdf->download('reporte_de_usuarios.pdf');
+            return $pdf->download('reporte_de_centros_acopio.pdf');
         }else{
             return response()->json([
                 'success' => false,
@@ -340,5 +342,19 @@ class CentroAcopioController extends Controller
                 'code' => 403
             ], 403);
         }  
+    }
+
+    public function reportExcel() {
+        $userAuth = User::where('id', Auth::user()->id)->first();
+
+        if ($userAuth->getRoleNames()[0] === 'Admin') {
+            return Excel::download(new CentroAcopioExport, 'reporte_de_centros_acopio.xlsx');
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Acceso no autorizado.',
+                'code' => 403
+            ], 403);
+        }
     }
 }

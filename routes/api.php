@@ -69,6 +69,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::group(['prefix' => 'centro-acopio'], function () {
         Route::get('index', [App\Http\Controllers\Centros\CentroAcopioController::class, 'index']);
         Route::get('report-pdf', [App\Http\Controllers\Centros\CentroAcopioController::class, 'reportPDF']);
+        Route::get('report-excel', [App\Http\Controllers\Centros\CentroAcopioController::class, 'reportExcel']);
         Route::get('show/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'show']);
         Route::post('store', [App\Http\Controllers\Centros\CentroAcopioController::class, 'store']);
         Route::put('update/{centro_id}', [App\Http\Controllers\Centros\CentroAcopioController::class, 'update']);
@@ -78,6 +79,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::group(['prefix' => 'raee'], function () {
         Route::get('index', [App\Http\Controllers\Raees\RaeeController::class, 'index']);
         Route::get('report-pdf', [App\Http\Controllers\Raees\RaeeController::class, 'reportPDF']);
+        Route::get('report-excel', [App\Http\Controllers\Raees\RaeeController::class, 'reportExcel']);
         Route::post('store', [App\Http\Controllers\Raees\RaeeController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'show']);
         Route::put('update/{raee_id}', [App\Http\Controllers\Raees\RaeeController::class, 'update']);
@@ -88,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::group(['prefix' => 'split'], function () {
         Route::get('index', [App\Http\Controllers\Components\ComponentController::class, 'index']);
         Route::get('report-pdf', [App\Http\Controllers\Components\ComponentController::class, 'reportPDF']);
+        Route::get('report-excel', [App\Http\Controllers\Elements\ElementController::class, 'reportExcel']);
         Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
         Route::put('update/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'update']);
