@@ -24,6 +24,7 @@ class ComponentStoreRequest extends FormRequest
         return [
             'raee_id' => ['required', 'numeric', 'exists:raees,id'],
             'components' => ['required', 'array', 'min:1'],
+            'components.*.id' => ['nullable', 'numeric'],
             'components.*.name' => ['required', 'string'],
             'components.*.weight' => ['required', 'numeric'],
             'components.*.dimensions' => ['required', 'string'],

@@ -60,7 +60,7 @@ class ElementController extends Controller
         }
     }
 
-    public function reportExcel() {
-        return Excel::download(new ComponentExport, 'reporte_de_componentes.xlsx');
+    public function reportExcel(Request $request) {
+        return Excel::download(new ComponentExport($request), 'reporte_de_componentes.xlsx');
     }
 }

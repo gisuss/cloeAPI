@@ -41,6 +41,14 @@ class Component extends Model
         return $this->belongsTo(User::class, 'separated_by');
     }
 
+    public function scopeType($query, $type) {
+        $query->when($type ?? null, function($query, $type) {
+            $query->whereHas('raee', function($query) use ($type) {
+                $query->where('status', $type);
+            });
+        });
+    }
+
     public function scopeCentro($query, $centroID) {
         $query->when($centroID ?? null, function($query, $centro) {
             $query->whereHas('raee', function($query) use ($centro) {

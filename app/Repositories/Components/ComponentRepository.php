@@ -18,18 +18,34 @@ class ComponentRepository extends Repository
         $raee = Raee::where('id', $data['raee_id'])->first();
         
         foreach ($data['components'] as $value) {
-            $component = $this->model->create([
-                'name' => $value['name'],
-                'weight' => $value['weight'],
-                'dimensions' => $value['dimensions'],
-                'observations' => $value['observations'],
-                'reusable' => $value['reusable'],
-                'separated_by' => Auth::user()->id,
-                'raee_id' => $raee->id
-            ]);
+            if (isset($value['id'])) {
+                $componente = Component::where('id', $value['id'])->firstOrFail();
+                $update = $componente->update($value);
+
+                if (isset($update)) {
+                    if (isset($data['materials'])) {
+                        $componente->materials()->sync($value['materials']);
+                    }
+
+                    if ($data['process']) {
+                        $componente->processes()->sync($value['process']);
+                    }
+                }
+            }else{
+                $component = $this->model->create([
+                    'name' => $value['name'],
+                    'weight' => $value['weight'],
+                    'dimensions' => $value['dimensions'],
+                    'observations' => $value['observations'],
+                    'reusable' => $value['reusable'],
+                    'separated_by' => Auth::user()->id,
+                    'raee_id' => $raee->id
+                ]);
+                
+                $component->materials()->attach($value['materials']);
+                $component->processes()->attach($value['process']);
+            }
             
-            $component->materials()->attach($value['materials']);
-            $component->processes()->attach($value['process']);
         }
 
         $raee->update([

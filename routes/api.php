@@ -90,7 +90,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::group(['prefix' => 'split'], function () {
         Route::get('index', [App\Http\Controllers\Components\ComponentController::class, 'index']);
         Route::get('report-pdf', [App\Http\Controllers\Components\ComponentController::class, 'reportPDF']);
-        Route::get('report-excel', [App\Http\Controllers\Elements\ElementController::class, 'reportExcel']);
+        Route::get('report-excel', [App\Http\Controllers\Components\ComponentController::class, 'reportExcel']);
         Route::post('store', [App\Http\Controllers\Components\ComponentController::class, 'store']);
         Route::get('show/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'show']);
         Route::put('update/{raee_id}', [App\Http\Controllers\Components\ComponentController::class, 'update']);

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Components;
 
+use App\Exports\SplitComponentExport;
 use App\Http\Controllers\Controller;
 use App\Models\{Component, User};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Responsable\Componentes\{ NewComponentRIndexResponsable, ComponentStoreResponsable, ComponentShowResponsable };
 use Illuminate\Support\Facades\Auth;
 
@@ -96,5 +98,9 @@ class ComponentController extends Controller
                 'code' => 403
             ], 403);
         }
+    }
+
+    public function reportExcel(Request $request) {
+        return Excel::download(new SplitComponentExport($request), 'reporte_de_componentes.xlsx');
     }
 }
