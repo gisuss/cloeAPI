@@ -55,4 +55,10 @@ class Raee extends Model
             $query->where('status', $status);
         });
     }
+
+    public function scopeType($query, $type) {
+        $query->when($type ?? null, function($query, $type) {
+            $query->where('status', $type);
+        });
+    }
 }

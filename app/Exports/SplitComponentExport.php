@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\{Component, User};
+use App\Models\{Component, Raee, User};
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ class SplitComponentExport implements FromView, WithColumnWidths, WithStyles, Wi
             'B' => 45,
             'C' => 45,
             'D' => 45,
-            'E' => 20,
+            'E' => 55,
             'F' => 15,
         ];
     }
@@ -105,19 +105,34 @@ class SplitComponentExport implements FromView, WithColumnWidths, WithStyles, Wi
 
     public function view(): View
     {
+        $isAdmin = false;
+        $centro = '';
         $userAuth = User::where('id', Auth::user()->id)->first();
 
-        // $centros = CentroAcopio::all();
-        if ($this->request->type == 1) {
-            $components = Component::all();
-        }else{
-            if ($this->request->type == 2) {
-                $components = Component::type('Clasificado')->get();
+        if ($userAuth->getRoleNames()[0] === 'Admin') {
+            if ($this->request->type == 1) {
+                $raees = Raee::all();
             }else{
-                $components = Component::type('Separado')->get();
+                if ($this->request->type == 2) {
+                    $raees = Raee::type('Clasificado')->get();
+                }else{
+                    $raees = Raee::type('Separado')->get();
+                }
             }
+            $isAdmin = true;
+        }else{
+            if ($this->request->type == 1) {
+                $raees = Raee::where('centro_id', $userAuth->centro_id)->get();
+            }else{
+                if ($this->request->type == 2) {
+                    $raees = Raee::where('centro_id', $userAuth->centro_id)->type('Clasificado')->get();
+                }else{
+                    $raees = Raee::where('centro_id', $userAuth->centro_id)->type('Separado')->get();
+                }
+            }
+            $centro = $userAuth->centro->name;
         }
 
-        return view('exports.ExcelSplitComponents', compact('components'));
+        return view('exports.ExcelRaeeFilter', compact('raees', 'centro', 'isAdmin'));
     }
 }

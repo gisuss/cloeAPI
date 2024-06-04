@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Components;
 
 use App\Exports\SplitComponentExport;
 use App\Http\Controllers\Controller;
-use App\Models\{Component, User};
+use App\Models\{Component, Raee, User};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
@@ -75,29 +75,39 @@ class ComponentController extends Controller
         //
     }
 
-    public function reportPDF() {
+    public function reportPDF(Request $request) {
         $isAdmin = false;
+        $centro = '';
         $userAuth = User::where('id', Auth::user()->id)->first();
 
+        // dd($request->type);
+
         if ($userAuth->getRoleNames()[0] === 'Admin') {
-            $componentes = Component::all();
+            if ($request->type == 1) {
+                $raees = Raee::all();
+            }else{
+                if ($request->type == 2) {
+                    $raees = Raee::type('Clasificado')->get();
+                }else{
+                    $raees = Raee::type('Separado')->get();
+                }
+            }
             $isAdmin = true;
-            $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin'));
-    
-            return $pdf->download('reporte_de_componentes.pdf');
-        }else if ($userAuth->getRoleNames()[0] === 'Separador') {
-            $componentes = Component::centro($userAuth->centro_id)->get();
-            $centro = $userAuth->centro->name;
-            $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin', 'centro'));
-    
-            return $pdf->download('reporte_de_componentes.pdf');
         }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Acceso no autorizado.',
-                'code' => 403
-            ], 403);
+            if ($request->type == 1) {
+                $raees = Raee::where('centro_id', $userAuth->centro_id)->get();
+            }else{
+                if ($request->type == 2) {
+                    $raees = Raee::where('centro_id', $userAuth->centro_id)->type('Clasificado')->get();
+                }else{
+                    $raees = Raee::where('centro_id', $userAuth->centro_id)->type('Separado')->get();
+                }
+            }
+            $centro = $userAuth->centro->name;
         }
+
+        $pdf = Pdf::loadView('exports.PDFRaeeFilter', compact('raees', 'isAdmin', 'centro'));
+        return $pdf->download('reporte_de_componentes.pdf');
     }
 
     public function reportExcel(Request $request) {

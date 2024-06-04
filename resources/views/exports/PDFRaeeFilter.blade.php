@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reporte de componentes</title>
+    <title>Reporte de RAEE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
   <body>
@@ -11,40 +11,36 @@
 
     @if ($isAdmin)
         <div class="mb-4">
-            <p class="h3 text-right mb-0">Reporte general de componentes</p>
+            <p class="h3 text-right mb-0">Reporte general de RAEE</p>
             <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @else
         <div class="mb-4">
-            <p class="h3 text-right mb-0">Reporte de componentes - Centro: {{ $centro }}</p>
+            <p class="h3 text-right mb-0">Reporte de RAEE - Centro {{ $centro }}</p>
             <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @endif
     
     <table class="table table-striped table-borderless table-sm">
-        <caption class="text-monospace">Lista de componentes registrados en sistema</caption>
+        <caption class="text-monospace">Lista de RAEE registrados en sistema</caption>
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Generado por</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">¿Reusable?</th>
+                <th scope="col">Marca / Modelo</th>
+                <th scope="col">Línea</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Estatus</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($componentes as $componente)
+            @forelse ($raees as $raee)
                 <tr>
-                    <th scope="row">{{ $componente->id }}</th>
-                    <td>{{ $componente->name }}</th>
-                    <td>{{ $componente->splitedBy->name . ' ' . $componente->splitedBy->lastname }}</td>
-                    <td>{{ $componente->created_at->format('d-m-Y') }}</td>
+                    <th scope="row">{{ $raee->id }}</th>
+                    <td>{{ $raee->marca->name }} / {{ $raee->model }}</th>
+                    <td>{{ $raee->linea->name }}</td>
+                    <td>{{ $raee->category->name }}</td>
                     <td>
-                        @if ($componente->reusable === 1)
-                            <span class="badge badge-pill badge-success">Si</span>
-                        @else
-                            <span class="badge badge-pill badge-warning">No</span>
-                        @endif
+                        <span class="badge badge-pill badge-primary">{{ $raee->status }}</span>
                     </td>
                 </tr>
             @empty
