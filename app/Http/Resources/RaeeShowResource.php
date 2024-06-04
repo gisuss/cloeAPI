@@ -26,8 +26,8 @@ class RaeeShowResource extends JsonResource
                 'dimensions' => $comp->dimensions,
                 'reusable' => $comp->reusable,
                 'observations' => $comp->observations,
-                'materials' => $comp->materials->pluck('id'),
-                'process' => $comp->processes->pluck('id'),
+                'materials' => $comp->materials->pluck('name'),
+                'process' => $comp->processes->pluck('name'),
             ];
         }
 
