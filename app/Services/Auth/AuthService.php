@@ -252,7 +252,7 @@ class AuthService
     public function resetPassword(array $data, Request $request) : array {
         $array = [];
         //VERIFICACION DE TOKEN RECIBIDO POR LOS HEADERS
-        $token = $request->header('Authorization');
+        $token = $data['token_url'];
 
         // if (self::verifyPin($token)) {
             //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
