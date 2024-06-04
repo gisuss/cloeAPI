@@ -80,8 +80,6 @@ class ComponentController extends Controller
         $centro = '';
         $userAuth = User::where('id', Auth::user()->id)->first();
 
-        // dd($request->type);
-
         if ($userAuth->getRoleNames()[0] === 'Admin') {
             if ($request->type == 1) {
                 $raees = Raee::all();
@@ -107,10 +105,10 @@ class ComponentController extends Controller
         }
 
         $pdf = Pdf::loadView('exports.PDFRaeeFilter', compact('raees', 'isAdmin', 'centro'));
-        return $pdf->download('reporte_de_componentes.pdf');
+        return $pdf->download('reporte_de_separaciones.pdf');
     }
 
     public function reportExcel(Request $request) {
-        return Excel::download(new SplitComponentExport($request), 'reporte_de_componentes.xlsx');
+        return Excel::download(new SplitComponentExport($request), 'reporte_de_separaciones.xlsx');
     }
 }
