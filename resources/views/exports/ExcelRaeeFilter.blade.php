@@ -7,11 +7,11 @@
         <th></th>
         @if ($isAdmin)
             <th colspan="2">
-                <strong>Reporte general de Raee registrados en sistema</strong>
+                <strong>Reporte general de separaciones de componentes</strong>
             </th>
         @else
             <th colspan="2">
-                <strong>Reporte de RAEE - Centro: {{ $centro }}</strong>
+                <strong>Reporte de separaciones de componentes - Centro: {{ $centro }}</strong>
             </th>
         @endif
     </tr>

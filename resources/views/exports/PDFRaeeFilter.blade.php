@@ -11,12 +11,12 @@
 
     @if ($isAdmin)
         <div class="mb-4">
-            <p class="h3 text-right mb-0">Reporte general de RAEE</p>
+            <p class="h3 text-right mb-0">Reporte general de separaciones de componentes</p>
             <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @else
         <div class="mb-4">
-            <p class="h3 text-right mb-0">Reporte de RAEE - Centro {{ $centro }}</p>
+            <p class="h3 text-right mb-0">Reporte de separaciones de componentes - Centro: {{ $centro }}</p>
             <p class="text-monospace text-right mb-0">Fecha: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
         </div>
     @endif

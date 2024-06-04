@@ -251,36 +251,27 @@ class AuthService
      */
     public function resetPassword(array $data, Request $request) : array {
         $array = [];
-        //VERIFICACION DE TOKEN RECIBIDO POR LOS HEADERS
         $token = $data['token_url'];
 
-        // if (self::verifyPin($token)) {
-            //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
-            $result = DB::table('password_reset_tokens')->where('token', $token)->first();
-            $email = $result->email;
-            // $result->delete();
+        //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
+        $result = DB::table('password_reset_tokens')->where('token', $token)->first();
+        $email = $result->email;
+        // $result->delete();
 
-            $user = User::where('email', $email)->first();
-            $user->update([
-                'password' => Hash::make($data['password']),
-                'active' => true
-            ]);
-            $user->tokens()->delete();
+        $user = User::where('email', $email)->first();
+        $user->update([
+            'password' => Hash::make($data['password']),
+            'active' => true
+        ]);
+        $user->tokens()->delete();
 
-            Mail::to($user->email)->send(new ResetPasswordMail($user, $data['password']));
+        Mail::to($user->email)->send(new ResetPasswordMail($user, $data['password']));
 
-            $array = [
-                'success' => true,
-                'message' => 'La contraseña ha sido restablecida con éxito.',
-                'code' => Response::HTTP_OK
-            ];
-        // }else{
-        //     $array = [
-        //         'success' => false,
-        //         'message' => 'Token inválido o caducado.',
-        //         'code' => Response::HTTP_FORBIDDEN
-        //     ];
-        // }
+        $array = [
+            'success' => true,
+            'message' => 'La contraseña ha sido restablecida con éxito.',
+            'code' => Response::HTTP_OK
+        ];
 
         return $array;
     }
