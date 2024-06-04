@@ -258,7 +258,7 @@ class AuthService
             //ELIMINAR EL TOKEN DE LA TABLA password_reset_tokens
             $result = DB::table('password_reset_tokens')->where('token', $token)->first();
             $email = $result->email;
-            $result->delete();
+            // $result->delete();
 
             $user = User::where('email', $email)->first();
             $user->update([
