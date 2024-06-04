@@ -14,8 +14,10 @@ class ProcesoSeeder extends Seeder
     public function run(): void
     {
         $procesos = [
+            [ 'name' => 'Separación manual' ],
             [ 'name' => 'Separación por densidad' ],
             [ 'name' => 'Separación magnética' ],
+            [ 'name' => 'Separación mecánica' ],
             [ 'name' => 'Separación por flotación' ],
             [ 'name' => 'Digestión ácida' ],
             [ 'name' => 'Disolución alcalina' ],

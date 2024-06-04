@@ -23,11 +23,11 @@ class ComponentRepository extends Repository
                 $update = $componente->update($value);
 
                 if (isset($update)) {
-                    if (isset($data['materials'])) {
+                    if (isset($value['materials'])) {
                         $componente->materials()->sync($value['materials']);
                     }
 
-                    if ($data['process']) {
+                    if (isset($value['process'])) {
                         $componente->processes()->sync($value['process']);
                     }
                 }
@@ -45,7 +45,6 @@ class ComponentRepository extends Repository
                 $component->materials()->attach($value['materials']);
                 $component->processes()->attach($value['process']);
             }
-            
         }
 
         $raee->update([
