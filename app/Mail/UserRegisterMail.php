@@ -25,7 +25,7 @@ class UserRegisterMail extends Mailable
     {
         $this->role = $role;
         $this->pass = $pass;
-        $this->user -> $user;
+        $this->user = $user;
     }
 
     /**
