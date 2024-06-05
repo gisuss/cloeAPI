@@ -279,7 +279,7 @@ class UtilsController extends Controller
             if ($userAuth->getRoleNames()[0] === 'Admin') {
                 $roles = Role::orderBy('name', 'asc')->get();
             }else{
-                $roles = Role::whereNotIn('name', ['Admin', 'Desactivado'])->orderBy('name', 'desc')->get();
+                $roles = Role::whereNotIn('name', ['Admin'])->orderBy('name', 'desc')->get();
             }
 
             foreach ($roles as $rol) {
