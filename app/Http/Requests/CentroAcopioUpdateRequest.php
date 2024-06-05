@@ -23,6 +23,7 @@ class CentroAcopioUpdateRequest extends FormRequest
             'description' => 'descripción del centro de acopio',
             'address' => 'dirección del centro de acopio',
             'name' => 'nombre del centro de acopio',
+            'active' => 'está activo el centro de acopio?',
         ];
     }
 
@@ -51,6 +52,7 @@ class CentroAcopioUpdateRequest extends FormRequest
             'name.string' => 'El :attribute debe ser de tipo texto.',
             'name.max' => 'El :attribute no debe superar los 150 caracteres.',
             'name.unique' => 'El :attribute ya está en uso.',
+            'active.boolean' => 'El campo :attribute debe ser de tipo booleano.',
         ];
     }
 
@@ -62,12 +64,13 @@ class CentroAcopioUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'encargado_id' => 'required|numeric|exists:users,id',
-            'estado_id' => 'required|numeric|exists:estados,id',
-            'ciudad_id' => 'required|numeric|exists:ciudades,id',
-            'name' => 'required|string|max:150|unique:centro_acopios,name,except,id',
+            'encargado_id' => 'nullable|numeric|exists:users,id',
+            'estado_id' => 'nullable|numeric|exists:estados,id',
+            'ciudad_id' => 'nullable|numeric|exists:ciudades,id',
+            'name' => 'nullable|string|max:150|unique:centro_acopios,name,except,id',
             'description' => 'nullable|string|max:300',
-            'address' => 'required|string|max:300',
+            'address' => 'nullable|string|max:300',
+            'active' => 'nullable|boolean',
         ];
     }
 }
