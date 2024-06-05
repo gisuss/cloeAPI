@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Users;
 
+use App\Mail\UserRegisterMail;
 use App\Models\{User, Identification};
 use App\Repositories\Repository;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class UserRepository extends Repository
      * @param array $data
      */
     public function register(array $data) {
-        $pass = $this->generateRandomPIN(6);
+        // $pass = $this->generateRandomPIN(6);
         $cedula = Identification::create([
             'type' => $data['ci_type'],
             'number' => $data['ci_number'],
@@ -40,14 +41,14 @@ class UserRepository extends Repository
             'centro_id' => isset($data['centro_id']) ? $data['centro_id'] : null,
             'enabled' => $data['role'] === 'Admin' ? true : (isset($data['centro_id']) ? true : false),
             'address' => $data['address'],
-            'password' => Hash::make($pass),
+            'password' => Hash::make($data['ci_number']),
             'username' => $this->setUsername($data['name'], $data['lastname']),
             'active' => true,
             'email_verified_at' => Carbon::now(),
         ]);
 
         $user->assignRole($data['role']);
-        // Mail::to($user->email)->send(new UserRegisterMail($user, $pass, $data['role']));
+        Mail::to($user->email)->send(new UserRegisterMail($user, $data['ci_number'], $data['role']));
 
         return $user;
     }

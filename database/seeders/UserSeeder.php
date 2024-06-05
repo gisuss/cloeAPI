@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'name' => 'Admin',
+            'name' => 'Administrador',
             'lastname' => 'Cloe',
             'ci_id' => 1,
             'email' => 'admin@cloe.com',
@@ -32,13 +32,13 @@ class UserSeeder extends Seeder
         // VALENCIA
 
         $user2 = User::create([
-            'name' => 'Encargado Juan',
+            'name' => 'Juan Carlos',
             'lastname' => 'Lopez',
             'ci_id' => 2,
             'email' => 'encargado@cloe.com',
             'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
-            'username' => 'encargado',
+            'username' => 'jclopez1',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'ciudad_id' => 122,
@@ -60,13 +60,13 @@ class UserSeeder extends Seeder
         ]);
         
         $user3 = User::create([
-            'name' => 'Clasificador',
-            'lastname' => 'Cloe',
+            'name' => 'Roberto Antonio',
+            'lastname' => 'Sulbarán',
             'ci_id' => 3,
             'email' => 'clasificador@cloe.com',
             'address' => 'Bejuma',
             'password'  =>  Hash::make('password'),
-            'username' => 'clasificador',
+            'username' => 'rsulbaran',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'ciudad_id' => 106,
@@ -76,13 +76,13 @@ class UserSeeder extends Seeder
         $user3->assignRole('Clasificador');
         
         $user4 = User::create([
-            'name' => 'Separador',
-            'lastname' => 'Cloe',
+            'name' => 'Maria Daniela',
+            'lastname' => 'Guarda',
             'ci_id' => 4,
-            'email' => 'separador@cloe.com',
+            'email' => 'm.guarda@cloe.com',
             'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
-            'username' => 'separador',
+            'username' => 'mguarda',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'ciudad_id' => 122,
@@ -108,13 +108,13 @@ class UserSeeder extends Seeder
         $user4->assignRole('Separador');
 
         $user4 = User::create([
-            'name' => 'Juan Wu',
+            'name' => 'Juan Yu',
             'lastname' => 'Rivas',
             'ci_id' => 6,
             'email' => 'wurivas@cloe.com',
             'address' => 'Valencia',
             'password'  =>  Hash::make('password'),
-            'username' => 'wrivas',
+            'username' => 'jwrivas',
             'email_verified_at' => Carbon::now(),
             'estado_id' => 7,
             'ciudad_id' => 108,
@@ -126,7 +126,7 @@ class UserSeeder extends Seeder
         // ARAGUA
 
         $user4 = User::create([
-            'name' => 'Paul Jose',
+            'name' => 'Paul José',
             'lastname' => 'Reyes',
             'ci_id' => 7,
             'email' => 'encargado99@cloe.com',
@@ -230,7 +230,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user4 = User::create([
-            'name' => 'Santiago',
+            'name' => 'Santiago Daniel',
             'lastname' => 'Laos',
             'ci_id' => 12,
             'email' => 'clasificador0034@cloe.com',
@@ -246,7 +246,7 @@ class UserSeeder extends Seeder
         $user4->assignRole('Clasificador');
 
         $user4 = User::create([
-            'name' => 'Yessica',
+            'name' => 'Yessica del Carmen',
             'lastname' => 'Swan',
             'ci_id' => 13,
             'email' => 'separadortovar45@cloe.com',
@@ -292,7 +292,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user4 = User::create([
-            'name' => 'Mary',
+            'name' => 'Mary Carmen',
             'lastname' => 'Lopez',
             'ci_id' => 15,
             'email' => 'separador303@cloe.com',
@@ -326,8 +326,8 @@ class UserSeeder extends Seeder
         // LARA
 
         $user4 = User::create([
-            'name' => 'Yesenia',
-            'lastname' => 'Durand',
+            'name' => 'Yesenia Josefina',
+            'lastname' => 'Durand Martínez',
             'ci_id' => 17,
             'email' => 'encargado809@cloe.com',
             'address' => 'Lara',
@@ -448,8 +448,8 @@ class UserSeeder extends Seeder
         ]);
 
         $user4 = User::create([
-            'name' => 'Tomas',
-            'lastname' => 'Lu',
+            'name' => 'Thomas Alexander',
+            'lastname' => 'Lu Veliz',
             'ci_id' => 23,
             'email' => 'separador2@cloe.com',
             'address' => 'Apure',
