@@ -45,7 +45,7 @@ class ElementController extends Controller
             $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin'));
     
             return $pdf->download('reporte_de_componentes.pdf');
-        }else if ($userAuth->getRoleNames()[0] === 'Separador') {
+        }else if ($userAuth->getRoleNames()[0] === 'Separador' || $userAuth->getRoleNames()[0] === 'Encargado' || $userAuth->getRoleNames()[0] === 'Clasificador') {
             $componentes = Component::centro($userAuth->centro_id)->get();
             $centro = $userAuth->centro->name;
             $pdf = Pdf::loadView('exports.PDFComponentes', compact('componentes', 'isAdmin', 'centro'));
