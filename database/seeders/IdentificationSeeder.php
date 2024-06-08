@@ -64,6 +64,7 @@ class IdentificationSeeder extends Seeder
             ['type' => 'V', 'number' => '22345654' ],
             ['type' => 'J', 'number' => '12323453' ],
             ['type' => 'V', 'number' => '21909863' ],
+            ['type' => 'V', 'number' => '22345432' ],
         ];
 
         foreach($identifications as $identification) {

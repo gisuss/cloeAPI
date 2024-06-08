@@ -18,8 +18,52 @@ class RaeeSeeder extends Seeder
             'brand_id' => 149,
             'line_id' => 4,
             'category_id' => 17,
-            'clasified_by' => 1,
-            'model' => 'Samsung Galaxy A54 5G',
+            'clasified_by' => 6,
+            'model' => 'Galaxy A54 5G',
+            'information' => 'Bateria y pantalla mala',
+            'status' => 'Separado'
+        ]);
+        
+        Raee::create([
+            'centro_id' => 1,
+            'brand_id' => 11,
+            'line_id' => 4,
+            'category_id' => 17,
+            'clasified_by' => 6,
+            'model' => 'Iphone 12',
+            'information' => 'No enciende, pantalla partida',
+            'status' => 'Clasificado'
+        ]);
+        
+        Raee::create([
+            'centro_id' => 1,
+            'brand_id' => 11,
+            'line_id' => 4,
+            'category_id' => 18,
+            'clasified_by' => 6,
+            'model' => 'Ipad pro',
+            'information' => 'Pin de carga malo, no enciende',
+            'status' => 'Separado'
+        ]);
+        
+        Raee::create([
+            'centro_id' => 1,
+            'brand_id' => 149,
+            'line_id' => 4,
+            'category_id' => 17,
+            'clasified_by' => 6,
+            'model' => 'Galaxy J7',
+            'information' => 'Bateria y pantalla mala',
+            'status' => 'Clasificado'
+        ]);
+        
+        Raee::create([
+            'centro_id' => 1,
+            'brand_id' => 149,
+            'line_id' => 4,
+            'category_id' => 17,
+            'clasified_by' => 6,
+            'model' => 'Galaxy S3 mini',
             'information' => 'Bateria y pantalla mala',
             'status' => 'Clasificado'
         ]);
@@ -29,7 +73,7 @@ class RaeeSeeder extends Seeder
             'brand_id' => 11,
             'line_id' => 3,
             'category_id' => 19,
-            'clasified_by' => 21,
+            'clasified_by' => 25,
             'model' => 'iTV Magic 3030',
             'information' => 'Condensadores malos y pantalla partida',
             'status' => 'Separado'
@@ -37,11 +81,11 @@ class RaeeSeeder extends Seeder
         
         Raee::create([
             'centro_id' => 5,
-            'brand_id' => 20,
+            'brand_id' => 74,
             'line_id' => 3,
             'category_id' => 19,
             'clasified_by' => 12,
-            'model' => 'TV plano',
+            'model' => 'Tv lcd 42 pulgadas L42F6',
             'information' => 'No enciende',
             'status' => 'Clasificado'
         ]);
@@ -50,7 +94,7 @@ class RaeeSeeder extends Seeder
             'centro_id' => 6,
             'brand_id' => 60,
             'line_id' => 4,
-            'category_id' => 23,
+            'category_id' => 25,
             'clasified_by' => 10,
             'model' => 'Impresora laser k333',
             'information' => 'No enciende',
@@ -91,46 +135,46 @@ class RaeeSeeder extends Seeder
         ]);
         
         Raee::create([
-            'centro_id' => 6,
-            'brand_id' => 78,
-            'line_id' => 1,
-            'category_id' => 1,
-            'clasified_by' => 9,
-            'model' => 'SL2250',
-            'information' => 'Motor malo',
-            'status' => 'Separado'
-        ]);
-        
-        Raee::create([
-            'centro_id' => 1,
-            'brand_id' => 80,
+            'centro_id' => 2,
+            'brand_id' => 46,
             'line_id' => 2,
-            'category_id' => 9,
-            'clasified_by' => 12,
-            'model' => 'FAST 2121',
-            'information' => 'No enciende',
+            'category_id' => 20,
+            'clasified_by' => 10,
+            'model' => 'Barra De Sonido Estéreo Para Computadora',
+            'information' => 'Enciende, pero no suena',
             'status' => 'Separado'
         ]);
         
         Raee::create([
             'centro_id' => 2,
-            'brand_id' => 55,
-            'line_id' => 1,
-            'category_id' => 7,
-            'clasified_by' => 21,
-            'model' => 'KL54',
-            'information' => 'Motor malo',
-            'status' => 'Separado'
+            'brand_id' => 182,
+            'line_id' => 4,
+            'category_id' => 16,
+            'clasified_by' => 9,
+            'model' => 'Laptop Toshiba A105 S4034 17puLG',
+            'information' => 'No enciende, bateria mala, carcasa en mal estado',
+            'status' => 'Clasificado'
         ]);
         
         Raee::create([
-            'centro_id' => 6,
-            'brand_id' => 79,
+            'centro_id' => 2,
+            'brand_id' => 3,
             'line_id' => 2,
-            'category_id' => 15,
-            'clasified_by' => 16,
-            'model' => 'Tipo cero',
-            'information' => 'No enciende',
+            'category_id' => 16,
+            'clasified_by' => 9,
+            'model' => 'Monitores 19 Pulgadas',
+            'information' => 'No enciende, bateria mala, carcasa en mal estado',
+            'status' => 'Clasificado'
+        ]);
+        
+        Raee::create([
+            'centro_id' => 2,
+            'brand_id' => 64,
+            'line_id' => 1,
+            'category_id' => 1,
+            'clasified_by' => 9,
+            'model' => 'Refrigerador Congelador Horizontal 300 Litros Dual',
+            'information' => 'No funciona',
             'status' => 'Clasificado'
         ]);
     }

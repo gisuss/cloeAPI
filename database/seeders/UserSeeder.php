@@ -478,5 +478,21 @@ class UserSeeder extends Seeder
             'centro_id' => $centro->id
         ]);
         $user4->assignRole('Separador');
+        
+        $user4 = User::create([
+            'name' => 'Manuel Alejandro',
+            'lastname' => 'Lozada',
+            'ci_id' => 51,
+            'email' => 'mlozada@cloe.com',
+            'address' => 'Apure',
+            'password'  =>  Hash::make('password'),
+            'username' => 'mlozada',
+            'email_verified_at' => Carbon::now(),
+            'estado_id' => 3,
+            'ciudad_id' => 48,
+            'enabled' => true,
+            'centro_id' => $centro->id
+        ]);
+        $user4->assignRole('Clasificador');
     }
 }
