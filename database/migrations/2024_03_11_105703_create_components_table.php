@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('raee_id')->constrained('raees')->onDelete('cascade');
             $table->foreignId('separated_by')->constrained('users', 'id');
             $table->string('name');
-            $table->float('weight', 8, 2, true);
+            $table->string('weight');
             $table->string('dimensions');
             $table->string('observations', 300)->nullable();
             $table->boolean('reusable')->default(true);
