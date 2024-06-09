@@ -65,7 +65,7 @@ class UserUpdateResponsable implements Responsable
                             $update = $usuario->update([
                                 'name' => isset($this->request['name']) ? $this->request['name'] : $usuario->name,
                                 'lastname' => isset($this->request['lastname']) ? $this->request['lastname'] : $usuario->lastname,
-                                'ci_id' => $cedula->id,
+                                'ci_id' => isset($cedula) ? $cedula->id : $usuario->ci_id,
                                 'email' => isset($this->request['email']) ? $this->request['email'] : $usuario->email,
                                 'estado_id' => isset($this->request['estado_id']) ? $this->request['estado_id'] : $usuario->estado_id,
                                 'ciudad_id' => isset($this->request['ciudad_id']) ? $this->request['ciudad_id'] : $usuario->ciudad_id,
