@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\{Identification, User};
+use App\Rules\MatchPasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends FormRequest
@@ -30,6 +32,7 @@ class UserUpdateRequest extends FormRequest
             'centro_id' => 'identificador de centro de acopio',
             'active' => 'actividad de usuario',
             'role' => 'rol de usuario',
+            'old_password' => 'contraseña actual',
             'password' => 'nueva contraseña',
             'confirm_password' => 'confirmación de nueva contraseña',
         ];
@@ -72,6 +75,9 @@ class UserUpdateRequest extends FormRequest
             'active.numeric' => 'El valor de campo :attribute debe ser 1 o 0.',
             'active.regex' => 'El valor de campo :attribute es inválido.',
             'password.required' => 'La :attribute es requerida.',
+            'old_password.min' => 'La :attribute debe contener al menos 8 caracteres.',
+            'old_password.max' => 'La :attribute solo debe contener hasta 16 caracteres.',
+            'old_password.current_password' => 'La :attribute no es correcta.',
             'password.min' => 'La :attribute debe contener al menos 8 caracteres.',
             'password.max' => 'La :attribute solo debe contener hasta 16 caracteres.',
             'confirm_password.required' => 'La :attribute es requerida.',
@@ -100,15 +106,14 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 'min:7',
                 'max:9',
-                // 'unique:identifications,number,auth()->user()->id,user',
                 'unique:users,email,' . auth()->user()->id . ',' . 'id',
-                // Rule::unique('identifications', 'number')->where(fn ($query) => $query->where('type', request()->ci_type))->ignore($identification)
             ],
             'estado_id' => 'nullable|numeric|exists:estados,id',
             'ciudad_id' => 'nullable|numeric|exists:ciudades,id',
             'centro_id' => 'nullable|numeric|exists:centro_acopios,id',
             'active' => 'nullable|numeric|regex:/^[10]$/',
             'role' => 'nullable|string|exists:roles,name',
+            'old_password' => ['nullable', new MatchPasswordRule],
             'password' => 'nullable|min:8|max:16',
             'confirm_password' => 'nullable|same:password',
         ];

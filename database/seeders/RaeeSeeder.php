@@ -175,7 +175,7 @@ class RaeeSeeder extends Seeder
             'clasified_by' => 9,
             'model' => 'Refrigerador Congelador Horizontal 300 Litros Dual',
             'information' => 'No funciona',
-            'status' => 'Clasificado'
+            'status' => 'Separado'
         ]);
     }
 }
